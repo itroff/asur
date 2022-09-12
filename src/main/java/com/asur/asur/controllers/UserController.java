@@ -13,7 +13,7 @@ public class UserController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("val", "mer");
+       // model.addAttribute("val", "mer");
         //TODO role as param
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {

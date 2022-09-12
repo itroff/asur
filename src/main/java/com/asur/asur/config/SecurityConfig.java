@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.asur.asur.models.User;
 
@@ -61,15 +62,18 @@ public class SecurityConfig {
         http
 			.authorizeHttpRequests((requests) -> requests
 				.antMatchers(PUBLIC_MATCHERS).permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER")
+                .antMatchers("/robot").hasAnyRole("ADMIN")
+                .antMatchers("/diagnostics").hasAnyRole("ADMIN")
+                .antMatchers("/index").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
+                .defaultSuccessUrl("/index", true)
 				.permitAll()
 			)
-			.logout((logout) -> logout.permitAll());
+			.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
             //exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 		return http.build();
     }
