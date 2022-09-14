@@ -34,6 +34,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	//compile "org.springframework.integration:spring-integration-mqtt:5.5.14"
+	compileOnly "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
 }
 
 tasks.named('test') {

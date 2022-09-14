@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.asur.asur.config.Mqtt;
+
 @Controller
 public class UserController {
     
@@ -28,6 +30,7 @@ public class UserController {
     public String login(Model model) {
         model.addAttribute("val", "mer");
         return "login";
+        
     }
 
     
