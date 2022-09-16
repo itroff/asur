@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+	id 'com.google.protobuf' version '0.8.15'
 }
 
 group = 'com.asur'
@@ -36,8 +37,19 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	//compile "org.springframework.integration:spring-integration-mqtt:5.5.14"
 	compileOnly "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
+	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.14.0'
+	//compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.19'
+	implementation group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+protobuf {
+    protoc {
+        // Download from repositories
+        artifact = 'com.google.protobuf:protoc:3.4.0'
+		generatedFilesBaseDir = "$projectDir/src"
+    }
 }

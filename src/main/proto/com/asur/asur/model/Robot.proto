@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.asur.asur.generated.model";
+//option java_outer_classname = "RobotProto";
+
+message RobotProto {
+    int32 id = 1;
+    string robot_name = 2;
+}
+
