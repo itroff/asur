@@ -24,4 +24,13 @@ public class Robots {
     public static List<Robot> getRobots() {
         return robots;
     } 
+
+    public static Robot getRobot(int id) {
+        for (Robot robot : robots) {
+            if (robot.getId() == id) {
+                return robot;
+            }
+        }
+        return null;
+    }
 }
