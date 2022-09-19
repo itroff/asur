@@ -1,42 +1,106 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Welcome</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <title>Main page of RMS</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">АСУР</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand navbar-dark" href="#">
+      <center>RMS</center>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/index">Главное окно</a>
+          <a class="nav-link" href="/index">Main page<span class="sr-only"></span></a>
         </li>
         <li th:if="${role} == 'admin'" class="nav-item">
-          <a class="nav-link" href="/robot">Управление роботом</a>
+          <a class="nav-link" href="/robot">Robot control center</a>
         </li>
         <li th:if="${role} == 'admin'" class="nav-item">
-          <a class="nav-link" href="/diagnostics">Диагностика</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Выйти</a>
+          <a class="nav-link" href="/diagnostics">Diagnostics</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
     </div>
   </nav>
+  <div>
+    <h2>Robotics management system main page</h2>
     <p>Welcome to our platform</p>
     Role is <span th:text="${role}" />
     <button type="button" class="btn btn-primary">Primary</button>
+
+    <div class="card">
+      <div class="card-header">
+        Robots in System
+      </div>
+      <div class="card-body">
+
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Robot name</th>
+              <th scope="col">Go to Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="robot: ${robots}">
+              <div th:switch="${robot.status}">
+                <span th:case="${T(com.asur.asur.models.RobotStatusEnum).ONLINE}">
+                  <td th:text="${robot.id}" class="table-success" />
+                  <td th:text="${robot.name}" class="table-success" />
+                  <td class="table-success"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}" role="button">Go to robot control</a>
+                  </td>
+                </span>
+                <span th:case="${T(com.asur.asur.models.RobotStatusEnum).FAULT}">
+                  <td th:text="${robot.id}" class="table-danger" />
+                  <td th:text="${robot.name}" class="table-danger" />
+                  <td class="table-danger"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}" role="button">Go to robot control</a>
+                  </td>
+                </span>
+                <span th:case="${T(com.asur.asur.models.RobotStatusEnum).NO_LINK}">
+                  <td th:text="${robot.id}" class="table-secondary" />
+                  <td th:text="${robot.name}" class="table-secondary" />
+                  <td class="table-secondary"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}" role="button">Go to robot control</a>
+                  </td>
+                </span>
+                </td>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        Working with Scenarios
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Upload scenario file</h5>
+        <p class="card-text">After upload valid scenario file page will be refresh</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+
+
+
+  </div>
+
 </body>
+
 </html>
