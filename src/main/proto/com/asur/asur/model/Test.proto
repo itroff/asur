@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.asur.asur.generated.model";
+
+message TestProto { 
+    int32 numBlink = 1;
+    string reply = 2;
+    int32 status = 3;
+    bool keepAlive = 4;
+}

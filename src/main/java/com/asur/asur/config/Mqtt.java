@@ -7,7 +7,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 
 public class Mqtt {
     private static final String MQTT_PUBLISHER_ID = "asur-server";
-    private static final String MQTT_SERVER_ADDRES= "tcp://127.0.0.1:1883";
+    private static final String MQTT_SERVER_ADDRES= "tcp://broker.hivemq.com:1883";//"tcp://127.0.0.1:1883";
     private static IMqttClient instance;
 
     public static IMqttClient getInstance() {
@@ -17,6 +17,7 @@ public class Mqtt {
             }
 
             MqttConnectOptions options = new MqttConnectOptions();
+            options.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(10);

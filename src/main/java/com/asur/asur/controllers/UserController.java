@@ -9,11 +9,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.config.Robots;
 import com.asur.asur.generated.model.Robot;
+import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Robot.RobotProto;
+import com.asur.asur.generated.model.Test.TestProto;
 
 @Controller
 public class UserController {
@@ -29,15 +32,8 @@ public class UserController {
         } else {
             model.addAttribute("role", "user");
         }
-     /*   Robot.RobotProto proto = RobotProto.newBuilder().setId(1).setRobotName("val123").build();
-        MqttMessage msg = new MqttMessage();
-        msg.setPayload(proto.toByteArray());
-        System.out.println(proto.toByteArray());
-        try {
-            Mqtt.getInstance().publish("/asur/topic2", msg);
-        } catch (MqttException ex) {
-            System.out.println(ex.getStackTrace());
-        }*/
+       // Robot.RobotProto proto = RobotProto.newBuilder().setId(1).setRobotName("val123").build();
+      
         model.addAttribute("robots", Robots.getRobots());
         model.addAttribute("validScenario", false);
         return "main";
@@ -47,8 +43,27 @@ public class UserController {
     public String login(Model model) {
         model.addAttribute("val", "mer");
         return "login";
-        
     }
 
+
+    @GetMapping("/led")
+    public String led(Model model, @RequestParam(name="num", required = false) int param) {
+        if (param != 0) {
+            Test.TestProto proto = TestProto.newBuilder().setNumBlink(param).build();
+            MqttMessage msg = new MqttMessage();
+            msg.setPayload(proto.toByteArray());
+            System.out.println(proto.toString());
+            System.out.println(proto.toByteArray());
+            System.out.println(proto.toByteString());
+            try {
+                Mqtt.getInstance().publish("asur/led", msg);
+            } catch (MqttException ex) {
+                System.out.println(ex.getStackTrace());
+            }
+            
+        }
+        model.addAttribute("num", param);
+        return "led";
+    }
     
 }
