@@ -8,6 +8,7 @@ plugins {
 group = 'com.asur'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+targetCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -36,7 +37,7 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	//compile "org.springframework.integration:spring-integration-mqtt:5.5.14"
-	compileOnly "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
+	implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
 	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.14.0'
 	//compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.19'
 	implementation group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'

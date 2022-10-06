@@ -1,0 +1,9 @@
+version: '3'
+services:
+  main:
+    container_name: asur
+    image: asur
+    restart: always
+    ports:
+      - "8080:8080"
+#      - "8666:8666"
