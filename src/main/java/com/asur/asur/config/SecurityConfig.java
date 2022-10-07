@@ -30,7 +30,7 @@ public class SecurityConfig {
         "/webjars/**",
         "/css/**",
         "/js/**",
-        "/images/**"
+        "/img/**"
 };
 
 

@@ -5,3 +5,48 @@
 .stop-button {
     width: 100%;
 }
+
+.logo-dev {
+    height: 10vh;
+    margin-left: 25px;
+    
+}
+
+.red-shuttle {
+    font-size: 26px;
+    font-weight: 600;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.red-shuttle2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: red;
+    margin-bottom: 3rem;
+}
+
+
+.form-cap {
+    text-align: left;
+    color: gray;
+}
+
+.btn-long {
+    width: 200px;
+}
+
+.main-paper {
+    height: 90vh;
+}
+
+.main-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.py-8 {
+    padding-top: 12rem !important;
+    padding-bottom: 3rem !important;
+  }

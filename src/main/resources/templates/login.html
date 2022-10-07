@@ -1,54 +1,72 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>RMS login</title>
-        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    </head>
-    <body>
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-        <section class="vh-100" style="background-color: #508bfc;">
-            <div class="container py-5 h-100">
+<head>
+  <title>RMS login</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-danger bg-danger">
+    <span class="logo-dev">  <img class="logo-dev" th:src="@{/img/logo.png}"/></span>
+
+  </nav>
+    <div class="main-paper" style="background-color: black;">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-8">
+            <div class="main-content">
+            <img th:src="@{/img/main.jpg}"/>
+          </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="container py-8 h-100">
               <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="col-12">
                   <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
-          
-                      <h3 class="mb-5">Login to RMS</h3>
+                    <div class="card-body p-5">
+
+                      <h3 class="red-shuttle text-center">Shuttle System</h3>
+                      <h3 class="red-shuttle2 text-center">Control Panel</h3>
                       <form th:action="@{/login}" method="post">
-                      <div class="form-outline mb-4">
-                        <input type="text" name="username" class="form-control form-control-lg" />
-                        <label class="form-label" for="typeUsernameX-2">Username</label>
-                      </div>
-          
-                      <div class="form-outline mb-4">
-                        <input type="password" name="password" class="form-control form-control-lg" />
-                        <label class="form-label" for="typePasswordX-2">Password</label>
-                      </div>
-          
-                      <!-- Checkbox -->
-                      <div class="form-check d-flex justify-content-start mb-4">
-                        <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                        <label class="form-check-label" for="form1Example3"> Remember password </label>
-                      </div>
-          
-                      <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-          
-                      <hr class="my-4">
-                      <div th:if="${param.error}">
-                        Wrong username or password.
-                    </div>
-                    <div th:if="${param.logout}">
-                        You successfully logout.
-                    </div>
-            </form>
+                        <div class="form-outline mb-4">
+                          <input type="text" name="username" class="form-control form-control-lg" />
+                          <label class="form-label form-cap" for="typeUsernameX-2">Login</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                          <input type="password" name="password" class="form-control form-control-lg" />
+                          <label class="form-label form-cap" for="typePasswordX-2">Password</label>
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-start mb-4">
+                          <input class="form-check-input" type="checkbox" value="checked" id="form1Example3" />
+                          <label class="form-check-label" for="form1Example3"> Remember me</label>
+                        </div>
+                        <div class="text-center">
+                         <button class="btn btn-danger btn-lg btn-block btn-long" type="submit">Log in</button>
+                        </div>
+                       
+                        <div th:if="${param.error}">
+                          Wrong username or password.
+                        </div>
+                        <div th:if="${param.logout}">
+                          You successfully logout.
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-       
-    </body>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
 </html>

@@ -47,7 +47,7 @@ public class MqttService {
         });
     }
 
-    @Scheduled(fixedRate = 60 * 1000)
+ //   @Scheduled(fixedRate = 60 * 1000)
     public void sendLed() {
         Random random = new Random();
         int num = random.nextInt(4) + 1;
