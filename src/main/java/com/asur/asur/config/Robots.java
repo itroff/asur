@@ -15,9 +15,9 @@ public class Robots {
     private static List<Robot> robots;
     static {
         robots = new ArrayList<>();
-        robots.add(new Robot(1, "Spot", "/spot", RobotStatusEnum.NO_LINK));
-        robots.add(new Robot(2, "Bender", "/bender", RobotStatusEnum.ONLINE));
-        robots.add(new Robot(3, "Wall-E", "/walle", RobotStatusEnum.FAULT));
+       // robots.add(new Robot(1, "Spot", "/spot", RobotStatusEnum.NO_LINK));
+       // robots.add(new Robot(2, "Bender", "/bender", RobotStatusEnum.ONLINE));
+       // robots.add(new Robot(3, "Wall-E", "/walle", RobotStatusEnum.FAULT));
 
     }
 

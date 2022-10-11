@@ -1,5 +1,8 @@
 package com.asur.asur.services;
 
+import java.sql.Array;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
@@ -7,19 +10,30 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.services.mqqttListeners.BooleanListener;
+import com.asur.asur.services.mqqttListeners.KeepAliveListener;
 
 @Component
 public class MqttService {
 
-    public MqttService() {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MqttService.class);
+    public static final String prefix = "Robot/"; 
+
+    @Autowired
+    public MqttService(ConnectedRobots connectedRobots) {
         try {
-            subscribe("asur/keepAlive");
+            Mqtt.getInstance().subscribe(prefix + "+/asur/keepAlive", 0, new KeepAliveListener(connectedRobots));
+          // Mqtt.getInstance().subscribe("asur/keepAlive", 1, new BooleanListener());
+         //  Mqtt.getInstance().subscribe("asur/keepAlive2", 1, new BooleanListener());
         } catch (MqttException ex) {
             ex.printStackTrace();
         }
@@ -27,19 +41,23 @@ public class MqttService {
 
     public void subscribe(String name) throws MqttException {
         CountDownLatch receivedSignal = new CountDownLatch(10);
-        System.out.println("subscribe: " + name);
+        //System.out.println("subscribe: " + name);
+        LOGGER.info("subscribe: " + name);
         Mqtt.getInstance().subscribe(name, 1, (topic, msg) -> {
 
             byte[] payload = msg.getPayload();
            // System.out.println(payload.length);
             //MqttMessage
             
-            System.out.println("topic: " + topic + " msg: " + new String(payload));
+         //  System.out.println("topic: " + topic + " msg: " + new String(payload));
+            LOGGER.info("topic: " + topic + " msg: " + new String(payload));
             try {
                 Test.TestProto proto = Test.TestProto.parseFrom(payload);
-                System.out.println("Parsed: " + proto.toString());
+                LOGGER.info("topic: " + topic + " msg: " + new String(payload));
+                //System.out.println("Parsed: " + proto.toString());
             } catch (Exception ex) {
-                ex.printStackTrace();
+                LOGGER.error(ex.getMessage());
+                
             }
 
             receivedSignal.countDown();
@@ -60,8 +78,11 @@ public class MqttService {
         try {
             Mqtt.getInstance().publish("asur/led", msg);
         } catch (MqttException ex) {
-            System.out.println(ex.getStackTrace());
+           // System.out.println(ex.getStackTrace());
+            LOGGER.error(ex.getMessage());
         }
     }
+
+
 
 }
