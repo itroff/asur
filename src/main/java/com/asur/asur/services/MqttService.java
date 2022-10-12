@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Test.TestProto;
-import com.asur.asur.services.mqqttListeners.BooleanListener;
-import com.asur.asur.services.mqqttListeners.KeepAliveListener;
+import com.asur.asur.services.mqttListeners.BooleanListener;
+import com.asur.asur.services.mqttListeners.KeepAliveListener;
 
 @Component
 public class MqttService {
@@ -31,9 +31,7 @@ public class MqttService {
     @Autowired
     public MqttService(ConnectedRobots connectedRobots) {
         try {
-            Mqtt.getInstance().subscribe(prefix + "+/asur/keepAlive", 0, new KeepAliveListener(connectedRobots));
-          // Mqtt.getInstance().subscribe("asur/keepAlive", 1, new BooleanListener());
-         //  Mqtt.getInstance().subscribe("asur/keepAlive2", 1, new BooleanListener());
+            Mqtt.getInstance().subscribe(prefix + "+/info/keepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (MqttException ex) {
             ex.printStackTrace();
         }

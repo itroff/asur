@@ -1,4 +1,4 @@
-package com.asur.asur.services.mqqttListeners;
+package com.asur.asur.services.mqttListeners;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
