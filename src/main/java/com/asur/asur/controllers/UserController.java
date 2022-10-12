@@ -32,6 +32,7 @@ public class UserController {
         } else {
             model.addAttribute("role", "user");
         }
+        model.addAttribute("username", auth.getName());
        // Robot.RobotProto proto = RobotProto.newBuilder().setId(1).setRobotName("val123").build();
       
         model.addAttribute("robots", Robots.getRobots());

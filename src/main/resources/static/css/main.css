@@ -50,3 +50,25 @@
     padding-top: 12rem !important;
     padding-bottom: 3rem !important;
   }
+
+  .but-pad {
+    padding-right: 50px;
+    padding-left: 50px;
+    margin-top: 7px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .select-pad {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 7px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 70%;
+  }
+
+  .lbl-pad {
+    margin-top: 15px;
+
+  }
