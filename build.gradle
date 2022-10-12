@@ -41,6 +41,11 @@ dependencies {
 	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.14.0'
 	//compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.19'
 	implementation group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
+	implementation 'org.webjars:webjars-locator-core:0.30'
+	implementation 'org.webjars:sockjs-client:1.0.2'
+	implementation 'org.webjars:stomp-websocket:2.3.3'
+	implementation 'org.webjars:bootstrap:3.3.7'
+	implementation 'org.webjars:jquery:3.1.1-1'
 }
 
 tasks.named('test') {

@@ -66,4 +66,10 @@ public class UserController {
         return "led";
     }
     
+
+    @GetMapping("/ws")
+    public String ws() {
+        return "ws";
+    }
+    
 }
