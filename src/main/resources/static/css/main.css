@@ -72,3 +72,37 @@
     margin-top: 15px;
 
   }
+
+  .menuIcon > img {
+    width: 100%;
+  }
+
+  .menuIcon img:active {
+    transform: scale(0.9);
+  }
+
+  .header-area {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+  .form-left {
+    text-align: left;
+  }

@@ -52,3 +52,89 @@
 </div>
 </body>
 </html>
+
+
+
+<div>
+    <h2>Robotics management system main page</h2>
+    <div class="container-fluid">
+      <div class="row main-row">
+        <div class="col-xl-9">
+          <div class="card">
+            <div class="card-header">
+              Robots in System
+            </div>
+            <div class="card-body">
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Robot name</th>
+                    <th scope="col">Go to Control</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="robot: ${robots}">
+                    <div th:switch="${robot.status}">
+                      <span th:case="${T(com.asur.asur.models.RobotStatusEnum).ONLINE}">
+                        <td th:text="${robot.id}" class="table-success" />
+                        <td th:text="${robot.name}" class="table-success" />
+                        <td class="table-success"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}"
+                            role="button">Go to robot control</a>
+                        </td>
+                      </span>
+                      <span th:case="${T(com.asur.asur.models.RobotStatusEnum).FAULT}">
+                        <td th:text="${robot.id}" class="table-danger" />
+                        <td th:text="${robot.name}" class="table-danger" />
+                        <td class="table-danger"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}"
+                            role="button">Go to robot control</a>
+                        </td>
+                      </span>
+                      <span th:case="${T(com.asur.asur.models.RobotStatusEnum).NO_LINK}">
+                        <td th:text="${robot.id}" class="table-secondary" />
+                        <td th:text="${robot.name}" class="table-secondary" />
+                        <td class="table-secondary"><a class="btn btn-primary" th:href="@{/robot(id=${robot.id})}"
+                            role="button">Go to robot control</a>
+                        </td>
+                      </span>
+                      </td>
+                    </div>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3">
+          <div class="card">
+            <div class="card-header">
+              Emergency Stop
+            </div>
+            <div class="card-body">
+              <a href="/robots/stop" class="btn btn-danger btn-lg stop-button">Stop <br>robots!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row main-row">
+        <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            Working with Scenarios
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Upload scenario file</h5>
+            <p class="card-text">After upload valid scenario file page will be refresh</p>
+            <form action="/uploadScenario">
+              <div class="mb-3">
+                <label for="formFileLg" class="form-label">Scenario file:</label>
+                <input class="form-control form-control-lg" id="formFileLg" type="file">
+              </div>
+            <button type="submit" class="btn btn-primary">Upload file</button>
+          </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
