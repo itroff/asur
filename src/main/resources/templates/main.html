@@ -43,13 +43,13 @@
     <button class="btn btn-secondary btn-sm but-pad">Setting Mode</button>
   </nav>
 
-  <div class="container text-center">
+  <div class="container-fluid text-center">
     <div class="row">
       <div class="col-4">
         <div class="header-area">
           Shuttle Auto Control
         </div>
-        <div class="card">
+        <div class="card card-main">
           <div class="card-body">
             <form action="/uploadScenario" class="form-left">
               <label for="inputPassword5" class="header-area">Path</label>
@@ -81,44 +81,128 @@
             </div>
           </div>
         </div>
-          <div class="menuIcon" id="menuIcon">
-            <img th:src="@{/img/stop.png}" />
-          </div>
-        
+        <div class="menuIcon" id="menuIcon">
+          <img th:src="@{/img/stop.png}" />
+        </div>
+
       </div>
       <div class="col-4">
         <div class="header-area">
           Shuttle Manual Control
         </div>
-        <div class="card">
+        <div class="card card-main">
           <div class="card-body">
-            <label for="exampleFormControlInput1" class="form-label">Position #</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1">
-            <button type="submit" class="btn btn-secondary"><i class="arrow up"></i></button>
-            <button type="submit" class="btn btn-secondary"><i class="arrow down"></i></button>
-            <div class="menuIcon">
-              <img th:src="@{/img/arrow_up.png}" />
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+
+                  <label for="exampleFormControlInput1" class="form-label">Position #</label>
+                  <div class="col-6">
+                    <input type="text" class="form-control input-postion" id="exampleFormControlInput1" value="1">
+                  </div>
+                  <div class="col-6">
+                    <div class="row">
+                      <button type="submit" class="btn btn-secondary btn-postition"><i class="arrow up"></i></button>
+                    </div>
+                    <div class="row">
+                      <button type="submit" class="btn btn-secondary btn-postition"><i class="arrow down"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div>
+                  Move
+                </div>
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_up.png}" />
+                </div>
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_down.png}" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                Load Cargo
+              </div>
+              <div class="col-6">
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_right.png}" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_left.png}" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                Unload Cargo
+              </div>
+              <div class="col-6">
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_left.png}" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="menuIcon">
+                  <img th:src="@{/img/arrow_right.png}" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="btn-start">
+                <img th:src="@{/img/go_start.png}" />
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+    </div>
+    <div class="col-4">
+      <div class="header-area">
+        Connected shuttles
+      </div>
+      <div class="card card-main connected">
+        <div class="card-body">
+        </div>
+      </div>
+      <div class="header-area">
+        Connection Control
+      </div>
+      <div class="card card-main">
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-8">
+            <div class="header-area-no-margin">
+              MQTT Broker
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text connected-span">IP:</span>
+              <input type="text" class="form-control">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text connected-span">PORT:</span>
+              <input type="text" class="form-control">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text connected-span">ID:</span>
+              <input type="text" class="form-control">
+            </div>
+            
+            </div>
+            <div class="col-4">
+              <button type="submit" class="btn btn-success btn-connected">Connected</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-4">
-        <div class="header-area">
-          Connected shuttles
-        </div>
-        <div class="card">
-          <div class="card-body">
-          </div>
-        </div>
-        <div class="header-area">
-          Connection Control
-        </div>
-        <div class="card">
-          <div class="card-body">
-          </div>
-        </div>
-      </div>
     </div>
+  </div>
   </div>
 
 </body>

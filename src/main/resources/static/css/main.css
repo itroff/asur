@@ -74,7 +74,7 @@
   }
 
   .menuIcon > img {
-    width: 100%;
+    width: 60%;
   }
 
   .menuIcon img:active {
@@ -84,6 +84,8 @@
   .header-area {
     text-align: left;
     margin-top: 20px;
+    margin-left: 30px;
+    color: gray;
   }
 
   .arrow {
@@ -105,4 +107,47 @@
 
   .form-left {
     text-align: left;
+  }
+
+  .btn-postition {
+    width: 50px;
+    margin-top: 10px;
+    height: 100px;
+  }
+
+  .input-postion {
+    width: 50px;
+    height: 210px;
+    margin-top: 10px;
+    float: right;
+  }
+
+ .card-main {
+    margin-left: 30px;
+    margin-right: 30px;
+ }
+ .btn-start > img{
+    width: 83%;
+ }
+ .btn-start img:active {
+    transform: scale(0.9);
+  }
+ .connected {
+    height: 30vh;
+ }
+
+ .btn-connected {
+    height: 150px;
+    margin-top: 60px;
+ }
+
+ .header-area-no-margin {
+    text-align: left;
+    margin-top: 20px;
+    color: gray;
+    margin-bottom: 20px;
+  }
+
+  .connected-span {
+    width: 100px;
   }
