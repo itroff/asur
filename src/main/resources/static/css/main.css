@@ -151,3 +151,24 @@
   .connected-span {
     width: 100px;
   }
+
+  .dot {
+    height: 40px;
+    width: 40px;
+    border: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top:5px;
+  }
+
+  .dot-grey {
+    background-color: grey;
+  }
+
+  .dot-red {
+    background-color: red;
+  }
+
+  .dot-green {
+    background-color: green;
+  }

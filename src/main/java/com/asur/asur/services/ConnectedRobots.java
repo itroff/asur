@@ -1,6 +1,7 @@
 package com.asur.asur.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,9 @@ public class ConnectedRobots {
     //TODO multithread
     private Map<String, Robot> allRobots = new HashMap<>();
 
+    @Autowired
+    WebSocketSender webSocketSender;
+
     public void updateKeepAlive(String topicName) {
         try{
             String prefix = topicName.split("/")[1];
@@ -35,11 +39,14 @@ public class ConnectedRobots {
                 Robot rb = allRobots.get(prefix);
                 rb.setLastKeepAlive(LocalDateTime.now());
                 rb.setStatus(RobotStatusEnum.ONLINE);
+                webSocketSender.sendConnected(getAllRobots());
+                
             } else {
                 Robot rb = new Robot(0, topicName, prefix, 
                 RobotStatusEnum.ONLINE, LocalDateTime.now());
                 subscribeRobot(prefix);
                 allRobots.put(prefix, rb);
+                webSocketSender.sendConnected(getAllRobots());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             LOGGER.error("wrong parse from ID");
@@ -105,6 +112,10 @@ public class ConnectedRobots {
                 LOGGER.error(ex.getMessage());
             }
         }
+    }
+
+    public List<Robot> getAllRobots() {
+        return new ArrayList<Robot>(this.allRobots.values());
     }
     
 }

@@ -7,6 +7,11 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <link rel="stylesheet" th:href="@{/css/main.css}" />
   <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+  <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+  <script th:src="@{/js/app.js}"></script>
 </head>
 
 <body>
@@ -36,9 +41,11 @@
     <label class="ms-auto lbl-pad">Shuttle ID</label>
     <div class="form-group col-md-1">
       <select class="form-select select-pad" id="exampleFormControlSelect1" aria-label="Default select example">
-        <option>001</option>
+        <option>No active</option>
       </select>
+      
     </div>
+    <span id="robot-status" class="dot dot-grey"></span>
     <button class="btn btn-success btn-sm but-pad">Operating Mode</button>
     <button class="btn btn-secondary btn-sm but-pad">Setting Mode</button>
   </nav>
@@ -84,7 +91,6 @@
         <div class="menuIcon" id="menuIcon">
           <img th:src="@{/img/stop.png}" />
         </div>
-
       </div>
       <div class="col-4">
         <div class="header-area">
