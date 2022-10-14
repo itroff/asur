@@ -59,13 +59,18 @@ public class ConnectedRobots {
     public void updateStatus() {
         int robotsNum = allRobots.size();
         int robotsOnline = 0;
+        boolean changed = false;
         for (Map.Entry<String, Robot> entry : allRobots.entrySet()) {
             if (entry.getValue().getLastKeepAlive().plusSeconds(2).isBefore(LocalDateTime.now())) {
                 entry.getValue().setStatus(RobotStatusEnum.NO_LINK);
+                changed = true;
             }
             if (entry.getValue().getStatus() == RobotStatusEnum.ONLINE) {
                 robotsOnline++;
             }
+        }
+        if (changed) {
+            webSocketSender.sendConnected(getAllRobots());
         }
         LOGGER.info("allRobots: {}, onlineRobots: {}", robotsNum, robotsOnline);
     }

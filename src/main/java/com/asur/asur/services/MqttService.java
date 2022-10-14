@@ -17,8 +17,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
+import com.asur.asur.generated.model.Boolean;
 import com.asur.asur.generated.model.Test;
+import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.models.Robot;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.KeepAliveListener;
 
@@ -27,6 +30,9 @@ public class MqttService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MqttService.class);
     public static final String prefix = "Robot/"; 
+
+    @Autowired 
+    WebSocketSender webSocketSender;
 
     @Autowired
     public MqttService(ConnectedRobots connectedRobots) {
@@ -73,14 +79,34 @@ public class MqttService {
         System.out.println(proto.toString());
         //System.out.println(proto.toByteArray());
         //System.out.println(proto.toByteString());
-        try {
-            Mqtt.getInstance().publish("asur/led", msg);
-        } catch (MqttException ex) {
-           // System.out.println(ex.getStackTrace());
+        sendCmd("asur/led", msg);
+    }
+
+        
+    @Scheduled(fixedRate = 5000)
+    private void sendConfig() {
+        try{
+            webSocketSender.sendConfig(Mqtt.getConfig());
+        } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
         }
     }
 
+    public void sendBoolCmd(Robot robot, String cmd){
+        Boolean.BooleanProto proto = BooleanProto.newBuilder().setEnabled(true).build();
+        MqttMessage msg = new MqttMessage();
+        msg.setPayload(proto.toByteArray());
+        sendCmd(prefix + robot.getTopicId() + cmd, msg);
+    }
+
+    public void sendCmd(String topic, MqttMessage msg) {
+        try {
+            Mqtt.getInstance().publish(topic,  msg);
+            //TODO add to diagnostics
+        } catch(MqttException ex) {
+             LOGGER.error(ex.getMessage());
+         }
+    }
 
 
 }

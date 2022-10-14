@@ -7,6 +7,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.Robot;
 
 @Component
@@ -15,8 +16,11 @@ public class WebSocketSender {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    public void sendConnected(List<Robot> robots) throws Exception {
+    public void sendConnected(List<Robot> robots) {
         this.simpMessagingTemplate.convertAndSend("/topic/connected", robots);
     }
-    
+
+    public void sendConfig(MqttConfig config) {
+        this.simpMessagingTemplate.convertAndSend("/topic/mqtt-config-status", config);
+    }    
 }

@@ -10,9 +10,13 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import com.asur.asur.config.Mqtt;
+import com.asur.asur.models.CommandWebSocket;
+import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.ConnectedRobots;
+import com.asur.asur.services.MqttService;
 
 
 
@@ -24,12 +28,25 @@ public class WebSocketController {
     @Autowired
     ConnectedRobots connectedRobots;
 
+    @Autowired
+    MqttService mqttService;
+
     @MessageMapping("/robots")
     @SendTo("/topic/connected")
-    public List<Robot> greeting() throws Exception {
+    public List<Robot> connected() throws Exception {
         LOGGER.info("request connected");
-       // Thread.sleep(1000); // simulated delay
        return connectedRobots.getAllRobots();
-        //return new Robot(0, "r2d2", "213", RobotStatusEnum.ONLINE, LocalDateTime.now());
     }
+
+    @MessageMapping("/mqtt-config")
+    public void setMqttConfig(MqttConfig config) {
+        Mqtt.reconnect(config);
+    }
+
+    @MessageMapping("/cmd-bool")
+    public void setMqttConfig(CommandWebSocket cmd) {
+        mqttService.sendBoolCmd( cmd.getRobot(), cmd.getCmd());
+    }
+
+
 }

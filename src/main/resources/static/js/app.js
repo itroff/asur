@@ -1,5 +1,6 @@
 var stompClient = null;
 var availableRobots = [];
+var robot = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -44,13 +45,13 @@ function showConnected(message) {
     console.log(val);
 
     availableRobots = message;
-    if ((val == 'No active' && message.length > 0) ||val != 'No active' ) {
+    if ((val == 'No active' && message.length > 0) || val != 'No active') {
         $('#exampleFormControlSelect1')
             .find('option')
             .remove()
             .end();
-    //.append('<option value="whatever">text</option>')
-    //.val('whatever')
+        //.append('<option value="whatever">text</option>')
+        //.val('whatever')
     }
     var currentRobot = null;
     message.forEach(element => {
@@ -62,8 +63,8 @@ function showConnected(message) {
     });
 
     if (val == 'No active' && message.length > 0) {
-        console.log( availableRobots[0]);
-        console.log( availableRobots);
+        console.log(availableRobots[0]);
+        console.log(availableRobots);
         currentRobot = availableRobots[0];
         $("#exampleFormControlSelect1").val($("#exampleFormControlSelect1 option:first").val());
     } else if (message.length > 0) {
@@ -74,10 +75,10 @@ function showConnected(message) {
     } else {
         return;
     }
-
+    robot = currentRobot;
     switch (currentRobot.status) {
         case 'NO_LINK':
-            $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-gray");
+            $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-grey");
             break;
         case 'ONLINE':
             $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-green");
@@ -86,21 +87,23 @@ function showConnected(message) {
             $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-red");
             break;
     }
+    //TODO save in cookie chosen
+}
+
+function sendStop() {
+    stompClient.send("/app/cmd-bool", {}, JSON.stringify({'cmd' : '/action/stop/cmd', 'robot' : robot}));
+}
 
 
-        //TODO save in cookie chosen
-        //TODO insert list
-        //TODO get current
-        // $("#exampleFormControlSelect1").append("<tr><td>" + message + "</td></tr>");
-    }
 
-    $(function () {
-        /*   $("form").on('submit', function (e) {
-               e.preventDefault();
-           });
-           $( "#connect" ).click(function() { connect(); });
-           $( "#disconnect" ).click(function() { disconnect(); });
-           $( "#send" ).click(function() { sendName(); });
-           */
-        connect();
-    });
+$(function () {
+    $("#stop-btn").click(function () { sendStop(); });
+    /*   $("form").on('submit', function (e) {
+           e.preventDefault();
+       });
+       $( "#connect" ).click(function() { connect(); });
+       $( "#disconnect" ).click(function() { disconnect(); });
+       $( "#send" ).click(function() { sendName(); });
+       */
+    connect();
+});
