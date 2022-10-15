@@ -35,11 +35,14 @@ public class MqttService {
     WebSocketSender webSocketSender;
 
     @Autowired
-    public MqttService(ConnectedRobots connectedRobots) {
+    ConnectedRobots connectedRobots;
+    
+    public MqttService() {
         try {
             Mqtt.getInstance().subscribe(prefix + "+/info/keepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (MqttException ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.toString());
+           // ex.printStackTrace();
         }
     }
 
@@ -87,8 +90,9 @@ public class MqttService {
     private void sendConfig() {
         try{
             webSocketSender.sendConfig(Mqtt.getConfig());
+            Mqtt.getInstance().subscribe(prefix + "+/info/keepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (Exception ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.error(ex.toString());
         }
     }
 

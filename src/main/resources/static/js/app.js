@@ -23,7 +23,11 @@ function connect() {
         stompClient.subscribe('/topic/connected', function (connected) {
             showConnected(JSON.parse(connected.body));
         });
+        stompClient.subscribe('/topic/mqtt-conf', function (connected) {
+            showMqtt(JSON.parse(connected.body));
+        });
         sendRequestConnected();
+        stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());
     });
 }
 
@@ -90,14 +94,34 @@ function showConnected(message) {
     //TODO save in cookie chosen
 }
 
+function showMqtt(message) {
+    $("#mqtt-ip").val(message.ip);
+    $("#mqtt-port").val(message.port);
+    $("#mqtt-id").val(message.id);
+    if(message.connected) {
+        $("#mqtt-btn").text("Connected");
+        $("#mqtt-btn").removeClass("btn-success btn-danger").addClass("btn-success");
+    } else {
+        $("#mqtt-btn").text("Not connected");
+        $("#mqtt-btn").removeClass("btn-success btn-danger").addClass("btn-danger");
+    }
+
+}
+
 function sendStop() {
     stompClient.send("/app/cmd-bool", {}, JSON.stringify({'cmd' : '/action/stop/cmd', 'robot' : robot}));
+}
+
+function sendMqttConfig() {
+    stompClient.send("/app/mqtt-config", {}, JSON.stringify({'ip' : $("#mqtt-ip").val(), 'id' : $("#mqtt-id").val(),
+    'port' : $("#mqtt-port").val(), 'connected' : false}));
 }
 
 
 
 $(function () {
     $("#stop-btn").click(function () { sendStop(); });
+    $("#mqtt-btn").click(function () { sendMqttConfig(); });
     /*   $("form").on('submit', function (e) {
            e.preventDefault();
        });

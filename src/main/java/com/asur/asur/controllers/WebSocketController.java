@@ -35,7 +35,14 @@ public class WebSocketController {
     @SendTo("/topic/connected")
     public List<Robot> connected() throws Exception {
         LOGGER.info("request connected");
-       return connectedRobots.getAllRobots();
+        return connectedRobots.getAllRobots();
+    }
+
+    @MessageMapping("/mqtt-config-get")
+    @SendTo("/topic/mqtt-conf")
+    public MqttConfig getMqttConfig() throws Exception {
+        LOGGER.info("request mqtt");
+        return Mqtt.getConfig();
     }
 
     @MessageMapping("/mqtt-config")
@@ -45,7 +52,7 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-bool")
     public void setMqttConfig(CommandWebSocket cmd) {
-        mqttService.sendBoolCmd( cmd.getRobot(), cmd.getCmd());
+        mqttService.sendBoolCmd(cmd.getRobot(), cmd.getCmd());
     }
 
 
