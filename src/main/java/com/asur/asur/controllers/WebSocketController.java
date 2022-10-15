@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
+import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CommandWebSocket;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
@@ -54,14 +55,20 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-bool")
     public void cmdBool(CommandWebSocket cmd) {
-        LOGGER.info(cmd.toString());
+      //  LOGGER.info(cmd.toString());
         mqttService.sendBoolCmd(cmd.getRobot(), cmd.getCmd());
     }
 
     @MessageMapping("/cmd-pos")
     public void cmdPos(PosCmd cmd) {
-        LOGGER.info(cmd.toString());
+       // LOGGER.info(cmd.toString());
         mqttService.sendPosCmd(cmd);
+    }
+
+    @MessageMapping("/cmd-cargo")
+    public void cmdCargo(CargoCmd cmd) {
+        LOGGER.info(cmd.toString());
+        mqttService.sendCargoCmd(cmd);
     }
 
 

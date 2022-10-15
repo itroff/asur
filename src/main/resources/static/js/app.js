@@ -138,6 +138,10 @@ function sendMove(msg) {
     'distances' : [], 'robot': robot}));
 }
 
+function sendCargo(type, direction) {
+    stompClient.send("/app/cmd-cargo", {}, JSON.stringify({'type' : type, 'direction' :direction, 'robot': robot}));
+}
+
 
 $(function () {
     $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd'); });
@@ -154,13 +158,15 @@ $(function () {
     });
     $("#move-up-btn").click(function () { sendMove(false); });
     $("#move-down-btn").click(function () { sendMove(true); });
+    //first parameter unload - false, load - true. second param: false - left, true - right  
+    $("#load-left-btn").click(function () { sendCargo(true, false); });
+    $("#load-right-btn").click(function () { sendCargo(true, true); });
+    $("#unload-left-btn").click(function () { sendCargo(false, false); });
+    $("#unload-right-btn").click(function () { sendCargo(false, true); });
 
     /*   $("form").on('submit', function (e) {
            e.preventDefault();
        });
-       $( "#connect" ).click(function() { connect(); });
-       $( "#disconnect" ).click(function() { disconnect(); });
-       $( "#send" ).click(function() { sendName(); });
        */
     connect();
 });

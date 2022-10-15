@@ -22,10 +22,12 @@ import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.KeepAliveListener;
+import com.google.protobuf.GeneratedMessageV3;
 
 @Component
 public class MqttService {
@@ -79,12 +81,10 @@ public class MqttService {
         Random random = new Random();
         int num = random.nextInt(4) + 1;
         Test.TestProto proto = TestProto.newBuilder().setNumBlink(num).build();
-        MqttMessage msg = new MqttMessage();
-        msg.setPayload(proto.toByteArray());
         System.out.println(proto.toString());
         //System.out.println(proto.toByteArray());
         //System.out.println(proto.toByteString());
-        sendCmd("asur/led", msg);
+        sendCmd("asur/led", proto);
     }
 
         
@@ -100,21 +100,25 @@ public class MqttService {
 
     public void sendBoolCmd(Robot robot, String cmd){
         Boolean.BooleanProto proto = BooleanProto.newBuilder().setEnabled(true).build();
-        MqttMessage msg = new MqttMessage();
-        msg.setPayload(proto.toByteArray());
-        sendCmd(prefix + robot.getTopicId() + cmd, msg);
+        sendCmd(prefix + robot.getTopicId() + cmd, proto);
     }
 
     public void sendPosCmd(PosCmd cmd){
         com.asur.asur.generated.model.PosCmd.PosCmdProto proto = com.asur.asur.generated.model.PosCmd.PosCmdProto.newBuilder()
         .setDirection(cmd.isDirection()).setPosition(cmd.getPosition()).build();
-        MqttMessage msg = new MqttMessage();
-        msg.setPayload(proto.toByteArray());
-        sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/pos/cmd", msg);
+        sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/pos/cmd", proto);
     }
 
-    public void sendCmd(String topic, MqttMessage msg) {
+    public void sendCargoCmd(CargoCmd cmd){
+        com.asur.asur.generated.model.CargoCmd.CargoCmdProto proto = com.asur.asur.generated.model.CargoCmd.CargoCmdProto.newBuilder()
+        .setType(cmd.isType()).setDirection(cmd.isDirection()).build();
+        sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/cargo/cmd", proto);
+    }
+
+    public void sendCmd(String topic, GeneratedMessageV3 proto) {
         try {
+            MqttMessage msg = new MqttMessage();
+            msg.setPayload(proto.toByteArray());
             msg.setQos(2);
             Mqtt.getInstance().publish(topic,  msg);
             //TODO add to diagnostics
