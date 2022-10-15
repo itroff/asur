@@ -34,15 +34,5 @@ public class AdminController {
         return "robot";
     }
 
-    @GetMapping("/diagnostics")
-    public String diagnostics(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("role", "admin");
-        } else {
-            model.addAttribute("role", "user");
-        }
-        return "diagnostics";
-    }
-    
+
 }

@@ -21,7 +21,7 @@
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
         <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
             <span th:text="${username}"></span>
           </button>
           <ul class="dropdown-menu">
@@ -35,12 +35,12 @@
 
   </nav>
   <nav class="nav">
-    <button class="btn btn-dark but-pad">System</button>
+    <a class="btn btn-dark but-pad" href="/index" role="button">System</a>
     <button class="btn btn-secondary but-pad">Shuttle</button>
-    <button class="btn btn-secondary but-pad">Monitor</button>
+    <a class="btn btn-secondary but-pad" href="/diagnostics" role="button">Monitor</a>
     <label class="ms-auto lbl-pad">Shuttle ID</label>
     <div class="form-group col-md-1">
-      <select class="form-select select-pad" id="exampleFormControlSelect1" aria-label="Default select example">
+      <select class="form-select select-pad" id="exampleFormControlSelect1">
         <option>No active</option>
       </select>
       

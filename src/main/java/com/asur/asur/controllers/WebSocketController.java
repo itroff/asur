@@ -14,11 +14,13 @@ import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CommandWebSocket;
+import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.ConnectedRobots;
+import com.asur.asur.services.Diagnostics;
 import com.asur.asur.services.MqttService;
 
 
@@ -30,6 +32,9 @@ public class WebSocketController {
 
     @Autowired
     ConnectedRobots connectedRobots;
+
+    @Autowired
+    Diagnostics diagnostics;
 
     @Autowired
     MqttService mqttService;
@@ -69,6 +74,12 @@ public class WebSocketController {
     public void cmdCargo(CargoCmd cmd) {
         LOGGER.info(cmd.toString());
         mqttService.sendCargoCmd(cmd);
+    }
+
+    @MessageMapping("/diagnostics")
+    @SendTo("/topic/diagnostics")
+    public List<DiagnosticElem> diagnostics() {
+        return diagnostics.getDiagnostics();
     }
 
 

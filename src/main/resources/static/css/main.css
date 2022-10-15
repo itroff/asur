@@ -126,6 +126,11 @@
     margin-left: 30px;
     margin-right: 30px;
  }
+
+ .card-diagnostics {
+  margin-top: 20px;
+  height: 80vh;
+ }
  .btn-start > img{
     width: 83%;
  }

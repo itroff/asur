@@ -23,6 +23,7 @@ import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
 import com.asur.asur.models.CargoCmd;
+import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.services.mqttListeners.BooleanListener;
@@ -40,6 +41,9 @@ public class MqttService {
 
     @Autowired
     ConnectedRobots connectedRobots;
+
+    @Autowired
+    Diagnostics diagnostics;
     
     public MqttService() {
         try {
@@ -121,7 +125,7 @@ public class MqttService {
             msg.setPayload(proto.toByteArray());
             msg.setQos(2);
             Mqtt.getInstance().publish(topic,  msg);
-            //TODO add to diagnostics
+            diagnostics.addElem(new DiagnosticElem(proto.toString(), "Server", topic));
         } catch(MqttException ex) {
              LOGGER.error(ex.getMessage());
          }

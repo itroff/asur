@@ -63,7 +63,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests((requests) -> requests
 				.antMatchers(PUBLIC_MATCHERS).permitAll()
                 .antMatchers("/robot").hasAnyRole("ADMIN")
-                .antMatchers("/diagnostics").hasAnyRole("ADMIN")
+                .antMatchers("/diagnostics").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/index").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)

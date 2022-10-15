@@ -7,6 +7,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
@@ -24,4 +25,8 @@ public class WebSocketSender {
     public void sendConfig(MqttConfig config) {
         this.simpMessagingTemplate.convertAndSend("/topic/mqtt-config-status", config);
     }    
+
+    public void sendDiagnostic(DiagnosticElem elem) {
+        this.simpMessagingTemplate.convertAndSend("/topic/diagnostics", List.of(elem));
+    }
 }

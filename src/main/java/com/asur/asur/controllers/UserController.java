@@ -33,10 +33,8 @@ public class UserController {
             model.addAttribute("role", "user");
         }
         model.addAttribute("username", auth.getName());
-       // Robot.RobotProto proto = RobotProto.newBuilder().setId(1).setRobotName("val123").build();
-      
-        model.addAttribute("robots", Robots.getRobots());
-        model.addAttribute("validScenario", false);
+     //   model.addAttribute("robots", Robots.getRobots());
+     //   model.addAttribute("validScenario", false);
         return "main";
     }
 
@@ -46,6 +44,18 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/diagnostics")
+    public String diagnostics(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("role", "admin");
+        } else {
+            model.addAttribute("role", "user");
+        }
+        model.addAttribute("username", auth.getName());
+        return "diagnostics";
+    }
+    
 
     @GetMapping("/led")
     public String led(Model model, @RequestParam(name="num", required = false) int param) {
