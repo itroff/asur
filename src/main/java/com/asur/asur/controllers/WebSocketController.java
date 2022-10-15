@@ -52,6 +52,7 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-bool")
     public void setMqttConfig(CommandWebSocket cmd) {
+        LOGGER.info(cmd.toString());
         mqttService.sendBoolCmd(cmd.getRobot(), cmd.getCmd());
     }
 

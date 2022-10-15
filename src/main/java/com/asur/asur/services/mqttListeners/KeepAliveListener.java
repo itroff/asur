@@ -38,8 +38,8 @@ public class KeepAliveListener implements IMqttMessageListener {
         }
 
         public void run() {
-            LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
-            "], Topic[ "+ topic + "],  Message [" + message +"] ");
+        //    LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
+        //    "], Topic[ "+ topic + "],  Message [" + message +"] ");
             robots.updateKeepAlive(topic);
             //System.out.println();
         }
@@ -47,8 +47,8 @@ public class KeepAliveListener implements IMqttMessageListener {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        LOGGER.info("asdsad");
-        LOGGER.info(connectedRobots.toString());
+     //   LOGGER.info("asdsad");
+     //   LOGGER.info(connectedRobots.toString());
         pool.execute(new MessageHandler(topic, message, connectedRobots));
    /*      LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
         "], Topic[ "+ topic + "],  Message [" + message +"] ");

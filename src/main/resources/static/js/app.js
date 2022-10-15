@@ -44,9 +44,9 @@ function sendRequestConnected() {
 }
 
 function showConnected(message) {
-    console.log(message);
+   // console.log(message);
     var val = $("#exampleFormControlSelect1 :selected").text();
-    console.log(val);
+    //console.log(val);
 
     availableRobots = message;
     if ((val == 'No active' && message.length > 0) || val != 'No active') {
@@ -58,17 +58,22 @@ function showConnected(message) {
         //.val('whatever')
     }
     var currentRobot = null;
+    $('#list-connected').empty();
     message.forEach(element => {
-        console.log(element);
+       // console.log(element);
         $("#exampleFormControlSelect1").append("<option>" + element.topicId + "</option>");
         if (val == element.topicId) {
             currentRobot = element;
         }
+        if (element.status == 'ONLINE') {
+            $("#list-connected").append('<li>' + element.topicId + '</li>');
+
+        }
     });
 
     if (val == 'No active' && message.length > 0) {
-        console.log(availableRobots[0]);
-        console.log(availableRobots);
+      //  console.log(availableRobots[0]);
+      //  console.log(availableRobots);
         currentRobot = availableRobots[0];
         $("#exampleFormControlSelect1").val($("#exampleFormControlSelect1 option:first").val());
     } else if (message.length > 0) {
@@ -118,10 +123,23 @@ function sendMqttConfig() {
 }
 
 
+function newRobot(name) {
+    console.log(name);
+    availableRobots.forEach(element => {
+        if(element.topicId === name){
+            robot = element;
+            return;
+        }
+     });
+}
+
 
 $(function () {
     $("#stop-btn").click(function () { sendStop(); });
     $("#mqtt-btn").click(function () { sendMqttConfig(); });
+    $('select').on('change', function() {
+        newRobot(this.value);
+      });
     /*   $("form").on('submit', function (e) {
            e.preventDefault();
        });
