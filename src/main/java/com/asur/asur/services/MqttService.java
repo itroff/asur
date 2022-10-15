@@ -20,7 +20,9 @@ import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Boolean;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
+import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.KeepAliveListener;
@@ -103,8 +105,17 @@ public class MqttService {
         sendCmd(prefix + robot.getTopicId() + cmd, msg);
     }
 
+    public void sendPosCmd(PosCmd cmd){
+        com.asur.asur.generated.model.PosCmd.PosCmdProto proto = com.asur.asur.generated.model.PosCmd.PosCmdProto.newBuilder()
+        .setDirection(cmd.isDirection()).setPosition(cmd.getPosition()).build();
+        MqttMessage msg = new MqttMessage();
+        msg.setPayload(proto.toByteArray());
+        sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/pos/cmd", msg);
+    }
+
     public void sendCmd(String topic, MqttMessage msg) {
         try {
+            msg.setQos(2);
             Mqtt.getInstance().publish(topic,  msg);
             //TODO add to diagnostics
         } catch(MqttException ex) {

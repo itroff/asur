@@ -102,16 +102,16 @@
               <div class="col-6">
                 <div class="row">
 
-                  <label for="exampleFormControlInput1" class="form-label">Position #</label>
+                  <label for="position-input" class="form-label">Position #</label>
                   <div class="col-6">
-                    <input type="text" class="form-control input-postion" id="exampleFormControlInput1" value="1">
+                    <input type="text" class="form-control input-postion" readonly="readonly" id="position-input" value="1">
                   </div>
                   <div class="col-6">
                     <div class="row">
-                      <button type="submit" class="btn btn-secondary btn-postition"><i class="arrow up"></i></button>
+                      <button type="submit" class="btn btn-secondary btn-postition" id="arrow-up-btn"><i class="arrow up"></i></button>
                     </div>
                     <div class="row">
-                      <button type="submit" class="btn btn-secondary btn-postition"><i class="arrow down"></i></button>
+                      <button type="submit" class="btn btn-secondary btn-postition" id="arrow-down-btn"><i class="arrow down"></i></button>
                     </div>
                   </div>
                 </div>
@@ -120,10 +120,10 @@
                 <div>
                   Move
                 </div>
-                <div class="menuIcon">
+                <div class="menuIcon" id="move-up-btn">
                   <img th:src="@{/img/arrow_up.png}" />
                 </div>
-                <div class="menuIcon">
+                <div class="menuIcon" id="move-down-btn">
                   <img th:src="@{/img/arrow_down.png}" />
                 </div>
               </div>
@@ -159,7 +159,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="btn-start">
+              <div class="btn-start" id="start-pos-btn">
                 <img th:src="@{/img/go_start.png}" />
               </div>
             </div>

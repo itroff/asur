@@ -113,8 +113,8 @@ function showMqtt(message) {
 
 }
 
-function sendStop() {
-    stompClient.send("/app/cmd-bool", {}, JSON.stringify({'cmd' : '/action/stop/cmd', 'robot' : robot}));
+function sendBoolean(msg) {
+    stompClient.send("/app/cmd-bool", {}, JSON.stringify({'cmd' : msg, 'robot' : robot}));
 }
 
 function sendMqttConfig() {
@@ -133,13 +133,28 @@ function newRobot(name) {
      });
 }
 
+function sendMove(msg) {
+    stompClient.send("/app/cmd-pos", {}, JSON.stringify({'direction' : msg, 'position' : parseInt($('#position-input').val(), 10), 
+    'distances' : [], 'robot': robot}));
+}
+
 
 $(function () {
-    $("#stop-btn").click(function () { sendStop(); });
+    $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd'); });
     $("#mqtt-btn").click(function () { sendMqttConfig(); });
     $('select').on('change', function() {
         newRobot(this.value);
       });
+    $("#start-pos-btn").click(function () { sendBoolean('/action/start/cmd'); });
+    $("#arrow-up-btn").click(function () {
+        $('#position-input').get(0).value++;
+    });
+    $("#arrow-down-btn").click(function () {
+        $('#position-input').get(0).value--;
+    });
+    $("#move-up-btn").click(function () { sendMove(false); });
+    $("#move-down-btn").click(function () { sendMove(true); });
+
     /*   $("form").on('submit', function (e) {
            e.preventDefault();
        });

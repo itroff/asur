@@ -8,6 +8,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import com.asur.asur.models.MqttConfig;
+import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 
 @Component
