@@ -195,3 +195,89 @@
   .card-top {
     margin-top: 20px;
   }
+
+  .form-range-new {
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* Chromium */
+    height: 120px;
+    padding: 0 5px;
+  }
+
+  .finger {
+    width: 70px;
+    height: 70px;
+    background-color: gray;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    margin-top: 8px;
+    display: table;
+  }
+
+  .finger > span {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .finger-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .label-finger-range {
+    border-radius: 5px;
+    border-color: gray;
+    border: 1px solid gray;
+    padding: 5px;
+  }
+  
+  .menuIconRobot {
+    width: 80px;
+    height: 80px;
+  }
+  .menuIconRobot > img {
+    width: 100%;
+  }
+
+  .menuIconRobot img:active {
+    transform: scale(0.9);
+  }
+
+
+  .range-wid {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .menuIconSide {
+    width: 80px;
+    height: 140px;
+  }
+
+  .menuIconSide > img {
+    width: 100%;
+  }
+
+
+  .menuIconSide img:active {
+    transform: scale(0.9);
+  }
+
+  .finger-slim {
+    width: 80px;
+    height: 40px;
+    background-color: gray;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    margin-top: 8px;
+    display: table;
+  }
+
+  .card-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+  }

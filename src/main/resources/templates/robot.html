@@ -44,7 +44,7 @@
       <select class="form-select select-pad" id="exampleFormControlSelect1">
         <option>No active</option>
       </select>
-      
+
     </div>
     <span id="robot-status" class="dot dot-grey"></span>
     <button class="btn btn-success btn-sm but-pad" id="operating-btn">Operating Mode</button>
@@ -89,81 +89,273 @@
                 <label for="maxSpeed" class="col-sm-2 col-form-label">mm</label>
               </div>
               <div class="row">
-              <div class="col">
-                <button type="submit" class="btn btn-primary but-pad">Read</button>
-              </div>
+                <div class="col">
+                  <button type="submit" class="btn btn-primary but-pad">Read</button>
+                </div>
 
-              <div class="col">
-                <button type="submit" class="btn btn-primary but-pad">Save</button>
+                <div class="col">
+                  <button type="submit" class="btn btn-primary but-pad">Save</button>
+                </div>
               </div>
-            </div>
             </form>
           </div>
         </div>
       </div>
-      <div class="col-7">
+      <div class="col-6">
         <div class="row">
           <div class="col-6">
             <div class="card card-main card-top">
               <div class="header-area-bold">
-               Front left finger
+                Front left finger
               </div>
               <div class="card-body">
-
+                <div class="row">
+                  <div class="col">
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span> Finger up</span>
+                      </div>
+                    </div>
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span>Finger down</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="menuIconRobot" id="motor-up-left-finger-btn">
+                      <img th:src="@{/img/motor_up.png}" />
+                    </div>
+                    <div class="menuIconRobot" id="motor-down-left-finger-btn">
+                      <img th:src="@{/img/motor_down.png}" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="range-wid">
+                      <label for="front-left-range" class="form-label label-finger-range">80</label>
+                      <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
+                        id="front-left-range">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card card-main card-top">
               <div class="header-area-bold">
-               Rear left finger
+                Rear left finger
               </div>
               <div class="card-body">
-
+                <div class="row">
+                  <div class="col">
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span> Finger up</span>
+                      </div>
+                    </div>
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span>Finger down</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="menuIconRobot" id="motor-up-rear-left-finger-btn">
+                      <img th:src="@{/img/motor_up.png}" />
+                    </div>
+                    <div class="menuIconRobot" id="motor-down-rear-left-finger-btn">
+                      <img th:src="@{/img/motor_down.png}" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="range-wid">
+                      <label for="rear-left-range" class="form-label label-finger-range">80</label>
+                      <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
+                        id="rear-left-range">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="col-6">
             <div class="card card-main card-top">
               <div class="header-area-bold">
-               Front right finger
+                Front right finger
               </div>
               <div class="card-body">
-
+                <div class="row">
+                  <div class="col">
+                    <div class="range-wid">
+                      <label for="front-right-range" class="form-label label-finger-range">80</label>
+                      <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
+                        id="front-right-range">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="menuIconRobot" id="motor-up-front-right-finger-btn">
+                      <img th:src="@{/img/motor_up.png}" />
+                    </div>
+                    <div class="menuIconRobot" id="motor-down-front-right-finger-btn">
+                      <img th:src="@{/img/motor_down.png}" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span> Finger up</span>
+                      </div>
+                    </div>
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span>Finger down</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="card card-main card-top">
               <div class="header-area-bold">
-               Rear right finger
+                Rear right finger
               </div>
               <div class="card-body">
-
+                <div class="row">
+                  <div class="col">
+                    <div class="range-wid">
+                      <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                      <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
+                        id="rear-right-range">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="menuIconRobot" id="motor-up-rear-right-finger-btn">
+                      <img th:src="@{/img/motor_up.png}" />
+                    </div>
+                    <div class="menuIconRobot" id="motor-down-rear-right-finger-btn">
+                      <img th:src="@{/img/motor_down.png}" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span> Finger up</span>
+                      </div>
+                    </div>
+                    <div class="finger-wrapper">
+                      <div class="finger">
+                        <span>Finger down</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="card card-main card-top">
+        <div class="row card-padding">
+          <div class="card card-top">
             <div class="header-area-bold">
-             Load Handling Device
+              Load Handling Device
             </div>
             <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <div class="finger-wrapper">
+                    <div class="finger-slim">
+                      <span>LHD front left</span>
+                    </div>
+                  </div>
+                  <div class="finger-wrapper">
+                    <div class="finger-slim">
+                      <span>LHD rear left</span>
+                    </div>
+                  </div>
+                  <div class="finger-wrapper">
+                    <div class="finger-slim">
+                      <span>Cargo left</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="finger-wrapper">
+                    <div class="menuIconSide" id="motor-left-btn">
+                      <img th:src="@{/img/motor_left.png}" />
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-4">
+                    <div class="range-wid">
+                      <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                      <input type="range" class="form-range-new" min="0" max="100" value="80"
+                        id="rear-right-range">
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div class="finger-wrapper">
+                      <div class="menuIconSide" id="motor-right-btn">
+                        <img th:src="@{/img/motor_right.png}" />
+                      </div>
+                    </div>
+                  </div>
+                    <div class="col-2">
+                      <div class="finger-wrapper">
+                        <div class="finger-slim">
+                          <span>LHD front right</span>
+                        </div>
+                      </div>
+                      <div class="finger-wrapper">
+                        <div class="finger-slim">
+                          <span>LHD rear right</span>
+                        </div>
+                      </div>
+                      <div class="finger-wrapper">
+                        <div class="finger-slim">
+                          <span>Cargo right</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+          </div>
+          <div class="col-2">
+            <div class="card card-main card-top">
+              <div class="header-area-bold">
+                Platform
+              </div>
+              <div class="card-body">
+                <div class="finger-wrapper">
+                  <div class="finger">
+                    <span>Nav sensor 1</span>
+                  </div>
+                </div>
+                <div class="finger-wrapper">
+                  <div class="menuIconRobot" id="motor-up-nav-sensor-btn">
+                    <img th:src="@{/img/motor_up.png}" />
+                  </div>
+                </div>
+                <div class="range-wid">
+                  <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                  <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
+                    id="rear-right-range">
+                </div>
+                <div class="finger-wrapper">
+                  <div class="menuIconRobot" id="motor-down-nav-sensor-btn">
+                    <img th:src="@{/img/motor_down.png}" />
+                  </div>
+                </div>
+                <div class="finger-wrapper">
+                  <div class="finger">
+                    <span>Nav sensor 2</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-      <div class="col-1">
-        <div class="card card-main card-top">
-          <div class="header-area-bold">
-           Platform
-          </div>
-          <div class="card-body">
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </body>
 
