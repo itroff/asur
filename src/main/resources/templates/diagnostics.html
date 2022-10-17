@@ -37,7 +37,7 @@
   </nav>
   <nav class="nav">
     <a class="btn btn-secondary but-pad" href="/index" role="button">System</a>
-    <button class="btn btn-secondary but-pad">Shuttle</button>
+    <a class="btn btn-secondary but-pad" href="/robot" role="button">Shuttle</a>
     <a class="btn btn-dark but-pad" href="/diagnostics" role="button">Monitor</a>
     <label class="ms-auto lbl-pad">Shuttle ID</label>
     <div class="form-group col-md-1">
@@ -47,8 +47,8 @@
       
     </div>
     <span id="robot-status" class="dot dot-grey"></span>
-    <button class="btn btn-success btn-sm but-pad">Operating Mode</button>
-    <button class="btn btn-secondary btn-sm but-pad">Setting Mode</button>
+    <button class="btn btn-success btn-sm but-pad" id="operating-btn">Operating Mode</button>
+    <button class="btn btn-secondary btn-sm but-pad" id="setting-btn">Setting Mode</button>
   </nav>
   <div class="card card-main card-diagnostics">
     <div class="card-body" id="card-insert">
