@@ -7,82 +7,49 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <link rel="stylesheet" th:href="@{/css/main.css}" />
   <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+  <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+  <script th:src="@{/js/app-robots.js}"></script>
+  <script th:src="@{/js/app-robot.js}"></script>
 </head>
 
 <body>
 
+  <nav class="navbar navbar-expand-lg navbar-danger bg-danger">
+    <span class="logo-dev"> <img class="logo-dev" th:src="@{/img/logo.png}" /></span>
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
+            <span th:text="${username}"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li> <a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand navbar-dark" href="#">
-      <center>RMS</center>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/index">Main page<span class="sr-only"></span></a>
-        </li>
-        <li th:if="${role} == 'admin'" class="nav-item">
-          <a class="nav-link" href="/robot">Robot control center</a>
-        </li>
-        <li th:if="${role} == 'admin'" class="nav-item">
-          <a class="nav-link" href="/diagnostics">Diagnostics</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
-      </ul>
-    </div>
+        </div>
+        </div>
+      </li>
+    </ul>
+
   </nav>
-<div>
-    <h2>Robot control page: <span th:text="${robot.name}"/> </h2>
-    <div class="card">
-        <div class="card-header">
-          Move robot
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Command for moving robot</h5>
-          <form action="/sendCmd">
-            <div class="mb-3">
-                <label for="inputDistance" class="form-label">Distance</label>
-                <input type="number" class="form-control" id="inputDistance">
-            </div>
-            <div class="form-check form-switch">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Back</label>
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Forward</label>
-              </div>
-          <button type="submit" class="btn btn-primary">Send Command</button>
-        </form>
-        </div>
-      </div>
-
-      <div class="card main-row">
-        <div class="card-header">
-          Cargo command
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Command for cargo open/close</h5>
-          <form action="/sendCmd">
-            <div class="mb-3">
-                <label for="inputCargo" class="form-label">Cargo param</label>
-                <input type="number" class="form-control" id="inputCargo">
-            </div>
-            <div class="form-check form-switch">
-                <label class="form-check-label" for="switchCargo">Load</label>
-                <input class="form-check-input" type="checkbox" id="switchCargo">
-                <label class="form-check-label" for="switchCargo">Unload</label>
-              </div>
-          <button type="submit" class="btn btn-primary">Send Command</button>
-        </form>
-        </div>
-      </div>
-</div>
+  <nav class="nav">
+    <a class="btn btn-secondary but-pad" href="/index" role="button">System</a>
+    <a class="btn btn-dark but-pad" href="/robot" role="button">Shuttle</a>
+    <a class="btn btn-secondary but-pad" href="/diagnostics" role="button">Monitor</a>
+    <label class="ms-auto lbl-pad">Shuttle ID</label>
+    <div class="form-group col-md-1">
+      <select class="form-select select-pad" id="exampleFormControlSelect1">
+        <option>No active</option>
+      </select>
+      
+    </div>
+    <span id="robot-status" class="dot dot-grey"></span>
+    <button class="btn btn-success btn-sm but-pad">Operating Mode</button>
+    <button class="btn btn-secondary btn-sm but-pad">Setting Mode</button>
+  </nav>
 
 
 </body>

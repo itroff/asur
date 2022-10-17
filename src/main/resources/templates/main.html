@@ -11,6 +11,7 @@
   <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
   <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+  <script th:src="@{/js/app-robots.js}"></script>
   <script th:src="@{/js/app.js}"></script>
 </head>
 
@@ -36,7 +37,7 @@
   </nav>
   <nav class="nav">
     <a class="btn btn-dark but-pad" href="/index" role="button">System</a>
-    <button class="btn btn-secondary but-pad">Shuttle</button>
+    <a class="btn btn-secondary but-pad" href="/robot" role="button">Shuttle</a>
     <a class="btn btn-secondary but-pad" href="/diagnostics" role="button">Monitor</a>
     <label class="ms-auto lbl-pad">Shuttle ID</label>
     <div class="form-group col-md-1">

@@ -55,6 +55,18 @@ public class UserController {
         model.addAttribute("username", auth.getName());
         return "diagnostics";
     }
+
+    @GetMapping("/robot")
+    public String robot(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("role", "admin");
+        } else {
+            model.addAttribute("role", "user");
+        }
+        model.addAttribute("username", auth.getName());
+        return "robot";
+    }
     
 
     @GetMapping("/led")

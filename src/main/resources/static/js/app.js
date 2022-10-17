@@ -1,19 +1,19 @@
 var stompClient = null;
-var availableRobots = [];
+/*var availableRobots = [];
 var robot = null;
-
+*/
 function connect() {
     var socket = new SockJS('/client-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/connected', function (connected) {
+  /*      stompClient.subscribe('/topic/connected', function (connected) {
             showConnected(JSON.parse(connected.body));
-        });
+        });*/
         stompClient.subscribe('/topic/mqtt-conf', function (connected) {
             showMqtt(JSON.parse(connected.body));
         });
-        sendRequestConnected();
+     //   sendRequestConnected();
         stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());
     });
 }
@@ -25,7 +25,7 @@ function disconnect() {
     setConnected(false);
     console.log("Disconnected");
 }
-
+/*
 function sendRequestConnected() {
     stompClient.send("/app/robots", {}, JSON.stringify());
 }
@@ -62,6 +62,7 @@ function showConnected(message) {
       //  console.log(availableRobots[0]);
       //  console.log(availableRobots);
         currentRobot = availableRobots[0];
+        localStorage.setItem('robot', currentRobot.topicId);
         $("#exampleFormControlSelect1").val($("#exampleFormControlSelect1 option:first").val());
     } else if (message.length > 0) {
         $("select option").filter(function () {
@@ -85,7 +86,7 @@ function showConnected(message) {
     }
     //TODO save in cookie chosen
 }
-
+*/
 function showMqtt(message) {
     $("#mqtt-ip").val(message.ip);
     $("#mqtt-port").val(message.port);
@@ -109,7 +110,7 @@ function sendMqttConfig() {
     'port' : $("#mqtt-port").val(), 'connected' : false}));
 }
 
-
+/*
 function newRobot(name) {
     console.log(name);
     availableRobots.forEach(element => {
@@ -119,7 +120,7 @@ function newRobot(name) {
         }
      });
 }
-
+*/
 function sendMove(msg) {
     stompClient.send("/app/cmd-pos", {}, JSON.stringify({'direction' : msg, 'position' : parseInt($('#position-input').val(), 10), 
     'distances' : [], 'robot': robot}));
@@ -133,9 +134,10 @@ function sendCargo(type, direction) {
 $(function () {
     $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd'); });
     $("#mqtt-btn").click(function () { sendMqttConfig(); });
-    $('select').on('change', function() {
+ /*   $('select').on('change', function() {
+        localStorage.setItem('robot', this.value);
         newRobot(this.value);
-      });
+      });*/
     $("#start-pos-btn").click(function () { sendBoolean('/action/start/cmd'); });
     $("#arrow-up-btn").click(function () {
         $('#position-input').get(0).value++;

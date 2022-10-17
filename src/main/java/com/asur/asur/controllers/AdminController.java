@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.asur.asur.config.Robots;
 import com.asur.asur.models.Robot;
 
-@Controller
+//@Controller
 public class AdminController {
 
-    @GetMapping("/robot")
+  /*  @GetMapping("/robot")
     public String robot(Model model, @RequestParam(name="id", required = false) int param) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
@@ -34,5 +34,5 @@ public class AdminController {
         return "robot";
     }
 
-
+*/ 
 }
