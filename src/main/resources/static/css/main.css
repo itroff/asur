@@ -181,3 +181,17 @@
   #list-connected {
     text-align: left;
   }
+
+  .header-area-bold {
+    font-weight: 600;
+
+  }
+
+  .card-full {
+    margin-top: 20px;
+    height: 70vh;
+  }
+
+  .card-top {
+    margin-top: 20px;
+  }

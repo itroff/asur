@@ -86,12 +86,12 @@ function showConnected(message) {
     }
     //TODO save in cookie chosen
 }
-
+/*
 window.onbeforeunload = function () {
     stompClientRobots.onclose = function () { }; // disable onclose handler first
     stompClientRobots.close();
 };
-
+*/
 
 $(function () {
     var modeLocal = localStorage.getItem('mode');
