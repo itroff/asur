@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.models.Robot;
+import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.FloatDataListener;
@@ -28,6 +29,8 @@ public class ConnectedRobots {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectedRobots.class);
     //TODO multithread
     private Map<String, Robot> allRobots = new HashMap<>();
+
+    private Map<Robot, List<RobotParam>> params = new HashMap<>();
 
     @Autowired
     WebSocketSender webSocketSender;
@@ -46,6 +49,7 @@ public class ConnectedRobots {
                 RobotStatusEnum.ONLINE, LocalDateTime.now());
                 subscribeRobot(prefix);
                 allRobots.put(prefix, rb);
+                params.put(rb, new ArrayList<RobotParam>());
                 webSocketSender.sendConnected(getAllRobots());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -121,6 +125,27 @@ public class ConnectedRobots {
 
     public List<Robot> getAllRobots() {
         return new ArrayList<Robot>(this.allRobots.values());
+    }
+
+    public void updateParam(String robotName, RobotParam param) {
+
+        Robot rb = allRobots.get(robotName);
+        boolean finded = false;
+        for(RobotParam pr : params.get(rb)){
+            if (param.getParamName().equals(pr.getParamName())) {
+                pr = param;
+                
+                LOGGER.info("update param: {}", param);
+                return;
+            }
+        }
+        LOGGER.info("add new param: {}", param);
+        params.get(rb).add(param);
+    }
+
+    public List<RobotParam> getParamsForRobot(String robotName) {
+        Robot rb = allRobots.get(robotName);
+        return params.get(rb);
     }
     
 }

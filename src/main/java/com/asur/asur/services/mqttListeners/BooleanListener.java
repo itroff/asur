@@ -9,7 +9,13 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.asur.asur.generated.model.Boolean;
+import com.asur.asur.generated.model.Boolean.BooleanProto;
+import com.asur.asur.models.BooleanParam;
+import com.asur.asur.services.ConnectedRobots;
 
 //@Component
 public class BooleanListener implements  IMqttMessageListener{
@@ -17,6 +23,9 @@ public class BooleanListener implements  IMqttMessageListener{
     private static final Logger LOGGER = LoggerFactory.getLogger(BooleanListener.class);
 
     private ExecutorService pool = Executors.newFixedThreadPool(10);
+
+    @Autowired
+    ConnectedRobots connectedRobots;
 
     class MessageHandler implements Runnable {
         MqttMessage message;
@@ -30,7 +39,15 @@ public class BooleanListener implements  IMqttMessageListener{
         public void run() {
             LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
             "], Topic[ "+ topic + "],  Message [" + message +"] ");
-            //System.out.println();
+            String prefix = topic.split("/")[1];
+            try{
+                Boolean.BooleanProto proto = BooleanProto.parseFrom(message.getPayload());
+                String paramName = topic.split("/")[4];
+                connectedRobots.updateParam(prefix, new BooleanParam(paramName, proto.getEnabled()));
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+                
+            }
         }
     }
 

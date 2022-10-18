@@ -18,6 +18,7 @@ import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
+import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.ConnectedRobots;
 import com.asur.asur.services.Diagnostics;
@@ -82,5 +83,11 @@ public class WebSocketController {
         return diagnostics.getDiagnostics();
     }
 
+    @MessageMapping("/params")
+    @SendTo("/topic/params")
+    public List<RobotParam> params(String robotName) {
+        LOGGER.info(robotName);
+        return connectedRobots.getParamsForRobot(robotName);
+    }
 
 }
