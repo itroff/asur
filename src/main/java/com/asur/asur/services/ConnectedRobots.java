@@ -89,8 +89,8 @@ public class ConnectedRobots {
         try {
             Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/error", 1, new ErrorListener(this));
             Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/mode/res", 1, new BooleanListener(this));
-            //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/pos/res", 1, new CmdResListener());
-            //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/cargo/res", 1, new CmdResListener());
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/pos/res", 1, new MotorResListener(this)/*new CmdResListener()*/);
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/cargo/res", 1, new MotorResListener(this)/*new CmdResListener()*/);
             Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/start/res", 1, new BooleanListener(this));
             Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/stop/res", 1, new BooleanListener(this));
         } catch (MqttException ex) {
@@ -111,7 +111,7 @@ public class ConnectedRobots {
         "/motor/fng_r_r/res", "/motor/fng_f_l/res", "/motor/fng_f_r/res"); 
         for (String topic : topicsMotorsRes) {
             try {
-                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new MotorResListener());
+                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new MotorResListener(this));
             } catch (MqttException ex) {
                 LOGGER.error(ex.getMessage());
             }
@@ -121,7 +121,7 @@ public class ConnectedRobots {
         "/param/lhd_ext/res"); 
         for (String topic : topicsMotorsRes) {
             try {
-                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new FloatDataListener());
+                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new FloatDataListener(this));
             } catch (MqttException ex) {
                 LOGGER.error(ex.getMessage());
             }

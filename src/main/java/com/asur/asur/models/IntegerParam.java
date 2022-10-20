@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class IntegerParam extends RobotParam {
     private int value;
     public IntegerParam(String name, int value){
