@@ -20,6 +20,7 @@ import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.mqttListeners.BooleanListener;
+import com.asur.asur.services.mqttListeners.ErrorListener;
 import com.asur.asur.services.mqttListeners.FloatDataListener;
 import com.asur.asur.services.mqttListeners.MotorResListener;
 
@@ -86,7 +87,7 @@ public class ConnectedRobots {
 
     public void subscribeRobot(String id) {
         try {
-            //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/error", 1, new ErrorListener());
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/error", 1, new ErrorListener(this));
             Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/mode/res", 1, new BooleanListener(this));
             //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/pos/res", 1, new CmdResListener());
             //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/cargo/res", 1, new CmdResListener());

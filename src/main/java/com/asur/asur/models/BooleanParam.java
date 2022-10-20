@@ -18,10 +18,11 @@ public class BooleanParam extends RobotParam{
 
     @Override
     public void updateParam(RobotParam param){
-        if(param.getParamName().equals(this.getParamName()));
-        BooleanParam p = (BooleanParam)param;
-        setValue(p.isValue());
-        this.setDt(p.getDt());
+        if(param.getParamName().equals(this.getParamName())) {
+            BooleanParam p = (BooleanParam)param;
+            setValue(p.isValue());
+            this.setDt(p.getDt());
+        }
     }
     
 }
