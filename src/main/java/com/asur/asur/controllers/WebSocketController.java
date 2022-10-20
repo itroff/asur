@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.models.CargoCmd;
+import com.asur.asur.models.CmdParam;
 import com.asur.asur.models.CommandWebSocket;
 import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MotorCmd;
@@ -82,6 +83,12 @@ public class WebSocketController {
     public void cmdMotor(MotorCmd cmd) {
         LOGGER.info(cmd.toString());
         mqttService.sendMotorCmd(cmd);
+    }
+
+    @MessageMapping("/cmd-param")
+    public void cmdParam(CmdParam cmd) {
+        LOGGER.info(cmd.toString());
+        mqttService.sendParamCmd(cmd);
     }
 
     @MessageMapping("/diagnostics")

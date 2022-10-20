@@ -18,11 +18,13 @@ import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Boolean;
+import com.asur.asur.generated.model.FloatData;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
 import com.asur.asur.models.CargoCmd;
+import com.asur.asur.models.CmdParam;
 import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MotorCmd;
 import com.asur.asur.models.PosCmd;
@@ -126,6 +128,12 @@ public class MqttService {
         com.asur.asur.generated.model.MotorCmd.MotorCmdProto proto = com.asur.asur.generated.model.MotorCmd.MotorCmdProto.newBuilder()
         .setDirection(cmd.isDirection()).setSpeed(cmd.getSpeed()).build();
         sendCmd(prefix + cmd.getRobot().getTopicId() + "/motor/"+ cmd.getTopic() + "/cmd", proto);
+    }
+
+    public void sendParamCmd(CmdParam cmd){
+        FloatData.FloatDataProto proto = FloatData.FloatDataProto.newBuilder()
+        .setData(cmd.getValue()).build();
+        sendCmd(prefix + cmd.getRobot().getTopicId() + "/param/"+ cmd.getTopic() + "/set", proto);
     }
 
     public void sendCmd(String topic, GeneratedMessageV3 proto) {
