@@ -15,6 +15,7 @@ import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CommandWebSocket;
 import com.asur.asur.models.DiagnosticElem;
+import com.asur.asur.models.MotorCmd;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
@@ -75,6 +76,12 @@ public class WebSocketController {
     public void cmdCargo(CargoCmd cmd) {
         LOGGER.info(cmd.toString());
         mqttService.sendCargoCmd(cmd);
+    }
+
+    @MessageMapping("/cmd-motor")
+    public void cmdMotor(MotorCmd cmd) {
+        LOGGER.info(cmd.toString());
+        mqttService.sendMotorCmd(cmd);
     }
 
     @MessageMapping("/diagnostics")

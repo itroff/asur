@@ -24,6 +24,7 @@ import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
 import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.DiagnosticElem;
+import com.asur.asur.models.MotorCmd;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.services.mqttListeners.BooleanListener;
@@ -119,6 +120,12 @@ public class MqttService {
         com.asur.asur.generated.model.CargoCmd.CargoCmdProto proto = com.asur.asur.generated.model.CargoCmd.CargoCmdProto.newBuilder()
         .setType(cmd.isType()).setDirection(cmd.isDirection()).build();
         sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/cargo/cmd", proto);
+    }
+
+    public void sendMotorCmd(MotorCmd cmd){
+        com.asur.asur.generated.model.MotorCmd.MotorCmdProto proto = com.asur.asur.generated.model.MotorCmd.MotorCmdProto.newBuilder()
+        .setDirection(cmd.isDirection()).setSpeed(cmd.getSpeed()).build();
+        sendCmd(prefix + cmd.getRobot().getTopicId() + "/motor/"+ cmd.getTopic() + "/cmd", proto);
     }
 
     public void sendCmd(String topic, GeneratedMessageV3 proto) {

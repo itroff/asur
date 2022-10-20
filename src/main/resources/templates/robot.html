@@ -123,16 +123,16 @@
                     </div>
                   </div>
                   <div class="col">
-                    <div class="menuIconRobot" id="motor-up-left-finger-btn">
+                    <div class="menuIconRobot" id="front-up-left-finger-btn">
                       <img th:src="@{/img/motor_up.png}" />
                     </div>
-                    <div class="menuIconRobot" id="motor-down-left-finger-btn">
+                    <div class="menuIconRobot" id="front-down-left-finger-btn">
                       <img th:src="@{/img/motor_down.png}" />
                     </div>
                   </div>
                   <div class="col">
                     <div class="range-wid">
-                      <label for="front-left-range" class="form-label label-finger-range">80</label>
+                      <label for="front-left-range" class="form-label label-finger-range" id="front-left-range-label">80</label>
                       <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
                         id="front-left-range">
                     </div>
@@ -168,7 +168,7 @@
                   </div>
                   <div class="col">
                     <div class="range-wid">
-                      <label for="rear-left-range" class="form-label label-finger-range">80</label>
+                      <label for="rear-left-range" class="form-label label-finger-range" id="rear-left-range-label">80</label>
                       <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
                         id="rear-left-range">
                     </div>
@@ -186,7 +186,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="range-wid">
-                      <label for="front-right-range" class="form-label label-finger-range">80</label>
+                      <label for="front-right-range" class="form-label label-finger-range" id="front-right-range-label">80</label>
                       <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
                         id="front-right-range">
                     </div>
@@ -222,7 +222,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="range-wid">
-                      <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                      <label for="rear-right-range" class="form-label label-finger-range" id="rear-right-range-label">80</label>
                       <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
                         id="rear-right-range">
                     </div>
@@ -278,21 +278,21 @@
                 </div>
                 <div class="col-2">
                   <div class="finger-wrapper">
-                    <div class="menuIconSide" id="motor-left-btn">
+                    <div class="menuIconSide" id="motor-left-handling-btn">
                       <img th:src="@{/img/motor_left.png}" />
                     </div>
                   </div>
                 </div>
                   <div class="col-4">
                     <div class="range-wid">
-                      <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                      <label for="rear-right-range" class="form-label label-finger-range" id="load-handling-range-label">80</label>
                       <input type="range" class="form-range-new" min="0" max="100" value="80"
-                        id="rear-right-range">
+                        id="load-handling-range">
                     </div>
                   </div>
                   <div class="col-2">
                     <div class="finger-wrapper">
-                      <div class="menuIconSide" id="motor-right-btn">
+                      <div class="menuIconSide" id="motor-right-handling-btn">
                         <img th:src="@{/img/motor_right.png}" />
                       </div>
                     </div>
@@ -337,9 +337,9 @@
                   </div>
                 </div>
                 <div class="range-wid">
-                  <label for="rear-right-range" class="form-label label-finger-range">80</label>
+                  <label for="rear-right-range" class="form-label label-finger-range" id="platform-range-label">80</label>
                   <input type="range" orient="vertical" class="form-range-new" min="0" max="100" value="80"
-                    id="rear-right-range">
+                    id="platform-range">
                 </div>
                 <div class="finger-wrapper">
                   <div class="menuIconRobot" id="motor-down-nav-sensor-btn">

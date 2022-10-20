@@ -7,6 +7,7 @@ var role = 'admin';
 function connectRobots() {
     var socket = new SockJS('/client-websocket');
     stompClientRobots = Stomp.over(socket);
+    stompClientRobots.debug = null
     stompClientRobots.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClientRobots.subscribe('/topic/connected', function (connected) {
