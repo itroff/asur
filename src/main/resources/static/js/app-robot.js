@@ -7,13 +7,18 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/params', function (msg) {
             var message = JSON.parse(msg.body);
-            console.log(message);
+        //    console.log(message);
             message.forEach(element => {
-                console.log(element);
+          //      console.log(element);
+                if(element.value) {
+                    $("#" + element.paramName).addClass("finger-success");
+                } else {
+                    $("#" + element.paramName).removeClass("finger-success");
+                }
             });
         });
         setInterval(() => {
-            console.log("timeout");
+            //console.log("timeout");
             if(robot !== null) {
                 stompClient.send("/app/params", {}, robot.topicId);
             }

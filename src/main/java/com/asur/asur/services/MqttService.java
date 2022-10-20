@@ -37,17 +37,19 @@ public class MqttService {
     public static final String prefix = "Robot/"; 
 
     @Autowired 
-    WebSocketSender webSocketSender;
+    private WebSocketSender webSocketSender;
+
+   // @Autowired
+   private ConnectedRobots connectedRobots;
 
     @Autowired
-    ConnectedRobots connectedRobots;
+    private Diagnostics diagnostics;
 
     @Autowired
-    Diagnostics diagnostics;
-    
-    public MqttService() {
+    public MqttService(ConnectedRobots connectedRobots) {
+        this.connectedRobots = connectedRobots;
         try {
-            Mqtt.getInstance().subscribe(prefix + "+/info/keepAlive", 0, new KeepAliveListener(connectedRobots));
+            Mqtt.getInstance().subscribe(prefix + "+/info/KeepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (MqttException ex) {
             LOGGER.error(ex.toString());
            // ex.printStackTrace();

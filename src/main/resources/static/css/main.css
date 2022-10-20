@@ -214,6 +214,22 @@
     display: table;
   }
 
+
+  .finger-slim {
+    width: 80px;
+    height: 40px;
+    background-color: gray;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    margin-top: 8px;
+    display: table;
+  }
+
+  .finger-success {
+    background-color: green;
+  }
+
   .finger > span {
     display: table-cell;
     vertical-align: middle;
@@ -266,16 +282,6 @@
     transform: scale(0.9);
   }
 
-  .finger-slim {
-    width: 80px;
-    height: 40px;
-    background-color: gray;
-    text-align: center;
-    color: white;
-    border-radius: 5px;
-    margin-top: 8px;
-    display: table;
-  }
 
   .card-padding {
     padding-left: 40px;

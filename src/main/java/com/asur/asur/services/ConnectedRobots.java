@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
+import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
@@ -34,6 +35,9 @@ public class ConnectedRobots {
 
     @Autowired
     WebSocketSender webSocketSender;
+
+    @Autowired
+    private Diagnostics diagnostics;
 
     public void updateKeepAlive(String topicName) {
         try{
@@ -83,20 +87,20 @@ public class ConnectedRobots {
     public void subscribeRobot(String id) {
         try {
             //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/error", 1, new ErrorListener());
-            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/mode/res", 1, new BooleanListener());
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/info/mode/res", 1, new BooleanListener(this));
             //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/pos/res", 1, new CmdResListener());
             //Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/cargo/res", 1, new CmdResListener());
-            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/start/res", 1, new BooleanListener());
-            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/stop/res", 1, new BooleanListener());
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/start/res", 1, new BooleanListener(this));
+            Mqtt.getInstance().subscribe(MqttService.prefix + id + "/action/stop/res", 1, new BooleanListener(this));
         } catch (MqttException ex) {
             LOGGER.error(ex.getMessage());
         }
         List<String> topicsSensor = Arrays.asList( "Nav1", "Nav2", "LHD_R_L", "LHD_R_R", "LHD_F_L", "LHD_F_R", "Cargo_L", 
-        "Cargo_R", "FNG_R_L_D", "FNG_R_L_U","FNG_R_R_D","FNG_R_L_U2","FNG_F_L_D","FNG_F_L_U","FNG_F_R_D","FNG_F_L_U2");
+        "Cargo_R", "FNG_R_L_D", "FNG_R_L_U","FNG_R_R_D","FNG_R_R_U","FNG_F_L_D","FNG_F_L_U","FNG_F_R_D","FNG_F_R_U");
         String prefix = "/info/sensor/";
         for (String topic : topicsSensor) {
             try {
-                Mqtt.getInstance().subscribe(MqttService.prefix + id + prefix + topic, 0, new BooleanListener());
+                Mqtt.getInstance().subscribe(MqttService.prefix + id + prefix + topic, 0, new BooleanListener(this));
             } catch (MqttException ex) {
                 LOGGER.error(ex.getMessage());
             }
@@ -127,15 +131,17 @@ public class ConnectedRobots {
         return new ArrayList<Robot>(this.allRobots.values());
     }
 
-    public void updateParam(String robotName, RobotParam param) {
+    public void updateParam(String robotName, RobotParam param, DiagnosticElem elem) {
 
         Robot rb = allRobots.get(robotName);
         boolean finded = false;
-        for(RobotParam pr : params.get(rb)){
+        diagnostics.addElem(elem);
+        List<RobotParam> lst = params.get(rb);
+        for(RobotParam pr : lst){
             if (param.getParamName().equals(pr.getParamName())) {
-                pr = param;
-                
-                LOGGER.info("update param: {}", param);
+                //pr = param;
+                pr.updateParam(param);
+                LOGGER.info("update param: {}", pr);
                 return;
             }
         }

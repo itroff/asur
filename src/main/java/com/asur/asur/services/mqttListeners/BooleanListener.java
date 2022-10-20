@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.asur.asur.generated.model.Boolean;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.models.BooleanParam;
+import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.services.ConnectedRobots;
 
 //@Component
@@ -24,8 +25,7 @@ public class BooleanListener implements  IMqttMessageListener{
 
     private ExecutorService pool = Executors.newFixedThreadPool(10);
 
-    @Autowired
-    ConnectedRobots connectedRobots;
+    private ConnectedRobots connectedRobots;
 
     class MessageHandler implements Runnable {
         MqttMessage message;
@@ -37,13 +37,15 @@ public class BooleanListener implements  IMqttMessageListener{
         }
 
         public void run() {
-            LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
-            "], Topic[ "+ topic + "],  Message [" + message +"] ");
+          //  LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
+        //    "], Topic[ "+ topic + "],  Message [" + message +"] ");
             String prefix = topic.split("/")[1];
             try{
                 Boolean.BooleanProto proto = BooleanProto.parseFrom(message.getPayload());
                 String paramName = topic.split("/")[4];
-                connectedRobots.updateParam(prefix, new BooleanParam(paramName, proto.getEnabled()));
+                LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
+                connectedRobots.updateParam(prefix, new BooleanParam(paramName, proto.getEnabled()),
+                new DiagnosticElem(proto.toString(), topic, "Server"));
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
                 
@@ -54,6 +56,10 @@ public class BooleanListener implements  IMqttMessageListener{
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         pool.execute(new MessageHandler(topic, message));
+    }
+
+    public BooleanListener(ConnectedRobots connectedRobots) {
+        this.connectedRobots = connectedRobots;
     }
 
    /*  @Override

@@ -14,6 +14,10 @@ public class RobotParam {
     private String paramName;
     private LocalDateTime dt;
 
+    public void updateParam(RobotParam param){
+        System.out.println("RobotParam");
+    }
+
 
     
 }
