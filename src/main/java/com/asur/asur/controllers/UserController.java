@@ -22,7 +22,7 @@ import com.asur.asur.generated.model.Test.TestProto;
 public class UserController {
 
 
-    @GetMapping("/index")
+    @GetMapping({"/index", "/"})
     public String index(Model model) {
        // model.addAttribute("val", "mer");
         //TODO role as param
