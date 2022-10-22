@@ -189,7 +189,7 @@
 
   .card-full {
     margin-top: 20px;
-    height: 70vh;
+    height: 97%;
   }
 
   .card-top {
@@ -403,4 +403,9 @@
     padding-top: 0px;
     padding-bottom: 5px;
   }
+
+.bottom-params {
+  width: 100%;
+  margin-bottom: 30px;
+}
   
