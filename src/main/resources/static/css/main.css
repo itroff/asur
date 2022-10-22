@@ -409,3 +409,7 @@
   margin-bottom: 30px;
 }
   
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.4;
+}

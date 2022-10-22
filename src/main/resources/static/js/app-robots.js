@@ -100,9 +100,11 @@ $(function () {
         if (modeLocal == 'operate') {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
+            $("#main-robot").addClass("disabled-div");
         } else if (modeLocal == 'setting') {
             $("#operating-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#setting-btn").removeClass("btn-secondary").addClass("btn-success");
+            $("#main-robot").removeClass("disabled-div");
         }
     }
 
@@ -112,6 +114,7 @@ $(function () {
         if (role == 'admin') {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
+            $("#main-robot").addClass("disabled-div");
             mode = 'operate';
             localStorage.setItem('mode', mode);
         }
@@ -120,6 +123,7 @@ $(function () {
         if (role == 'admin') {
             $("#operating-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#setting-btn").removeClass("btn-secondary").addClass("btn-success");
+            $("#main-robot").removeClass("disabled-div");
             mode = 'setting';
             localStorage.setItem('mode', mode);
         }
