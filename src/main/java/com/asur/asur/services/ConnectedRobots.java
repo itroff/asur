@@ -121,7 +121,7 @@ public class ConnectedRobots {
         // topics for floatdata
         List<String> topicsFloatData = Arrays.asList( "/param/move_vel/res","/param/lhd_time/res", "/param/fng_vel/res",
         "/param/lhd_ext/res"); 
-        for (String topic : topicsMotorsRes) {
+        for (String topic : topicsFloatData) {
             try {
                 Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new FloatDataListener(this));
             } catch (MqttException ex) {

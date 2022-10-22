@@ -23,7 +23,7 @@ public class FloatDataListener implements IMqttMessageListener{
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        connectedRobots.updateParam(topic, null, null);
+        //connectedRobots.updateParam(topic, null, null);
         String prefix = topic.split("/")[1];
         try{
             FloatData.FloatDataProto proto = FloatDataProto.parseFrom(message.getPayload());

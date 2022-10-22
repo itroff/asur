@@ -24,7 +24,7 @@ public class MotorResListener implements IMqttMessageListener{
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        connectedRobots.updateParam(topic, null, null);
+        //connectedRobots.updateParam(topic, null, null);
         String prefix = topic.split("/")[1];
         try{
             MotorRes.MotorResProto proto = MotorResProto.parseFrom(message.getPayload());
@@ -37,7 +37,7 @@ public class MotorResListener implements IMqttMessageListener{
             
         }
     
-        LOGGER.info("asdsad");
+     //   LOGGER.info("asdsad");
      //   LOGGER.info(connectedRobots.toString());
      //   pool.execute(new MessageHandler(topic, message, connectedRobots));
     }
