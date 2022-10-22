@@ -259,8 +259,12 @@
     transform: scale(0.9);
   }
 
-
   .range-wid {
+    margin-top:10px;
+  }
+
+
+  .range-wid-horizontal {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -393,5 +397,10 @@
   }
   input[type=range]:focus::-ms-fill-upper {
     background: #E8E8E8;
+  }
+  
+  .card-top > .card-body {
+    padding-top: 0px;
+    padding-bottom: 5px;
   }
   
