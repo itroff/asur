@@ -81,7 +81,7 @@ function showConnected(message) {
         case 'ONLINE':
             $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-green");
             break;
-        case 'ERROR':
+        case 'FAULT':
             $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-red");
             break;
     }

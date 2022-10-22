@@ -46,7 +46,9 @@ public class ConnectedRobots {
             if (allRobots.containsKey(prefix)) {
                 Robot rb = allRobots.get(prefix);
                 rb.setLastKeepAlive(LocalDateTime.now());
-                rb.setStatus(RobotStatusEnum.ONLINE);
+                if (rb.getStatus().equals(RobotStatusEnum.NO_LINK)) {
+                    rb.setStatus(RobotStatusEnum.ONLINE);
+                }
                 webSocketSender.sendConnected(getAllRobots());
                 
             } else {
@@ -153,6 +155,16 @@ public class ConnectedRobots {
     public List<RobotParam> getParamsForRobot(String robotName) {
         Robot rb = allRobots.get(robotName);
         return params.get(rb);
+    }
+
+    public void updateRobotError(String topic, int errorCode) {
+        Robot rb = allRobots.get(topic);
+        if (errorCode == 0) {
+            rb.setStatus(RobotStatusEnum.ONLINE);
+        } else {
+            rb.setStatus(RobotStatusEnum.FAULT);
+        }
+        webSocketSender.sendConnected(getAllRobots());
     }
     
 }

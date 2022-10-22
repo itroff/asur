@@ -17,7 +17,7 @@ public class ErrorListener implements IMqttMessageListener {
 
     private ExecutorService pool = Executors.newFixedThreadPool(10);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BooleanListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorListener.class);
 
     private ConnectedRobots connectedRobots;
 
@@ -40,6 +40,7 @@ public class ErrorListener implements IMqttMessageListener {
                 LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
                 connectedRobots.updateParam(prefix, new IntegerParam(paramName, proto.getError()),
                 new DiagnosticElem(proto.toString(), topic, "Server"));
+                connectedRobots.updateRobotError(prefix, proto.getError());
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
                 
