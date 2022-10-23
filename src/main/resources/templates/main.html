@@ -6,7 +6,6 @@
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <link rel="stylesheet" th:href="@{/css/main.css}" />
-  <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
@@ -19,21 +18,20 @@
 
   <nav class="navbar navbar-expand-lg navbar-danger bg-danger">
     <span class="logo-dev"> <img class="logo-dev" th:src="@{/img/logo.png}" /></span>
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
-        <div class="dropdown">
-          <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
-            <span th:text="${username}"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li> <a class="dropdown-item" href="/logout">Logout</a></li>
-          </ul>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav ms-auto">
 
-        </div>
-        </div>
+      <li class="nav-item dropdown drop-margin">
+          <button class="btn btn-danger nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span th:text="${username}"></span>
+            <input type="hidden" id="role-id" th:value="${role}"/>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
       </li>
     </ul>
-
+  </div>
   </nav>
   <nav class="nav">
     <a class="btn btn-dark but-pad" href="/index" role="button">System</a>

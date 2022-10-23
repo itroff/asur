@@ -34,8 +34,8 @@ function showMqtt(message) {
 
 }
 
-function sendBoolean(msg) {
-    stompClient.send("/app/cmd-bool", {}, JSON.stringify({'cmd' : msg, 'robot' : robot}));
+function sendBoolean(msg, value) {
+    stompClient.send("/app/cmd-bool", {}, JSON.stringify({'topic' : msg, 'robot' : robot, "value": value}));
 }
 
 function sendMqttConfig() {
@@ -54,9 +54,9 @@ function sendCargo(type, direction) {
 
 
 $(function () {
-    $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd'); });
+    $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd', true); });
     $("#mqtt-btn").click(function () { sendMqttConfig(); });
-    $("#start-pos-btn").click(function () { sendBoolean('/action/start/cmd'); });
+    $("#start-pos-btn").click(function () { sendBoolean('/action/start/cmd', true); });
     $("#arrow-up-btn").click(function () {
         $('#position-input').get(0).value++;
     });

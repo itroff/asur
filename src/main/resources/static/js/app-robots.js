@@ -2,7 +2,7 @@ var stompClientRobots = null;
 var availableRobots = [];
 var robot = null;
 var mode = 'operate';
-var role = 'admin';
+var role = 'user';
 
 function connectRobots() {
     var socket = new SockJS('/client-websocket');
@@ -19,6 +19,10 @@ function connectRobots() {
 
 function sendRequestConnected() {
     stompClientRobots.send("/app/robots", {}, JSON.stringify());
+}
+
+function sendMode(mode) {
+    stompClientRobots.send("/app/mode", {}, JSON.stringify());
 }
 
 function newRobot(name) {
@@ -60,8 +64,6 @@ function showConnected(message) {
     });
 
     if (val == 'No active' && message.length > 0) {
-        //  console.log(availableRobots[0]);
-        //  console.log(availableRobots);
         currentRobot = availableRobots[0];
         localStorage.setItem('robot', currentRobot.topicId);
         $("#exampleFormControlSelect1").val($("#exampleFormControlSelect1 option:first").val());
@@ -85,17 +87,20 @@ function showConnected(message) {
             $("#robot-status").removeClass("dot-grey dot-red dot-green").addClass("dot-red");
             break;
     }
-    //TODO save in cookie chosen
 }
-/*
-window.onbeforeunload = function () {
-    stompClientRobots.onclose = function () { }; // disable onclose handler first
-    stompClientRobots.close();
-};
-*/
+
+function sendBoolean2(msg, value) {
+    if(role==='admin') {
+        stompClient.send("/app/cmd-bool", {}, JSON.stringify({'topic' : msg, 'robot' : robot, "value": value}));
+    }
+}
 
 $(function () {
     var modeLocal = localStorage.getItem('mode');
+    role = $("#role-id").val();
+    if (role === 'user') {
+        modeLocal = 'operate';
+    }
     if (modeLocal !== undefined) {
         if (modeLocal == 'operate') {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
@@ -109,14 +114,13 @@ $(function () {
     }
 
     $("#operating-btn").click(function () {
-        //TODO check role
-
         if (role == 'admin') {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#main-robot").addClass("disabled-div");
             mode = 'operate';
             localStorage.setItem('mode', mode);
+            sendBoolean2("/info/mode/cmd", false);
         }
     });
     $("#setting-btn").click(function () {
@@ -126,6 +130,7 @@ $(function () {
             $("#main-robot").removeClass("disabled-div");
             mode = 'setting';
             localStorage.setItem('mode', mode);
+            sendBoolean2("/info/mode/cmd", true);
         }
     });
     $('select').on('change', function () {

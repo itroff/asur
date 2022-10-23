@@ -23,6 +23,7 @@ import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.models.BoolCmd;
 import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CmdParam;
 import com.asur.asur.models.DiagnosticElem;
@@ -107,9 +108,9 @@ public class MqttService {
         }
     }
 
-    public void sendBoolCmd(Robot robot, String cmd){
-        Boolean.BooleanProto proto = BooleanProto.newBuilder().setEnabled(true).build();
-        sendCmd(prefix + robot.getTopicId() + cmd, proto);
+    public void sendBoolCmd(BoolCmd cmd){
+        Boolean.BooleanProto proto = BooleanProto.newBuilder().setEnabled(cmd.isValue()).build();
+        sendCmd(prefix + cmd.getRobot().getTopicId() + cmd.getTopic(), proto);
     }
 
     public void sendPosCmd(PosCmd cmd){

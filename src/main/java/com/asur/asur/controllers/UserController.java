@@ -22,53 +22,48 @@ import com.asur.asur.generated.model.Test.TestProto;
 public class UserController {
 
 
-    @GetMapping({"/index", "/"})
-    public String index(Model model) {
-       // model.addAttribute("val", "mer");
-        //TODO role as param
+    private String getRole() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("role", "admin");
-        } else {
-            model.addAttribute("role", "user");
-        }
-        model.addAttribute("username", auth.getName());
-     //   model.addAttribute("robots", Robots.getRobots());
+            return "admin";
+        } 
+        return "user";
+    }
+
+    private String getUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
+
+    @GetMapping({"/index", "/"})
+    public String index(Model model) {
+        model.addAttribute("role", getRole());
+        model.addAttribute("username", getUsername());
      //   model.addAttribute("validScenario", false);
         return "main";
     }
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("val", "mer");
         return "login";
     }
 
     @GetMapping("/diagnostics")
     public String diagnostics(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("role", "admin");
-        } else {
-            model.addAttribute("role", "user");
-        }
-        model.addAttribute("username", auth.getName());
+
+        model.addAttribute("role", getRole());
+        model.addAttribute("username", getUsername());
         return "diagnostics";
     }
 
     @GetMapping("/robot")
     public String robot(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("role", "admin");
-        } else {
-            model.addAttribute("role", "user");
-        }
-        model.addAttribute("username", auth.getName());
+        model.addAttribute("role", getRole());
+        model.addAttribute("username", getUsername());
         return "robot";
     }
     
-
+/* 
     @GetMapping("/led")
     public String led(Model model, @RequestParam(name="num", required = false) int param) {
         if (param != 0) {
@@ -87,12 +82,7 @@ public class UserController {
         }
         model.addAttribute("num", param);
         return "led";
-    }
-    
+    }*/
 
-    @GetMapping("/ws")
-    public String ws() {
-        return "ws";
-    }
     
 }

@@ -6,7 +6,6 @@
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <link rel="stylesheet" th:href="@{/css/main.css}" />
-  <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
   <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
@@ -24,6 +23,7 @@
         <div class="dropdown">
           <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
             <span th:text="${username}"></span>
+            <input type="hidden" id="role-id" th:value="${role}"/>
           </button>
           <ul class="dropdown-menu">
             <li> <a class="dropdown-item" href="/logout">Logout</a></li>

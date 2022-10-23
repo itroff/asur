@@ -413,3 +413,7 @@
   pointer-events: none;
   opacity: 0.4;
 }
+
+.drop-margin {
+  margin-right: 50px;
+}
