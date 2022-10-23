@@ -57,17 +57,34 @@
         </div>
         <div class="card card-main">
           <div class="card-body">
-            <form action="/uploadScenario" class="form-left">
-              <label for="inputPassword5" class="header-area">Path</label>
+            <div class="header-area-no-margin">Path</div>
+            <div class="row">
+              <div class="col-8">
+            <div class="input-group">
+              <select class="form-select" id="inputGroupSelect04">
+                <option selected>One</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="input-group">
+              <label class="btn btn-primary">
+                Load scenario <input type="file" hidden>
+            </label>
+          </div>
+            </div>
+          </div>
+           <!-- <form action="/uploadScenario" class="form-left">
+              <label for="inputPassword5" class="header-area-no-margin">Path</label>
               <div class="row">
                 <div class="col">
                   <input type="file" id="inputPassword5" class="form-control">
                 </div>
                 <div class="col">
-                  <button type="submit" class="btn btn-primary">Load Scenario</button>
+                  <button type="file" class="btn btn-primary">Load Scenario</button>
                 </div>
               </div>
-            </form>
+            </form>-->
             <div class="row">
               <div class="col">
                 <div class="menuIcon">
@@ -181,7 +198,7 @@
       <div class="header-area">
         Connection Control
       </div>
-      <div class="card card-main">
+      <div class="card card-main" id="card-last">
         <div class="card-body">
 
           <div class="row">

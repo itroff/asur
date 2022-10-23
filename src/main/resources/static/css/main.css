@@ -417,3 +417,11 @@
 .drop-margin {
   margin-right: 50px;
 }
+
+#stop-btn {
+  padding-top: 75px;
+}
+
+#card-last {
+  padding-bottom: 85px;
+}
