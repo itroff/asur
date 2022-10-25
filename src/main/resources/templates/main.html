@@ -61,30 +61,23 @@
             <div class="row">
               <div class="col-8">
             <div class="input-group">
+             
               <select class="form-select" id="inputGroupSelect04">
                 <option selected>One</option>
               </select>
             </div>
           </div>
           <div class="col-4">
+              <form method="post" th:action="@{/put-file}" enctype="multipart/form-data" id="form-file">
             <div class="input-group">
               <label class="btn btn-primary">
-                Load scenario <input type="file" hidden>
+                Load scenario <input type="file" name="file" hidden  accept=".json">
             </label>
+          </form>
+          <span th:text="${file}"></span>
           </div>
             </div>
           </div>
-           <!-- <form action="/uploadScenario" class="form-left">
-              <label for="inputPassword5" class="header-area-no-margin">Path</label>
-              <div class="row">
-                <div class="col">
-                  <input type="file" id="inputPassword5" class="form-control">
-                </div>
-                <div class="col">
-                  <button type="file" class="btn btn-primary">Load Scenario</button>
-                </div>
-              </div>
-            </form>-->
             <div class="row">
               <div class="col">
                 <div class="menuIcon">

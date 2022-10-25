@@ -65,6 +65,7 @@ public class SecurityConfig {
                 .antMatchers("/robot").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/diagnostics").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/index").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/put-file").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form

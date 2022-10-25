@@ -75,5 +75,8 @@ $(function () {
            e.preventDefault();
        });
        */
+       $("input:file").change(function (){
+        $( "#form-file" ).submit();
+      });
     connect();
 });
