@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
+import com.asur.asur.models.AutoMsg;
 import com.asur.asur.models.BoolCmd;
 import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CmdParam;
@@ -23,6 +24,7 @@ import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
+import com.asur.asur.services.AutoControlService;
 import com.asur.asur.services.ConnectedRobots;
 import com.asur.asur.services.Diagnostics;
 import com.asur.asur.services.MqttService;
@@ -42,6 +44,9 @@ public class WebSocketController {
 
     @Autowired
     MqttService mqttService;
+
+    @Autowired
+    AutoControlService autoControlService;
 
     @MessageMapping("/robots")
     @SendTo("/topic/connected")
@@ -103,6 +108,14 @@ public class WebSocketController {
     public List<RobotParam> params(String robotName) {
         LOGGER.info(robotName);
         return connectedRobots.getParamsForRobot(robotName);
+    }
+
+    @MessageMapping("/cmd-auto")
+    public void cmdAuto(AutoMsg msg) {
+        //todo load file and inject
+      //  autoControlService.injectNewMission()
+        autoControlService.controlStep(msg.getCmd());
+        LOGGER.info(msg.toString());
     }
 
 }

@@ -77,24 +77,26 @@
           <span th:text="${file}"></span>
           </div>
             </div>
+
           </div>
             <div class="row">
               <div class="col">
-                <div class="menuIcon">
+                <div class="menuIcon" id="start-btn">
                   <img th:src="@{/img/play.png}" />
                 </div>
               </div>
               <div class="col">
-                <div class="menuIcon">
+                <div class="menuIcon" id="pause-btn">
                   <img th:src="@{/img/pause.png}" />
                 </div>
               </div>
               <div class="col">
-                <div class="menuIcon">
+                <div class="menuIcon" id="cancel-btn">
                   <img th:src="@{/img/cancel.png}" />
                 </div>
               </div>
             </div>
+            <div class="row" id="mission-text"></div>
           </div>
         </div>
         <div class="menuIcon" id="stop-btn">

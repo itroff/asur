@@ -8,6 +8,10 @@ function connect() {
         stompClient.subscribe('/topic/mqtt-conf', function (connected) {
             showMqtt(JSON.parse(connected.body));
         });
+        stompClient.subscribe('/topic/auto-control', function (connected) {
+            var msg = JSON.parse(connected.body);
+            $("#mission-text").html(msg.msg);
+        });
         stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());
     });
 }
@@ -52,6 +56,11 @@ function sendCargo(type, direction) {
     stompClient.send("/app/cmd-cargo", {}, JSON.stringify({'type' : type, 'direction' :direction, 'robot': robot}));
 }
 
+function sendCmdAuto(cmd) {
+    var scenario = $("#inputGroupSelect04").val();
+    stompClient.send("/app/cmd-auto", {}, JSON.stringify({'file' : scenario, 'cmd' : cmd}));
+}
+
 
 $(function () {
     $("#stop-btn").click(function () { sendBoolean('/action/stop/cmd', true); });
@@ -78,5 +87,9 @@ $(function () {
        $("input:file").change(function (){
         $( "#form-file" ).submit();
       });
+      $("#start-btn").click(function () { sendCmdAuto('PLAY'); });
+      $("#pause-btn").click(function () { sendCmdAuto('PAUSE'); });
+      $("#cancel-btn").click(function () { sendCmdAuto('STOP'); });
+
     connect();
 });

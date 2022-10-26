@@ -1,6 +1,7 @@
 package com.asur.asur.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -11,6 +12,7 @@ import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.MqttConfig;
 import com.asur.asur.models.PosCmd;
 import com.asur.asur.models.Robot;
+import com.asur.asur.models.StateControl;
 
 @Component
 public class WebSocketSender {
@@ -28,5 +30,10 @@ public class WebSocketSender {
 
     public void sendDiagnostic(DiagnosticElem elem) {
         this.simpMessagingTemplate.convertAndSend("/topic/diagnostics", List.of(elem));
+    }
+
+    public void sendAutoControl(String msg, StateControl state) {
+        Map<String, Object> map = Map.of("msg", msg, "state", state);
+        this.simpMessagingTemplate.convertAndSend("/topic/auto-control", map);
     }
 }
