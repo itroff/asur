@@ -1,5 +1,7 @@
 package com.asur.asur.services;
 
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.asur.asur.models.CmdControl;
 import com.asur.asur.models.CmdElem;
 import com.asur.asur.models.FileMeta;
+import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.StateControl;
 
 @Component
@@ -21,6 +24,9 @@ public class AutoControlService  {
     @Autowired
     WebSocketSender webSocketSender;
 
+    @Autowired
+    ConnectedRobots connectedRobots;
+
     public AutoControlService() {
   
     }
@@ -28,33 +34,43 @@ public class AutoControlService  {
 
     private StateControl state = StateControl.STOP;
     private boolean isPaused = false;
+    private CmdElem currentCmd = null;
+    private LocalDateTime lastSend = null;
 
-    //@Scheduled(fixedRate = 500)
+
     public void controlStep(CmdControl cmd) {
         if (cmd.equals(CmdControl.STOP)) {
             state = StateControl.STOP;
             LOGGER.info("Stop Mission");
             webSocketSender.sendAutoControl("Stop Mission", StateControl.STOP);
+        } else if (cmd.equals(CmdControl.PLAY)) {
+            if (state.equals(StateControl.STOP)) {
+                startMission();
+            } else if (cmd.equals(CmdControl.PAUSE)){
+                execCmd(currentMission.getCmds().get(0));
+            } else {
+                webSocketSender.sendAutoControl("Mission already started, please stop first", StateControl.RUN);
+            }
+        } else if (cmd.equals(CmdControl.PAUSE)) {
+            if (state.equals(StateControl.WAITINGRES) || state.equals(StateControl.RUN)) {
+                state = StateControl.PAUSE;
+                webSocketSender.sendAutoControl("Mission paused", StateControl.PAUSE);
+            }
+        } else if (cmd.equals(CmdControl.RESPONSE)) {
+
+        } else {
+            webSocketSender.sendAutoControl("Wrong cmd", StateControl.WAITING);
         }
-        switch (state) {
-            case WAITING:
-                if (cmd.equals(CmdControl.PLAY)) {
-                    // send start next cmd
-                }
-                break;
-            case WAITINGRES:
-                if (cmd.equals(CmdControl.RESPONSE)) {
-                    // check response and next cmd
-                } 
-                break;
-            case STOP:
-                if (cmd.equals(CmdControl.PLAY)) {
-                    
-                    // start new mission
-                }
-                break;
-            case RUN: 
+
+    }
+
+    @Scheduled(fixedRate = 500)
+    public void controlLoop() {
+        if(!state.equals(StateControl.WAITINGRES)) {
+            return;
         }
+        RobotParam param =  connectedRobots.getParamRobot(currentMission.getRobotId(), currentCmd.getResponseTopic());
+        
     }
 
     public void startMission() {
@@ -70,7 +86,9 @@ public class AutoControlService  {
             webSocketSender.sendAutoControl(msg, StateControl.STOP);
             return;
         }
+        webSocketSender.sendAutoControl("Started new Mission: " + currentMission.getName() , StateControl.RUN);
         execCmd(currentMission.getCmds().get(0));
+        currentMission.getCmds().remove(0);
 
     }
 
@@ -84,25 +102,12 @@ public class AutoControlService  {
     }
 
     public void execCmd(CmdElem cmd) {
+        currentCmd = cmd;
         // TODO send cmd to topic 
+        lastSend = LocalDateTime.now();
         this.state = StateControl.WAITINGRES;
-        webSocketSender.sendAutoControl("Started new Mission: " + currentMission.getName() , StateControl.RUN);
+        webSocketSender.sendAutoControl("Send cmd: " + cmd.getType() , StateControl.RUN);
     }
 
-/*
-    @Override
-    public void run() {
-        while(true) {
-        LOGGER.info("thread");
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            LOGGER.error(ex.getMessage() );
-        }
-    }
-        // TODO Auto-generated method stub
-        
-    }
-    
-    */
+
 }

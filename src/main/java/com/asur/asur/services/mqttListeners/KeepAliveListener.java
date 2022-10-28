@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.services.ConnectedRobots;
 
 public class KeepAliveListener implements IMqttMessageListener {
@@ -38,8 +39,16 @@ public class KeepAliveListener implements IMqttMessageListener {
         }
 
         public void run() {
-        //    LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
-        //    "], Topic[ "+ topic + "],  Message [" + message +"] ");
+            try {
+            com.asur.asur.generated.model.Boolean.BooleanProto proto = com.asur.asur.generated.model.Boolean.BooleanProto.parseFrom(message.getPayload());
+           
+            LOGGER.info("{}", proto.getEnabled());
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
+            
+        }
+            LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
+            "], Topic[ "+ topic + "],  Message [" + message +"] ");
             robots.updateKeepAlive(topic);
             //System.out.println();
         }

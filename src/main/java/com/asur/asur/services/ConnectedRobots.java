@@ -157,6 +157,18 @@ public class ConnectedRobots {
         return params.get(rb);
     }
 
+    public RobotParam getParamRobot(String robotName, String paramName) {
+        Robot rb = allRobots.get(robotName);
+        List<RobotParam> paramsRobots =  params.get(rb);
+        for(RobotParam param : paramsRobots) { 
+            if (param.getParamName().equals(paramName)) {
+                return param;
+            }
+        }
+        return null;
+
+    }
+
     public void updateRobotError(String topic, int errorCode) {
         Robot rb = allRobots.get(topic);
         if (errorCode == 0) {

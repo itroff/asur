@@ -5,6 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +18,38 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.asur.asur.models.CmdElem;
+import com.asur.asur.models.FileMeta;
+import com.asur.asur.services.AutoControlService;
+
 @SpringBootTest
 class AsurApplicationTests {
 
 	@Autowired
     private WebApplicationContext context;
 
+	@Autowired
+	AutoControlService autoControlService;
+
     private MockMvc mvc;
+
+	private FileMeta file;
 
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
           .apply(springSecurity())
           .build();
+
+		file = new FileMeta();
+		file.setName("hello");
+		file.setRepeated(false);
+		file.setRobotId("001");
+		List<CmdElem> list =  new ArrayList<>();
+		CmdElem el = new CmdElem();
+		//el.
+		
+	//	file.setCmds();
     }
 /* 
 	@Test
@@ -90,4 +112,11 @@ class AsurApplicationTests {
 				.andExpect(status().isOk());
 	}
 */
+
+	@Test
+	@WithUserDetails(value = "user")
+	public void testSM() throws Exception {
+		//autoControlService.injectNewMission(null)
+	}
+
 }

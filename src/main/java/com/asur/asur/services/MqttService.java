@@ -102,7 +102,7 @@ public class MqttService {
     private void sendConfig() {
         try{
             webSocketSender.sendConfig(Mqtt.getConfig());
-            Mqtt.getInstance().subscribe(prefix + "+/info/keepAlive", 0, new KeepAliveListener(connectedRobots));
+            Mqtt.getInstance().subscribe(prefix + "+/info/KeepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (Exception ex) {
             LOGGER.error(ex.toString());
         }
