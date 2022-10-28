@@ -11,6 +11,28 @@ function connect() {
         stompClient.subscribe('/topic/auto-control', function (connected) {
             var msg = JSON.parse(connected.body);
             $("#mission-text").html(msg.msg);
+            
+            switch(msg.state) {
+                case 'STOP': 
+                    $("#cancel-btn").addClass("disabled-div");
+                    $("#load-btn").removeClass("disabled-div");
+                    $("#inputGroupSelect04").removeClass("disabled-div");
+                break;
+                case 'PAUSE': 
+                    $("#pause-btn").addClass("disabled-div");
+                    $("#inputGroupSelect04").addClass("disabled-div");
+                    $("#load-btn").addClass("disabled-div");
+                    $("#cancel-btn").removeClass("disabled-div");
+                    $("#play-btn").removeClass("disabled-div");
+                break;
+                case 'WAITINGRES':
+                    $("#inputGroupSelect04").addClass("disabled-div");
+                    $("#load-btn").addClass("disabled-div");
+                    $("#pause-btn").removeClass("disabled-div");
+                    $("#cancel-btn").removeClass("disabled-div");
+                    $("#play-btn").addClass("disabled-div");
+                break;
+            }
         });
         stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());
     });
