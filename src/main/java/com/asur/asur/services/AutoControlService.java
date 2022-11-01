@@ -61,7 +61,7 @@ public class AutoControlService  {
         } else if (cmd.equals(CmdControl.PLAY)) {
             if (state.equals(StateControl.STOP)) {
                 startMission();
-            } else if (cmd.equals(CmdControl.PAUSE)){
+            } else if (state.equals(StateControl.PAUSE)){
                 execCmd(currentMission.getCmds().get(0));
             } else {
                 webSocketSender.sendAutoControl("Mission already started, please stop first", StateControl.RUN);
@@ -72,8 +72,14 @@ public class AutoControlService  {
                 webSocketSender.sendAutoControl("Mission paused", StateControl.PAUSE);
             }
         } else if (cmd.equals(CmdControl.RESPONSE)) {
-            currentMission.getCmds().remove(0);
-            execCmd(currentMission.getCmds().get(0));
+            if(currentMission.getCmds().size() == 0) {
+                state = StateControl.STOP;
+                webSocketSender.sendAutoControl("Mission successfuly completed!", StateControl.STOP);
+            } else {
+                currentMission.getCmds().remove(0);
+                execCmd(currentMission.getCmds().get(0));
+            }
+           
         } else {
             webSocketSender.sendAutoControl("Wrong cmd", StateControl.WAITING);
         }
@@ -110,19 +116,19 @@ public class AutoControlService  {
     public void startMission() {
         if (currentMission == null) {
             String msg = "Need to set current mission";
-            LOGGER.info(msg);
+          //  LOGGER.info(msg);
             webSocketSender.sendAutoControl(msg, StateControl.STOP);
             return;
         } 
         if (currentMission.getCmds().size() == 0) {
             String msg = "size of mission is 0, please check";
-            LOGGER.info(msg);
+          //  LOGGER.info(msg);
             webSocketSender.sendAutoControl(msg, StateControl.STOP);
             return;
         }
         webSocketSender.sendAutoControl("Started new Mission: " + currentMission.getName() , StateControl.RUN);
         execCmd(currentMission.getCmds().get(0));
-        currentMission.getCmds().remove(0);
+       // currentMission.getCmds().remove(0);
 
     }
 
@@ -165,7 +171,7 @@ public class AutoControlService  {
 		el.setResponseTopic("action/start/res");
 		Robot rb = new Robot();
 		rb.setTopicId("001");
-		BoolCmd bcmd = new BoolCmd("action/start/cmd", rb , true);
+		BoolCmd bcmd = new BoolCmd("/action/start/cmd", rb , true);
 		el.setBoolCmd(bcmd);
 
 		CmdElem el2 = new CmdElem();

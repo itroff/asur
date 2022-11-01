@@ -27,7 +27,7 @@ public class Mqtt {
         try {
             if (instance == null) {
                 if(config == null) {
-                    config = new MqttConfig("asur-server", /*"127.0.0.1"*/"broker.hivemq.com", "1883", false);
+                    config = new MqttConfig("asur-server", "127.0.0.1" /*"broker.hivemq.com"*/, "1883", false);
                 }
                 LOGGER.info(config.toString());
                 // TODO init config

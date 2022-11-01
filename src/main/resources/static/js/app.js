@@ -32,6 +32,13 @@ function connect() {
                     $("#cancel-btn").removeClass("disabled-div");
                     $("#play-btn").addClass("disabled-div");
                 break;
+                case 'RUN':
+                    $("#inputGroupSelect04").addClass("disabled-div");
+                    $("#load-btn").addClass("disabled-div");
+                    $("#pause-btn").removeClass("disabled-div");
+                    $("#cancel-btn").removeClass("disabled-div");
+                    $("#play-btn").addClass("disabled-div");
+                break;
             }
         });
         stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());

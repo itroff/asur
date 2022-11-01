@@ -1,5 +1,6 @@
 package com.asur.asur.controllers;
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,13 +18,12 @@ import com.asur.asur.services.AutoControlService;
 import com.asur.asur.services.ConnectedRobots;
 import com.asur.asur.services.Diagnostics;
 import com.asur.asur.services.MqttService;
-
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class WebSocketController {
 
-    private static final Logger LOGGER =  LoggerFactory.getLogger(WebSocketController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
 
     @Autowired
     ConnectedRobots connectedRobots;
@@ -40,14 +40,14 @@ public class WebSocketController {
     @MessageMapping("/robots")
     @SendTo("/topic/connected")
     public List<Robot> connected() throws Exception {
-      //  LOGGER.info("request connected");
+        // LOGGER.info("request connected");
         return connectedRobots.getAllRobots();
     }
 
     @MessageMapping("/mqtt-config-get")
     @SendTo("/topic/mqtt-conf")
     public MqttConfig getMqttConfig() throws Exception {
-       // LOGGER.info("request mqtt");
+        // LOGGER.info("request mqtt");
         return Mqtt.getConfig();
     }
 
@@ -58,19 +58,19 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-bool")
     public void cmdBool(BoolCmd cmd) {
-      //  LOGGER.info(cmd.toString());
+        // LOGGER.info(cmd.toString());
         mqttService.sendBoolCmd(cmd);
     }
 
     @MessageMapping("/cmd-pos")
     public void cmdPos(PosCmd cmd) {
-       // LOGGER.info(cmd.toString());
+        // LOGGER.info(cmd.toString());
         mqttService.sendPosCmd(cmd);
     }
 
     @MessageMapping("/cmd-cargo")
     public void cmdCargo(CargoCmd cmd) {
-     //   LOGGER.info(cmd.toString());
+        // LOGGER.info(cmd.toString());
         mqttService.sendCargoCmd(cmd);
     }
 
@@ -82,7 +82,7 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-param")
     public void cmdParam(CmdParam cmd) {
-    //    LOGGER.info(cmd.toString());
+        // LOGGER.info(cmd.toString());
         mqttService.sendParamCmd(cmd);
     }
 
@@ -95,16 +95,23 @@ public class WebSocketController {
     @MessageMapping("/params")
     @SendTo("/topic/params")
     public List<RobotParam> params(String robotName) {
-      //  LOGGER.info(robotName);
+        // LOGGER.info(robotName);
         return connectedRobots.getParamsForRobot(robotName);
     }
 
     @MessageMapping("/cmd-auto")
     public void cmdAuto(AutoMsg msg) {
-        //todo load file and inject
-      //  autoControlService.injectNewMission()
+        if (msg.getCmd().equals(CmdControl.PLAY)) {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                FileMeta file = mapper.readValue(Paths.get(msg.getFile() + ".json").toFile(), FileMeta.class);
+                autoControlService.injectNewMission(file);
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
+        }
         autoControlService.controlStep(msg.getCmd());
-       // autoControlService.saveDefaultFile();
+        // autoControlService.saveDefaultFile();
         LOGGER.info(msg.toString());
     }
 

@@ -39,10 +39,11 @@ public class BooleanListener implements  IMqttMessageListener{
         public void run() {
           //  LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
         //    "], Topic[ "+ topic + "],  Message [" + message +"] ");
-            String prefix = topic.split("/")[1];
+            String[] splitterText = topic.split("/");
+            String prefix = splitterText[1];
             try{
                 Boolean.BooleanProto proto = BooleanProto.parseFrom(message.getPayload());
-                String paramName = topic.split("/")[4];
+                String paramName = splitterText[2] + "/" + splitterText[3] + "/" + splitterText[4];
                 LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
                 connectedRobots.updateParam(prefix, new BooleanParam(paramName, proto.getEnabled()),
                 new DiagnosticElem(proto.toString(), topic, "Server"));

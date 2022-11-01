@@ -25,10 +25,11 @@ public class MotorResListener implements IMqttMessageListener{
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         //connectedRobots.updateParam(topic, null, null);
-        String prefix = topic.split("/")[1];
+        String[] splitterText = topic.split("/");
+        String prefix = splitterText[1];
         try{
             MotorRes.MotorResProto proto = MotorResProto.parseFrom(message.getPayload());
-            String paramName = topic.split("/")[3];
+            String paramName =  splitterText[2] + "/" + splitterText[3] + "/" + splitterText[4];
             LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
             connectedRobots.updateParam(prefix, new IntegerParam(paramName, proto.getStatus()),
             new DiagnosticElem(proto.toString(), topic, "Server"));

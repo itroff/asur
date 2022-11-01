@@ -7,7 +7,7 @@
     "responseTopic" : "action/start/res",
     "responseType" : null,
     "boolCmd" : {
-      "topic" : "action/start/cmd",
+      "topic" : "/action/start/cmd",
       "robot" : {
         "id" : 0,
         "name" : null,
