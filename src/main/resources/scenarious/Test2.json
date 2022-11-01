@@ -1,0 +1,24 @@
+{
+  "name" : "Test2",
+  "robotId" : "001",
+  "cmds" : [ {
+    "topic" : "action/start/cmd",
+    "type" : "Boolean",
+    "responseTopic" : "action/start/res",
+    "responseType" : null,
+    "boolCmd" : {
+      "topic" : "/action/start/cmd",
+      "robot" : {
+        "id" : 0,
+        "name" : null,
+        "topicId" : "001",
+        "status" : null,
+        "lastKeepAlive" : null
+      },
+      "value" : true
+    },
+    "posCmd" : null,
+    "cargoCmd" : null
+  } ],
+  "repeated" : false
+}

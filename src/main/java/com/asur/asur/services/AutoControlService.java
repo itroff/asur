@@ -1,9 +1,13 @@
 package com.asur.asur.services;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,10 +198,36 @@ public class AutoControlService  {
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
         try {
-            writer.writeValue(Paths.get("Default.json").toFile(), file);
+            writer.writeValue(Paths.get("/asur/asur/src/main/resources/scenarious", "Default.json").toFile(), file);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<String> getScenarious() {
+       // Paths.get("src/main/resources/scenarious").to
+        List<String> scenariousFiles = new ArrayList<>();
+        List<String> files = Stream.of(new File("/asur/asur/src/main/resources/scenarious").listFiles())
+            .filter(file -> !file.isDirectory())
+            .map(File::getName)
+            .collect(Collectors.toList());
+            for (String filename : files){
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                LOGGER.info(filename);
+                FileMeta mission = mapper.readValue(Paths.get("/asur/asur/src/main/resources/scenarious", filename).toFile(), FileMeta.class);
+                scenariousFiles.add(mission.getName());
+            }
+            catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
+        }
+        if (scenariousFiles.size() == 0) {
+            saveDefaultFile();
+            scenariousFiles.add("Default");
+        }
+        return scenariousFiles;
+        
     }
 
 

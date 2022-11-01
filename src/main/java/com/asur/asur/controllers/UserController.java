@@ -1,6 +1,5 @@
 package com.asur.asur.controllers;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +28,10 @@ import com.asur.asur.generated.model.Robot;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Robot.RobotProto;
 import com.asur.asur.generated.model.Test.TestProto;
+import com.asur.asur.models.FileMeta;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 @Controller
 public class UserController {
@@ -39,7 +42,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "admin";
-        } 
+        }
         return "user";
     }
 
@@ -48,12 +51,12 @@ public class UserController {
         return auth.getName();
     }
 
-    @GetMapping({"/index", "/"})
-    public String index(Model model, @RequestParam(name="file", required = false) String filename) {
+    @GetMapping({ "/index", "/" })
+    public String index(Model model, @RequestParam(name = "file", required = false) String filename) {
         model.addAttribute("file", filename);
         model.addAttribute("role", getRole());
         model.addAttribute("username", getUsername());
-     //   model.addAttribute("validScenario", false);
+        // model.addAttribute("validScenario", false);
         return "main";
     }
 
@@ -76,21 +79,26 @@ public class UserController {
         model.addAttribute("username", getUsername());
         return "robot";
     }
-    
+
     @PostMapping("/put-file")
     public String putFile(@RequestParam("file") MultipartFile file,
-    RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
             redirectAttributes.addAttribute("file", "Please select a file to upload.");
             return "redirect:/";
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
-            //TODO parsing json 
+            // TODO parsing json
+            ObjectMapper mapper = new ObjectMapper();
+            FileMeta mission = mapper.readValue(file.getInputStream(), FileMeta.class);
+            //Path path = Paths.get("/" + fileName); // TODO check dir
+            // Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
-            Path path = Paths.get("/" + fileName); //TODO check dir
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+         //   LOGGER.info(Paths.get("src/main/resources/scenarious", fileName).toString());
+            writer.writeValue(Paths.get("/asur/asur/src/main/resources/scenarious", fileName).toFile(), mission);
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             redirectAttributes.addAttribute("file", "Error while processing file");
             return "redirect:/";
@@ -100,5 +108,4 @@ public class UserController {
         return "redirect:/";
     }
 
-    
 }

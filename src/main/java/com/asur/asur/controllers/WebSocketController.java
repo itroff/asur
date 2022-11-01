@@ -104,7 +104,7 @@ public class WebSocketController {
         if (msg.getCmd().equals(CmdControl.PLAY)) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                FileMeta file = mapper.readValue(Paths.get(msg.getFile() + ".json").toFile(), FileMeta.class);
+                FileMeta file = mapper.readValue(Paths.get("/asur/asur/src/main/resources/scenarious", msg.getFile() + ".json").toFile(), FileMeta.class);
                 autoControlService.injectNewMission(file);
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
@@ -113,6 +113,13 @@ public class WebSocketController {
         autoControlService.controlStep(msg.getCmd());
         // autoControlService.saveDefaultFile();
         LOGGER.info(msg.toString());
+    }
+
+    @MessageMapping("/scenarious-get")
+    @SendTo("/topic/scenarious")
+    public List<String> getScenarious() throws Exception {
+        // LOGGER.info("request mqtt");
+        return autoControlService.getScenarious();
     }
 
 }

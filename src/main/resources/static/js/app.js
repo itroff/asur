@@ -41,7 +41,15 @@ function connect() {
                 break;
             }
         });
+        stompClient.subscribe('/topic/scenarious', function (connected) {
+            var msgScenario = JSON.parse(connected.body);
+            $('#inputGroupSelect04').empty();
+            msgScenario.forEach(element => {
+                $("#inputGroupSelect04").append('<option>' + element + '</option>');
+            });
+        });
         stompClient.send("/app/mqtt-config-get", {}, JSON.stringify());
+        stompClient.send("/app/scenarious-get", {}, JSON.stringify());
     });
 }
 

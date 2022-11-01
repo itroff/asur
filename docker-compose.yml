@@ -8,3 +8,5 @@ services:
 #    ports:
 #      - "80:8080"
 #      - "8666:8666"
+    volumes:
+      - $HOME/asur/:/asur/asur/src/main/resources/scenarious/:rw
