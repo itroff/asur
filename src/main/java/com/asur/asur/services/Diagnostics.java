@@ -27,13 +27,13 @@ public class Diagnostics {
     }
 
     public void addElem(DiagnosticElem elem) {
-        LOGGER.info(elem.toString());
+     //   LOGGER.info(elem.toString());
         obj.add(elem);
         webSocketSender.sendDiagnostic(elem);
     }
 
     public List<DiagnosticElem> getDiagnostics() {
-        LOGGER.info(obj.toString());
+    //    LOGGER.info(obj.toString());
         return new ArrayList<>(obj);
     }
 }

@@ -18,8 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.asur.asur.models.BoolCmd;
+import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CmdElem;
 import com.asur.asur.models.FileMeta;
+import com.asur.asur.models.PosCmd;
+import com.asur.asur.models.Robot;
 import com.asur.asur.services.AutoControlService;
 
 @SpringBootTest
@@ -42,14 +46,34 @@ class AsurApplicationTests {
           .build();
 
 		file = new FileMeta();
-		file.setName("hello");
+		file.setName("Test");
 		file.setRepeated(false);
 		file.setRobotId("001");
 		List<CmdElem> list =  new ArrayList<>();
 		CmdElem el = new CmdElem();
-		//el.
-		
-	//	file.setCmds();
+		el.setType("Boolean");
+		el.setTopic("action/start/cmd");
+		el.setResponseTopic("action/start/res");
+		Robot rb = new Robot();
+		rb.setTopicId("001");
+		BoolCmd bcmd = new BoolCmd("action/start/cmd", rb , true);
+		el.setBoolCmd(bcmd);
+
+		CmdElem el2 = new CmdElem();
+		el2.setType("PosCmd");
+		el2.setTopic("action/pos/cmd");
+		el2.setResponseTopic("action/pos/res");
+		PosCmd pcmd = new PosCmd(true, 3, new float[0], rb);
+		el2.setPosCmd(pcmd);
+
+		CmdElem el3 = new CmdElem();
+		el3.setType("CargoCmd");
+		el3.setTopic("action/cargo/cmd");
+		el3.setResponseTopic("action/cargo/res");
+		CargoCmd ccmd = new CargoCmd(true, true, rb);
+		el3.setCargoCmd(ccmd);
+		List<CmdElem> els = List.of(el, el2, el3);
+		file.setCmds(els);
     }
 /* 
 	@Test
@@ -116,7 +140,8 @@ class AsurApplicationTests {
 	@Test
 	@WithUserDetails(value = "user")
 	public void testSM() throws Exception {
-		//autoControlService.injectNewMission(null)
+		//autoControlService.injectNewMission(this.file);
+
 	}
 
 }

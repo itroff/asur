@@ -10,5 +10,7 @@ public class CmdElem {
     private String type;
     private String responseTopic;
     private String responseType;
-    
+    private BoolCmd boolCmd;
+    private PosCmd posCmd;
+    private CargoCmd cargoCmd;
 }

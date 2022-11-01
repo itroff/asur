@@ -1,0 +1,61 @@
+{
+  "name" : "Default",
+  "robotId" : "001",
+  "cmds" : [ {
+    "topic" : "action/start/cmd",
+    "type" : "Boolean",
+    "responseTopic" : "action/start/res",
+    "responseType" : null,
+    "boolCmd" : {
+      "topic" : "action/start/cmd",
+      "robot" : {
+        "id" : 0,
+        "name" : null,
+        "topicId" : "001",
+        "status" : null,
+        "lastKeepAlive" : null
+      },
+      "value" : true
+    },
+    "posCmd" : null,
+    "cargoCmd" : null
+  }, {
+    "topic" : "action/pos/cmd",
+    "type" : "PosCmd",
+    "responseTopic" : "action/pos/res",
+    "responseType" : null,
+    "boolCmd" : null,
+    "posCmd" : {
+      "direction" : true,
+      "position" : 3,
+      "distancies" : [ ],
+      "robot" : {
+        "id" : 0,
+        "name" : null,
+        "topicId" : "001",
+        "status" : null,
+        "lastKeepAlive" : null
+      }
+    },
+    "cargoCmd" : null
+  }, {
+    "topic" : "action/cargo/cmd",
+    "type" : "CargoCmd",
+    "responseTopic" : "action/cargo/res",
+    "responseType" : null,
+    "boolCmd" : null,
+    "posCmd" : null,
+    "cargoCmd" : {
+      "type" : true,
+      "direction" : true,
+      "robot" : {
+        "id" : 0,
+        "name" : null,
+        "topicId" : "001",
+        "status" : null,
+        "lastKeepAlive" : null
+      }
+    }
+  } ],
+  "repeated" : false
+}

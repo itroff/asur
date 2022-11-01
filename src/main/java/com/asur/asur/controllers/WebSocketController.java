@@ -12,18 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
-import com.asur.asur.models.AutoMsg;
-import com.asur.asur.models.BoolCmd;
-import com.asur.asur.models.CargoCmd;
-import com.asur.asur.models.CmdParam;
-import com.asur.asur.models.CommandWebSocket;
-import com.asur.asur.models.DiagnosticElem;
-import com.asur.asur.models.MotorCmd;
-import com.asur.asur.models.MqttConfig;
-import com.asur.asur.models.PosCmd;
-import com.asur.asur.models.Robot;
-import com.asur.asur.models.RobotParam;
-import com.asur.asur.models.RobotStatusEnum;
+import com.asur.asur.models.*;
 import com.asur.asur.services.AutoControlService;
 import com.asur.asur.services.ConnectedRobots;
 import com.asur.asur.services.Diagnostics;
@@ -51,14 +40,14 @@ public class WebSocketController {
     @MessageMapping("/robots")
     @SendTo("/topic/connected")
     public List<Robot> connected() throws Exception {
-        LOGGER.info("request connected");
+      //  LOGGER.info("request connected");
         return connectedRobots.getAllRobots();
     }
 
     @MessageMapping("/mqtt-config-get")
     @SendTo("/topic/mqtt-conf")
     public MqttConfig getMqttConfig() throws Exception {
-        LOGGER.info("request mqtt");
+       // LOGGER.info("request mqtt");
         return Mqtt.getConfig();
     }
 
@@ -81,7 +70,7 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-cargo")
     public void cmdCargo(CargoCmd cmd) {
-        LOGGER.info(cmd.toString());
+     //   LOGGER.info(cmd.toString());
         mqttService.sendCargoCmd(cmd);
     }
 
@@ -93,7 +82,7 @@ public class WebSocketController {
 
     @MessageMapping("/cmd-param")
     public void cmdParam(CmdParam cmd) {
-        LOGGER.info(cmd.toString());
+    //    LOGGER.info(cmd.toString());
         mqttService.sendParamCmd(cmd);
     }
 
@@ -106,7 +95,7 @@ public class WebSocketController {
     @MessageMapping("/params")
     @SendTo("/topic/params")
     public List<RobotParam> params(String robotName) {
-        LOGGER.info(robotName);
+      //  LOGGER.info(robotName);
         return connectedRobots.getParamsForRobot(robotName);
     }
 
@@ -115,6 +104,7 @@ public class WebSocketController {
         //todo load file and inject
       //  autoControlService.injectNewMission()
         autoControlService.controlStep(msg.getCmd());
+       // autoControlService.saveDefaultFile();
         LOGGER.info(msg.toString());
     }
 

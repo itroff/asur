@@ -23,13 +23,7 @@ import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
-import com.asur.asur.models.BoolCmd;
-import com.asur.asur.models.CargoCmd;
-import com.asur.asur.models.CmdParam;
-import com.asur.asur.models.DiagnosticElem;
-import com.asur.asur.models.MotorCmd;
-import com.asur.asur.models.PosCmd;
-import com.asur.asur.models.Robot;
+import com.asur.asur.models.*;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.KeepAliveListener;
 import com.google.protobuf.GeneratedMessageV3;
@@ -87,7 +81,7 @@ public class MqttService {
     }
 
  //   @Scheduled(fixedRate = 60 * 1000)
-    public void sendLed() {
+  /*   public void sendLed() {
         Random random = new Random();
         int num = random.nextInt(4) + 1;
         Test.TestProto proto = TestProto.newBuilder().setNumBlink(num).build();
@@ -95,7 +89,7 @@ public class MqttService {
         //System.out.println(proto.toByteArray());
         //System.out.println(proto.toByteString());
         sendCmd("asur/led", proto);
-    }
+    } */
 
         
     @Scheduled(fixedRate = 5000)

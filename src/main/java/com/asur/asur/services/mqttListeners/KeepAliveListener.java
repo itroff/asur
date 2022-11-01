@@ -42,15 +42,14 @@ public class KeepAliveListener implements IMqttMessageListener {
             try {
             com.asur.asur.generated.model.Boolean.BooleanProto proto = com.asur.asur.generated.model.Boolean.BooleanProto.parseFrom(message.getPayload());
            
-            LOGGER.info("{}", proto.getEnabled());
+        //    LOGGER.info("{}", proto.getEnabled());
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
             
         }
-            LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
+     /*       LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
             "], Topic[ "+ topic + "],  Message [" + message +"] ");
-            robots.updateKeepAlive(topic);
-            //System.out.println();
+            robots.updateKeepAlive(topic); */
         }
     }
 

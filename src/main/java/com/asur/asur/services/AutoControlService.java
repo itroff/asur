@@ -1,6 +1,9 @@
 package com.asur.asur.services;
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.asur.asur.models.BoolCmd;
+import com.asur.asur.models.BooleanParam;
+import com.asur.asur.models.CargoCmd;
 import com.asur.asur.models.CmdControl;
 import com.asur.asur.models.CmdElem;
 import com.asur.asur.models.FileMeta;
+import com.asur.asur.models.IntegerParam;
+import com.asur.asur.models.PosCmd;
+import com.asur.asur.models.Robot;
 import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.StateControl;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 @Component
 public class AutoControlService  {
@@ -26,6 +38,9 @@ public class AutoControlService  {
 
     @Autowired
     ConnectedRobots connectedRobots;
+
+    @Autowired
+    MqttService mqttService;
 
     public AutoControlService() {
   
@@ -57,7 +72,8 @@ public class AutoControlService  {
                 webSocketSender.sendAutoControl("Mission paused", StateControl.PAUSE);
             }
         } else if (cmd.equals(CmdControl.RESPONSE)) {
-
+            currentMission.getCmds().remove(0);
+            execCmd(currentMission.getCmds().get(0));
         } else {
             webSocketSender.sendAutoControl("Wrong cmd", StateControl.WAITING);
         }
@@ -70,7 +86,25 @@ public class AutoControlService  {
             return;
         }
         RobotParam param =  connectedRobots.getParamRobot(currentMission.getRobotId(), currentCmd.getResponseTopic());
-        
+        if (param == null) {
+            return;
+        }
+        if (param.getDt().isAfter(lastSend)) {
+            if (currentCmd.getType().equals("Boolean")) {
+                BooleanParam bp = (BooleanParam)param;
+                if (bp.isValue()) {
+                    controlStep(CmdControl.RESPONSE);
+                } else {
+                    state = StateControl.STOP;
+                    webSocketSender.sendAutoControl("Stop Mission failed", StateControl.STOP);
+                }
+            } else if (currentCmd.getType().equals("PosCmd") || currentCmd.getType().equals("CargoCmd")) {
+                IntegerParam ip = (IntegerParam)param;
+                if (ip.getValue() == 3) {
+                    controlStep(CmdControl.RESPONSE);
+                } // TODO if failure
+            }
+        }
     }
 
     public void startMission() {
@@ -103,10 +137,61 @@ public class AutoControlService  {
 
     public void execCmd(CmdElem cmd) {
         currentCmd = cmd;
-        // TODO send cmd to topic 
+        if (currentCmd.getType().equals("Boolean")) {
+            mqttService.sendBoolCmd(cmd.getBoolCmd());
+        } else if (currentCmd.getType().equals("PosCmd")){
+            mqttService.sendPosCmd(currentCmd.getPosCmd());
+        } else if (currentCmd.getType().equals("CargoCmd")) {
+            mqttService.sendCargoCmd(currentCmd.getCargoCmd());
+        } else {
+            state = StateControl.STOP;
+            webSocketSender.sendAutoControl("Wrong Cmd"  , StateControl.STOP);
+            return;
+        }
         lastSend = LocalDateTime.now();
         this.state = StateControl.WAITINGRES;
         webSocketSender.sendAutoControl("Send cmd: " + cmd.getType() , StateControl.RUN);
+    }
+
+    public void saveDefaultFile() {
+        FileMeta file = new FileMeta();
+		file.setName("Default");
+		file.setRepeated(false);
+		file.setRobotId("001");
+		List<CmdElem> list =  new ArrayList();
+		CmdElem el = new CmdElem();
+		el.setType("Boolean");
+		el.setTopic("action/start/cmd");
+		el.setResponseTopic("action/start/res");
+		Robot rb = new Robot();
+		rb.setTopicId("001");
+		BoolCmd bcmd = new BoolCmd("action/start/cmd", rb , true);
+		el.setBoolCmd(bcmd);
+
+		CmdElem el2 = new CmdElem();
+		el2.setType("PosCmd");
+		el2.setTopic("action/pos/cmd");
+		el2.setResponseTopic("action/pos/res");
+		PosCmd pcmd = new PosCmd(true, 3, new float[0], rb);
+		el2.setPosCmd(pcmd);
+
+		CmdElem el3 = new CmdElem();
+		el3.setType("CargoCmd");
+		el3.setTopic("action/cargo/cmd");
+		el3.setResponseTopic("action/cargo/res");
+		CargoCmd ccmd = new CargoCmd(true, true, rb);
+		el3.setCargoCmd(ccmd);
+		List<CmdElem> els = List.of(el, el2, el3);
+		file.setCmds(els);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+
+        try {
+            writer.writeValue(Paths.get("Default.json").toFile(), file);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 

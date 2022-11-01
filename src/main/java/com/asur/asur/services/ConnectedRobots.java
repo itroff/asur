@@ -144,17 +144,21 @@ public class ConnectedRobots {
             if (param.getParamName().equals(pr.getParamName())) {
                 //pr = param;
                 pr.updateParam(param);
-                LOGGER.info("update param: {}", pr);
+         //       LOGGER.info("update param: {}", pr);
                 return;
             }
         }
-        LOGGER.info("add new param: {}", param);
+    //    LOGGER.info("add new param: {}", param);
         params.get(rb).add(param);
     }
 
     public List<RobotParam> getParamsForRobot(String robotName) {
         Robot rb = allRobots.get(robotName);
         return params.get(rb);
+    }
+
+    public Robot getRobot(String topicId) {
+        return allRobots.get(topicId);
     }
 
     public RobotParam getParamRobot(String robotName, String paramName) {
