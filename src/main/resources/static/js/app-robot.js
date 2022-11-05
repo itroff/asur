@@ -1,5 +1,5 @@
 var stompClient = null;
-
+var lastParams = [];
 function connect() {
     var socket = new SockJS('/client-websocket');
     stompClient = Stomp.over(socket);
@@ -8,24 +8,24 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/params', function (msg) {
             var message = JSON.parse(msg.body);
-        //    console.log(message);
+            lastParams = message;
             message.forEach(element => {
-          //      console.log(element);
-                if(element.value) {
-                    $("#" + element.paramName).addClass("finger-success");
-                } else {
-                    $("#" + element.paramName).removeClass("finger-success");
+                if(element.paramName.startsWith("info/sensor/")) {
+                    let paramName = element.paramName;
+                    paramName =  paramName.replace("info/sensor/", "");
+                    if(element.value) {
+                        $("#" + paramName).addClass("finger-success");
+                    } else {
+                        $("#" + paramName).removeClass("finger-success");
+                    }
                 }
             });
         });
         setInterval(() => {
-            //console.log("timeout");
             if(robot !== null) {
                 stompClient.send("/app/params", {}, robot.topicId);
             }
           }, "1000")
-          
-        //stompClient.send("/app/diagnostics", {}, JSON.stringify());
     });
 }
 
@@ -127,6 +127,19 @@ $(function () {
         sendParam('lhd_ext', lhdExtension);
         
     });
-
+    $("#read-params-btn").click(function () {
+        console.log(lastParams);
+        lastParams.forEach(element => {
+            if (element.paramName === "move_vel") {
+                $("#maxSpeed").val(element.value);
+            } else if (element.paramName === "lhd_time") {
+                $("#lhdTime").val(element.value);
+            } else if (element.paramName === "fng_vel") {
+                $("#fingerSpeed").val(element.value);
+            } else if (element.paramName === "lhd_ext") {
+                $("#lhdExtension").val(element.value);
+            }
+        });
+    });
 
 });

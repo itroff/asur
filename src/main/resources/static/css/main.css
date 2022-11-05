@@ -180,9 +180,7 @@
     display: table;
   }
 
-  .finger-success {
-    background-color: green;
-  }
+
 
   .finger > span {
     display: table-cell;
@@ -584,4 +582,13 @@
     padding-right: 40px;
   }
 
+  .row > .col-robot {
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+  }
+
+}
+
+.finger-success {
+  background-color: green;
 }
