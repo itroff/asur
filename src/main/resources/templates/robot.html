@@ -40,7 +40,7 @@
     <a class="btn btn-dark but-pad" href="/robot" role="button">Shuttle</a>
     <a class="btn btn-secondary but-pad" href="/diagnostics" role="button">Monitor</a>
     <label class="ms-auto lbl-pad">Shuttle ID</label>
-    <div class="form-group col-md-1">
+    <div class="form-group">
       <select class="form-select select-pad" id="exampleFormControlSelect1">
         <option>No active</option>
       </select>
@@ -53,7 +53,7 @@
 
   <div class="container-fluid text-center">
     <div class="row" id="main-robot">
-      <div class="col-4">
+      <div class="col-4 col-robot">
         <div class="card card-main card-full">
           <div class="header-area-bold">
             Shuttle Configuration
@@ -102,16 +102,16 @@
           </div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-6 col-robot">
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 col-robot">
             <div class="card card-main card-top">
               <div class="header-area-bold">
                 Front left finger
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="finger-wrapper">
                       <div class="finger" id="FNG_F_L_U">
                         <span> Finger up</span>
@@ -123,7 +123,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="menuIconRobot" id="front-up-left-finger-btn">
                       <img th:src="@{/img/motor_up.png}" />
                     </div>
@@ -131,7 +131,7 @@
                       <img th:src="@{/img/motor_down.png}" />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="range-wid">
                      <label for="front-left-range" class="label-finger-range" id="front-left-range-label">80</label>
                       <input type="range" class="form-range-new robot-range" min="0" max="100" value="80"
@@ -147,7 +147,7 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="finger-wrapper">
                       <div class="finger" id="FNG_R_L_U">
                         <span> Finger up</span>
@@ -159,7 +159,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="menuIconRobot" id="motor-up-rear-left-finger-btn">
                       <img th:src="@{/img/motor_up.png}" />
                     </div>
@@ -167,7 +167,7 @@
                       <img th:src="@{/img/motor_down.png}" />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="range-wid">
                       <label for="rear-left-range" class="label-finger-range" id="rear-left-range-label">80</label>
                       <input type="range" class="form-range-new robot-range" min="0" max="100" value="80"
@@ -178,21 +178,21 @@
               </div>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-6 col-robot">
             <div class="card card-main card-top">
               <div class="header-area-bold">
                 Front right finger
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="range-wid">
                       <label for="front-right-range" class="label-finger-range" id="front-right-range-label">80</label>
                       <input type="range" class="form-range-new robot-range" min="0" max="100" value="80"
                         id="front-right-range">
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="menuIconRobot" id="motor-up-front-right-finger-btn">
                       <img th:src="@{/img/motor_up.png}" />
                     </div>
@@ -200,7 +200,7 @@
                       <img th:src="@{/img/motor_down.png}" />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="finger-wrapper">
                       <div class="finger" id="FNG_F_R_U">
                         <span> Finger up</span>
@@ -221,14 +221,14 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="range-wid">
                       <label for="rear-right-range" class="label-finger-range" id="rear-right-range-label">80</label>
                       <input type="range" class="form-range-new robot-range" min="0" max="100" value="80"
                         id="rear-right-range">
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="menuIconRobot" id="motor-up-rear-right-finger-btn">
                       <img th:src="@{/img/motor_up.png}" />
                     </div>
@@ -236,7 +236,7 @@
                       <img th:src="@{/img/motor_down.png}" />
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col col-robot">
                     <div class="finger-wrapper">
                       <div class="finger" id="FNG_R_R_U">
                         <span> Finger up</span>
@@ -260,7 +260,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-2">
+                <div class="col-2 col-robot">
                   <div class="finger-wrapper">
                     <div class="finger-slim" id="LHD_F_L">
                       <span>LHD front left</span>
@@ -277,28 +277,28 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-2 col-robot">
                   <div class="finger-wrapper">
                     <div class="menuIconSide" id="motor-left-handling-btn">
                       <img th:src="@{/img/motor_left.png}" />
                     </div>
                   </div>
                 </div>
-                  <div class="col-4">
+                  <div class="col-4 col-robot">
                     <div class="range-wid-horizontal">
                       <label for="rear-right-range" class="label-finger-range" id="load-handling-range-label">80</label>
                       <input type="range" class="form-range-new" min="0" max="100" value="80"
                         id="load-handling-range">
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-2 col-robot">
                     <div class="finger-wrapper">
                       <div class="menuIconSide" id="motor-right-handling-btn">
                         <img th:src="@{/img/motor_right.png}" />
                       </div>
                     </div>
                   </div>
-                    <div class="col-2">
+                    <div class="col-2 col-robot">
                       <div class="finger-wrapper">
                         <div class="finger-slim" id="LHD_F_R">
                           <span>LHD front right</span>
@@ -321,7 +321,7 @@
             </div>
 
           </div>
-          <div class="col-2">
+          <div class="col-2 col-robot">
             <div class="card card-main card-full">
               <div class="header-area-bold">
                 Platform
