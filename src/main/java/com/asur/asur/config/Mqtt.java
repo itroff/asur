@@ -23,11 +23,15 @@ public class Mqtt {
     private static IMqttClient instance;
     private static MqttConfig config;
 
+    private static final String  localS = "127.0.0.1";
+
+    private static final String  hivemqS = "broker.hivemq.com";
+
     public static IMqttClient getInstance() {
         try {
             if (instance == null) {
                 if(config == null) {
-                    config = new MqttConfig("asur-server", "127.0.0.1" /*"broker.hivemq.com"*/, "1883", false);
+                    config = new MqttConfig("asur-server",  hivemqS, "1883", false);
                 }
                 LOGGER.info(config.toString());
                 // TODO init config

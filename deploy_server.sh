@@ -14,6 +14,6 @@ rsync -avhe "ssh -p $PORT" --progress docker-compose.yml $USER@$HOST:~/asur/dock
 ssh $USER@$HOST -p $PORT "
 cd asur
 docker build . --tag asur:latest
-docker compose up -d
+docker-compose up -d
 docker logs -f asur
 "

@@ -8,7 +8,7 @@ case $1 in
     docker image prune -f
     docker logs -f asur
     ;;
-    -prod) ./deploy_server.sh asur 10.0.0.1 22
+    -prod) ./deploy_server.sh elias 130.193.58.37 22
     ;;
     *) echo "usage ./deploy [-local | -prod ]"
     ;;
