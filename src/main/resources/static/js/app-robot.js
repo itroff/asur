@@ -9,6 +9,7 @@ function connect() {
         stompClient.subscribe('/topic/params', function (msg) {
             var message = JSON.parse(msg.body);
             lastParams = message;
+            $(".finger").removeClass("finger-success");
             message.forEach(element => {
                 if(element.paramName.startsWith("info/sensor/")) {
                     let paramName = element.paramName;
