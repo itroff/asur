@@ -41,6 +41,9 @@ public class ConnectedRobots {
     @Autowired
     private Diagnostics diagnostics;
 
+    @Autowired
+    private Mqtt mqtt;
+
     public void updateKeepAlive(String topicName) {
         try{
             String prefix = topicName.split("/")[1];

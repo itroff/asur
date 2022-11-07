@@ -45,6 +45,9 @@ public class MqttService {
     private Diagnostics diagnostics;
 
     @Autowired
+    private Mqtt mqtt;
+
+    @Autowired
     public MqttService(ConnectedRobots connectedRobots) {
         this.connectedRobots = connectedRobots;
         try {

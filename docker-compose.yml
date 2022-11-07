@@ -10,3 +10,6 @@ services:
 #      - "8666:8666"
     volumes:
       - $HOME/asur/:/asur/asur/src/main/resources/scenarious/:rw
+    environment:
+      - MQTT_ADDRESS=broker.hivemq.com
+      - MQTT_ID=asur-server-prod
