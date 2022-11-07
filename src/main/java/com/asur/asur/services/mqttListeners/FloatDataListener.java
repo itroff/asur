@@ -10,6 +10,7 @@ import com.asur.asur.generated.model.FloatData.FloatDataProto;
 import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.FLoatParam;
 import com.asur.asur.services.ConnectedRobots;
+import com.google.protobuf.util.JsonFormat;
 
 public class FloatDataListener implements IMqttMessageListener{
 
@@ -27,10 +28,11 @@ public class FloatDataListener implements IMqttMessageListener{
         String prefix = topic.split("/")[1];
         try{
             FloatData.FloatDataProto proto = FloatDataProto.parseFrom(message.getPayload());
+            String protoStr = JsonFormat.printer().includingDefaultValueFields().print(proto);
             String paramName = topic.split("/")[3];
-            LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
+            LOGGER.info("topic: {}, msg: {}", topic, protoStr);
             connectedRobots.updateParam(prefix, new FLoatParam(paramName, proto.getData()),
-            new DiagnosticElem(proto.toString(), topic, "Server"));
+            new DiagnosticElem(protoStr, topic, "Server"));
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
             

@@ -12,6 +12,7 @@ import com.asur.asur.generated.model.Error.ErrorProto;
 import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.models.IntegerParam;
 import com.asur.asur.services.ConnectedRobots;
+import com.google.protobuf.util.JsonFormat;
 
 public class ErrorListener implements IMqttMessageListener {
 
@@ -36,10 +37,11 @@ public class ErrorListener implements IMqttMessageListener {
             String prefix = topic.split("/")[1];
             try{
                 com.asur.asur.generated.model.Error.ErrorProto proto = ErrorProto.parseFrom(message.getPayload());
+                String protoStr = JsonFormat.printer().includingDefaultValueFields().print(proto);
                 String paramName = topic.split("/")[3];
-                LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
+                LOGGER.info("topic: {}, msg: {}", topic, protoStr);
                 connectedRobots.updateParam(prefix, new IntegerParam(paramName, proto.getError()),
-                new DiagnosticElem(proto.toString(), topic, "Server"));
+                new DiagnosticElem(protoStr, topic, "Server"));
                 connectedRobots.updateRobotError(prefix, proto.getError());
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());

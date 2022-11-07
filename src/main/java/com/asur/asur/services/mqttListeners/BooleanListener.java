@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.converter.ProtobufJsonFormatMessageConverter;
 import org.springframework.stereotype.Component;
 
 import com.asur.asur.generated.model.Boolean;
@@ -17,6 +18,7 @@ import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.models.BooleanParam;
 import com.asur.asur.models.DiagnosticElem;
 import com.asur.asur.services.ConnectedRobots;
+import com.google.protobuf.util.JsonFormat;
 
 //@Component
 public class BooleanListener implements  IMqttMessageListener{
@@ -43,10 +45,11 @@ public class BooleanListener implements  IMqttMessageListener{
             String prefix = splitterText[1];
             try{
                 Boolean.BooleanProto proto = BooleanProto.parseFrom(message.getPayload());
+                String protoStr = JsonFormat.printer().includingDefaultValueFields().print(proto);
                 String paramName = splitterText[2] + "/" + splitterText[3] + "/" + splitterText[4];
-                LOGGER.info("topic: {}, msg: {}", topic, proto.toString());
+                LOGGER.info("topic: {}, msg: {}", topic, protoStr);
                 connectedRobots.updateParam(prefix, new BooleanParam(paramName, proto.getEnabled()),
-                new DiagnosticElem(proto.toString(), topic, "Server"));
+                new DiagnosticElem(protoStr, topic, "Server"));
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
                 

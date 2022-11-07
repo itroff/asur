@@ -595,10 +595,12 @@
   }
 
   #card-last {
-    padding-bottom: 85px;
+    padding-bottom: 55px;
   }
 
-
+  .card-height {
+    height: initial;
+  }
 
   .btn-start>img {
     width: 83%;

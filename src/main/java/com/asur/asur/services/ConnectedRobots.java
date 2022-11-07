@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class ConnectedRobots {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectedRobots.class);
     //TODO multithread
-    private Map<String, Robot> allRobots = new HashMap<>();
+    private Map<String, Robot> allRobots = new ConcurrentHashMap<>();
 
-    private Map<Robot, List<RobotParam>> params = new HashMap<>();
+    private Map<Robot, List<RobotParam>> params = new ConcurrentHashMap<>();
 
     @Autowired
     WebSocketSender webSocketSender;
@@ -134,7 +135,7 @@ public class ConnectedRobots {
         return new ArrayList<Robot>(this.allRobots.values());
     }
 
-    public void updateParam(String robotName, RobotParam param, DiagnosticElem elem) {
+    public synchronized void updateParam(String robotName, RobotParam param, DiagnosticElem elem) {
 
         Robot rb = allRobots.get(robotName);
         boolean finded = false;

@@ -26,9 +26,11 @@ public class Diagnostics {
         obj = new ArrayDeque<>(100);
     }
 
-    public void addElem(DiagnosticElem elem) {
+    public synchronized void addElem(DiagnosticElem elem) {
      //   LOGGER.info(elem.toString());
+      
         obj.add(elem);
+    
         webSocketSender.sendDiagnostic(elem);
     }
 
