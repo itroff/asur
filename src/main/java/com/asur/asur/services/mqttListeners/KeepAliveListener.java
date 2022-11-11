@@ -11,26 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.services.ConnectedRobots;
+import com.google.protobuf.util.JsonFormat;
 
 public class KeepAliveListener implements IMqttMessageListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KeepAliveListener.class);
 
-    //@Autowired
+    // @Autowired
     private ConnectedRobots connectedRobots;
 
     public KeepAliveListener(ConnectedRobots robots) {
         this.connectedRobots = robots;
     }
- 
+
     private ExecutorService pool = Executors.newFixedThreadPool(10);
 
     class MessageHandler implements Runnable {
         MqttMessage message;
         String topic;
         ConnectedRobots robots;
-
-
 
         public MessageHandler(String topic, MqttMessage message, ConnectedRobots robots) {
             this.message = message;
@@ -40,28 +39,33 @@ public class KeepAliveListener implements IMqttMessageListener {
 
         public void run() {
             try {
-            com.asur.asur.generated.model.Boolean.BooleanProto proto = com.asur.asur.generated.model.Boolean.BooleanProto.parseFrom(message.getPayload());
-         //   String protoStr = JsonFormat.printer().includingDefaultValueFields().print(proto);
-           //  LOGGER.info("{}", proto.getEnabled());
-        } catch (Exception ex) {
-            LOGGER.error(ex.getMessage());
-            
-        }
-        robots.updateKeepAlive(topic);
-     /*       LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
-            "], Topic[ "+ topic + "],  Message [" + message +"] ");
+                com.asur.asur.generated.model.Boolean.BooleanProto proto = com.asur.asur.generated.model.Boolean.BooleanProto
+                        .parseFrom(message.getPayload());
+                // String protoStr =
+                // JsonFormat.printer().includingDefaultValueFields().print(proto);
+                // LOGGER.info("{}", protoStr);
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+
+            }
+            robots.updateKeepAlive(topic);
+            /*
+             * LOGGER.info("Thread [ " + Thread.currentThread().getName() +
+             * "], Topic[ "+ topic + "],  Message [" + message +"] ");
              */
         }
     }
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-     //   LOGGER.info("asdsad");
-     //   LOGGER.info(connectedRobots.toString());
+        // LOGGER.info("asdsad");
+        // LOGGER.info(connectedRobots.toString());
         pool.execute(new MessageHandler(topic, message, connectedRobots));
-   /*      LOGGER.info("Thread [ " + Thread.currentThread().getName() + 
-        "], Topic[ "+ topic + "],  Message [" + message +"] ");
-        connectedRobots.updateKeepAlive(topic);*/
+        /*
+         * LOGGER.info("Thread [ " + Thread.currentThread().getName() +
+         * "], Topic[ "+ topic + "],  Message [" + message +"] ");
+         * connectedRobots.updateKeepAlive(topic);
+         */
     }
-    
+
 }

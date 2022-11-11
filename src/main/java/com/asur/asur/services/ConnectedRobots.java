@@ -22,7 +22,8 @@ import com.asur.asur.models.RobotParam;
 import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.ErrorListener;
-import com.asur.asur.services.mqttListeners.FloatDataListener;
+import com.asur.asur.services.mqttListeners.IntDataListener;
+//import com.asur.asur.services.mqttListeners.FloatDataListener;
 import com.asur.asur.services.mqttListeners.MotorResListener;
 
 
@@ -123,11 +124,11 @@ public class ConnectedRobots {
             }
         }
         // topics for floatdata
-        List<String> topicsFloatData = Arrays.asList( "/param/move_vel/res","/param/lhd_time/res", "/param/fng_vel/res",
+        List<String> topicsIntData = Arrays.asList( "/param/move_vel/res","/param/lhd_time/res", "/param/fng_vel/res",
         "/param/lhd_ext/res"); 
-        for (String topic : topicsFloatData) {
+        for (String topic : topicsIntData) {
             try {
-                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new FloatDataListener(this));
+                Mqtt.getInstance().subscribe(MqttService.prefix + id + topic, 1, new IntDataListener(this));
             } catch (MqttException ex) {
                 LOGGER.error(ex.getMessage());
             }

@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option java_package = "com.asur.asur.generated.model";
+
+message IntDataProto { 
+    int32 data = 1;
+}

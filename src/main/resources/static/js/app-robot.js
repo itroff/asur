@@ -129,16 +129,16 @@ $(function () {
         
     });
     $("#read-params-btn").click(function () {
-        console.log(lastParams);
+       // console.log(lastParams);
         lastParams.forEach(element => {
             if (element.paramName === "move_vel") {
-                $("#maxSpeed").val(element.value);
+                $("#maxSpeed").val(element.value / 100);
             } else if (element.paramName === "lhd_time") {
-                $("#lhdTime").val(element.value);
+                $("#lhdTime").val(element.value / 100);
             } else if (element.paramName === "fng_vel") {
-                $("#fingerSpeed").val(element.value);
+                $("#fingerSpeed").val(element.value / 100);
             } else if (element.paramName === "lhd_ext") {
-                $("#lhdExtension").val(element.value);
+                $("#lhdExtension").val(element.value / 100);
             }
         });
     });

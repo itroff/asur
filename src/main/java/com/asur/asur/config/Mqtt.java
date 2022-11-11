@@ -60,7 +60,7 @@ public class Mqtt {
                         MQTT_ID = "asur-server";
                         LOGGER.info("use default id asur-server" );
                     }
-                    config = new MqttConfig(MQTT_ID,  hivemqS, "1883", false);
+                    config = new MqttConfig(MQTT_ID,  SVN_URL, "1883", false);
                 }
                 LOGGER.info(config.toString());
                 // TODO init config

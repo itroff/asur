@@ -19,8 +19,10 @@ import org.springframework.stereotype.Component;
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Boolean;
 import com.asur.asur.generated.model.FloatData;
+import com.asur.asur.generated.model.IntData;
 import com.asur.asur.generated.model.Test;
 import com.asur.asur.generated.model.Boolean.BooleanProto;
+import com.asur.asur.generated.model.FloatData.FloatDataProto;
 import com.asur.asur.generated.model.PosCmd.PosCmdProto;
 import com.asur.asur.generated.model.Test.TestProto;
 import com.asur.asur.models.*;
@@ -93,6 +95,15 @@ public class MqttService {
         //System.out.println(proto.toByteArray());
         //System.out.println(proto.toByteString());
         sendCmd("asur/led", proto);
+    } 
+    @Scheduled(fixedRate = 60 * 1000)
+    public void sendFloat() {
+        float f = 1.23f;
+        FloatData.FloatDataProto proto = FloatDataProto.newBuilder().setData(f).build();
+     //   System.out.println(proto.toString());
+        //System.out.println(proto.toByteArray());
+        //System.out.println(proto.toByteString());
+        sendCmd("Robot/1/param/move_vel/set", proto);
     } */
 
         
@@ -130,9 +141,10 @@ public class MqttService {
     }
 
     public void sendParamCmd(CmdParam cmd){
-        FloatData.FloatDataProto proto = FloatData.FloatDataProto.newBuilder()
-        .setData(cmd.getValue()).build();
-        LOGGER.info("topic:{} float:{}",cmd.getTopic(), bytesToHex(proto.toByteArray()));
+        //FloatData.FloatDataProto proto = FloatData.FloatDataProto.newBuilder()
+        IntData.IntDataProto proto = IntData.IntDataProto.newBuilder()
+        .setData((int)(cmd.getValue() * 100)).build();
+        //LOGGER.info("topic:{} float:{}",cmd.getTopic(), bytesToHex(proto.toByteArray()));
         sendCmd(prefix + cmd.getRobot().getTopicId() + "/param/"+ cmd.getTopic() + "/set", proto);
     }
 

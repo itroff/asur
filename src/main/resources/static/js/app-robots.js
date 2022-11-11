@@ -101,16 +101,24 @@ $(function () {
     if (role === 'user') {
         modeLocal = 'operate';
     }
-    if (modeLocal !== undefined) {
+    console.log(modeLocal);
+    if (modeLocal === 'operate' || modeLocal === 'setting') {
         if (modeLocal == 'operate') {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#main-robot").addClass("disabled-div");
+            $("#card-last").addClass("disabled-div");
         } else if (modeLocal == 'setting') {
             $("#operating-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#setting-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#main-robot").removeClass("disabled-div");
+            $("#card-last").removeClass("disabled-div");
         }
+    } else {
+        $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
+        $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
+        $("#main-robot").addClass("disabled-div");
+        $("#card-last").addClass("disabled-div");
     }
 
     $("#operating-btn").click(function () {
@@ -118,6 +126,7 @@ $(function () {
             $("#operating-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#setting-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#main-robot").addClass("disabled-div");
+            $("#card-last").addClass("disabled-div");
             mode = 'operate';
             localStorage.setItem('mode', mode);
             sendBoolean2("/info/mode/cmd", false);
@@ -128,6 +137,7 @@ $(function () {
             $("#operating-btn").removeClass("btn-success").addClass("btn-secondary");
             $("#setting-btn").removeClass("btn-secondary").addClass("btn-success");
             $("#main-robot").removeClass("disabled-div");
+            $("#card-last").removeClass("disabled-div");
             mode = 'setting';
             localStorage.setItem('mode', mode);
             sendBoolean2("/info/mode/cmd", true);
