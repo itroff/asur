@@ -5,5 +5,5 @@ option java_package = "com.asur.asur.generated.model";
 message PosCmdProto { 
     bool direction = 1;
     int32 position = 2;
-    repeated float distances = 3;
+    repeated int32 distances = 3;
 }

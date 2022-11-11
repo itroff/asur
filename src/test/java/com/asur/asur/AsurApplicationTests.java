@@ -63,7 +63,7 @@ class AsurApplicationTests {
 		el2.setType("PosCmd");
 		el2.setTopic("action/pos/cmd");
 		el2.setResponseTopic("action/pos/res");
-		PosCmd pcmd = new PosCmd(true, 3, new float[0], rb);
+		PosCmd pcmd = new PosCmd(true, 3, new int[0], rb);
 		el2.setPosCmd(pcmd);
 
 		CmdElem el3 = new CmdElem();

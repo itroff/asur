@@ -23,7 +23,7 @@ public class Diagnostics {
     WebSocketSender webSocketSender;
 
     public Diagnostics() {
-        obj = new ArrayDeque<>(100);
+        obj = new ArrayDeque<>(1000);// TOOD params
     }
 
     public synchronized void addElem(DiagnosticElem elem) {

@@ -29,17 +29,17 @@ public final class PosCmd {
     int getPosition();
 
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
-    java.util.List<java.lang.Float> getDistancesList();
+    java.util.List<java.lang.Integer> getDistancesList();
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
     int getDistancesCount();
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
-    float getDistances(int index);
+    int getDistances(int index);
   }
   /**
    * Protobuf type {@code PosCmdProto}
@@ -97,23 +97,23 @@ public final class PosCmd {
               position_ = input.readInt32();
               break;
             }
-            case 29: {
+            case 24: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                distances_ = new java.util.ArrayList<java.lang.Float>();
+                distances_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              distances_.add(input.readFloat());
+              distances_.add(input.readInt32());
               break;
             }
             case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
-                distances_ = new java.util.ArrayList<java.lang.Float>();
+                distances_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000004;
               }
               while (input.getBytesUntilLimit() > 0) {
-                distances_.add(input.readFloat());
+                distances_.add(input.readInt32());
               }
               input.popLimit(limit);
               break;
@@ -165,24 +165,24 @@ public final class PosCmd {
     }
 
     public static final int DISTANCES_FIELD_NUMBER = 3;
-    private java.util.List<java.lang.Float> distances_;
+    private java.util.List<java.lang.Integer> distances_;
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
-    public java.util.List<java.lang.Float>
+    public java.util.List<java.lang.Integer>
         getDistancesList() {
       return distances_;
     }
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
     public int getDistancesCount() {
       return distances_.size();
     }
     /**
-     * <code>repeated float distances = 3;</code>
+     * <code>repeated int32 distances = 3;</code>
      */
-    public float getDistances(int index) {
+    public int getDistances(int index) {
       return distances_.get(index);
     }
     private int distancesMemoizedSerializedSize = -1;
@@ -211,7 +211,7 @@ public final class PosCmd {
         output.writeUInt32NoTag(distancesMemoizedSerializedSize);
       }
       for (int i = 0; i < distances_.size(); i++) {
-        output.writeFloatNoTag(distances_.get(i));
+        output.writeInt32NoTag(distances_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -231,7 +231,10 @@ public final class PosCmd {
       }
       {
         int dataSize = 0;
-        dataSize = 4 * getDistancesList().size();
+        for (int i = 0; i < distances_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(distances_.get(i));
+        }
         size += dataSize;
         if (!getDistancesList().isEmpty()) {
           size += 1;
@@ -586,56 +589,56 @@ public final class PosCmd {
         return this;
       }
 
-      private java.util.List<java.lang.Float> distances_ = java.util.Collections.emptyList();
+      private java.util.List<java.lang.Integer> distances_ = java.util.Collections.emptyList();
       private void ensureDistancesIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          distances_ = new java.util.ArrayList<java.lang.Float>(distances_);
+          distances_ = new java.util.ArrayList<java.lang.Integer>(distances_);
           bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
-      public java.util.List<java.lang.Float>
+      public java.util.List<java.lang.Integer>
           getDistancesList() {
         return java.util.Collections.unmodifiableList(distances_);
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
       public int getDistancesCount() {
         return distances_.size();
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
-      public float getDistances(int index) {
+      public int getDistances(int index) {
         return distances_.get(index);
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
       public Builder setDistances(
-          int index, float value) {
+          int index, int value) {
         ensureDistancesIsMutable();
         distances_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
-      public Builder addDistances(float value) {
+      public Builder addDistances(int value) {
         ensureDistancesIsMutable();
         distances_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
       public Builder addAllDistances(
-          java.lang.Iterable<? extends java.lang.Float> values) {
+          java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureDistancesIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, distances_);
@@ -643,7 +646,7 @@ public final class PosCmd {
         return this;
       }
       /**
-       * <code>repeated float distances = 3;</code>
+       * <code>repeated int32 distances = 3;</code>
        */
       public Builder clearDistances() {
         distances_ = java.util.Collections.emptyList();
@@ -716,7 +719,7 @@ public final class PosCmd {
     java.lang.String[] descriptorData = {
       "\n com/asur/asur/model/PosCmd.proto\"E\n\013Po" +
       "sCmdProto\022\021\n\tdirection\030\001 \001(\010\022\020\n\010position" +
-      "\030\002 \001(\005\022\021\n\tdistances\030\003 \003(\002B\037\n\035com.asur.as" +
+      "\030\002 \001(\005\022\021\n\tdistances\030\003 \003(\005B\037\n\035com.asur.as" +
       "ur.generated.modelb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

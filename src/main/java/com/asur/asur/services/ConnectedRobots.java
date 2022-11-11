@@ -74,20 +74,20 @@ public class ConnectedRobots {
     @Scheduled(fixedRate = 1000)
     public void updateStatus() {
         int robotsNum = allRobots.size();
-        int robotsOnline = 0;
-        boolean changed = false;
+       // int robotsOnline = 0;
+       // boolean changed = false;
         for (Map.Entry<String, Robot> entry : allRobots.entrySet()) {
-            if (entry.getValue().getLastKeepAlive().plusSeconds(2).isBefore(LocalDateTime.now())) {
+            if (entry.getValue().getLastKeepAlive().plusSeconds(3).isBefore(LocalDateTime.now())) {
                 entry.getValue().setStatus(RobotStatusEnum.NO_LINK);
-                changed = true;
+              //  changed = true;
             }
-            if (entry.getValue().getStatus() == RobotStatusEnum.ONLINE) {
+           /*if (entry.getValue().getStatus() == RobotStatusEnum.ONLINE || entry.getValue().getStatus() == RobotStatusEnum.FAULT) {
                 robotsOnline++;
-            }
+            } */ 
         }
-        if (changed) {
+      /*  if (changed) {
             webSocketSender.sendConnected(getAllRobots());
-        }
+        } */
       //  LOGGER.info("allRobots: {}, onlineRobots: {}", robotsNum, robotsOnline);
     }
 

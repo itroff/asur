@@ -57,9 +57,8 @@ function showConnected(message) {
         if (val == element.topicId) {
             currentRobot = element;
         }
-        if (element.status == 'ONLINE') {
+        if (element.status == 'ONLINE' || element.status == 'FAULT') {
             $("#list-connected").append('<li>' + element.topicId + '</li>');
-
         }
     });
 

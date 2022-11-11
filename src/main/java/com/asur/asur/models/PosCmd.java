@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PosCmd {
     boolean direction;
     int position;
-    float[] distancies;
+    int[] distancies;
     Robot robot;
 
     
