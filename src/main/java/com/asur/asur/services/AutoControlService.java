@@ -92,10 +92,13 @@ public class AutoControlService  {
 
     @Scheduled(fixedRate = 500)
     public void controlLoop() {
+        try{
         if(!state.equals(StateControl.WAITINGRES)) {
             return;
         }
+       
         RobotParam param =  connectedRobots.getParamRobot(currentMission.getRobotId(), currentCmd.getResponseTopic());
+        
         if (param == null) {
             return;
         }
@@ -115,6 +118,9 @@ public class AutoControlService  {
                 } // TODO if failure
             }
         }
+    } catch(Exception ex) {
+        LOGGER.info("error in sheduled task");
+    }
     }
 
     public void startMission() {
@@ -208,7 +214,7 @@ public class AutoControlService  {
        // Paths.get("src/main/resources/scenarious").to
         List<String> scenariousFiles = new ArrayList<>();
         List<String> files = Stream.of(new File("/asur/asur/src/main/resources/scenarious").listFiles())
-            .filter(file -> !file.isDirectory())
+            .filter(file -> (!file.isDirectory() && file.getName().endsWith(".json")))
             .map(File::getName)
             .collect(Collectors.toList());
             for (String filename : files){

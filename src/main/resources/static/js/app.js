@@ -86,7 +86,7 @@ function sendMqttConfig() {
 
 function sendMove(msg) {
     stompClient.send("/app/cmd-pos", {}, JSON.stringify({'direction' : msg, 'position' : parseInt($('#position-input').val(), 10), 
-    'distances' : [], 'robot': robot}));
+    'distancies' : [], 'robot': robot}));
 }
 
 function sendCargo(type, direction) {

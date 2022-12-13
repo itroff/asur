@@ -1,0 +1,25 @@
+{
+  "name" : "Poscmd",
+  "robotId" : "001",
+  "cmds" : [  {
+    "topic" : "action/pos/cmd",
+    "type" : "PosCmd",
+    "responseTopic" : "action/pos/res",
+    "responseType" : null,
+    "boolCmd" : null,
+    "posCmd" : {
+      "direction" : true,
+      "position" : 3,
+      "distancies" : [ 1,2,3],
+      "robot" : {
+        "id" : 0,
+        "name" : null,
+        "topicId" : "001",
+        "status" : null,
+        "lastKeepAlive" : null
+      }
+    },
+    "cargoCmd" : null
+  } ],
+  "repeated" : false
+}

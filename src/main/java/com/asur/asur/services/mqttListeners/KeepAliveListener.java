@@ -41,9 +41,9 @@ public class KeepAliveListener implements IMqttMessageListener {
             try {
                 com.asur.asur.generated.model.Boolean.BooleanProto proto = com.asur.asur.generated.model.Boolean.BooleanProto
                         .parseFrom(message.getPayload());
-                // String protoStr =
-                // JsonFormat.printer().includingDefaultValueFields().print(proto);
-                // LOGGER.info("{}", protoStr);
+                 String protoStr =
+                 JsonFormat.printer().includingDefaultValueFields().print(proto);
+                 LOGGER.info("{}", protoStr);
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
 

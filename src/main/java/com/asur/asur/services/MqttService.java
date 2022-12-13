@@ -1,10 +1,14 @@
 package com.asur.asur.services;
 
 import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
@@ -123,8 +127,20 @@ public class MqttService {
     }
 
     public void sendPosCmd(PosCmd cmd){
-        com.asur.asur.generated.model.PosCmd.PosCmdProto proto = com.asur.asur.generated.model.PosCmd.PosCmdProto.newBuilder()
-        .setDirection(cmd.isDirection()).setPosition(cmd.getPosition()).build();
+        List<Integer> lst = new ArrayList<>();
+        if (cmd.getDistancies().length > 0) {
+            lst = Arrays.stream(cmd.getDistancies())
+                    .boxed().collect(Collectors.toList());
+        }
+ 
+        com.asur.asur.generated.model.PosCmd.PosCmdProto.Builder protoBuilder = com.asur.asur.generated.model.PosCmd.PosCmdProto.newBuilder()
+        .setDirection(cmd.isDirection()).setPosition(cmd.getPosition());/* .addAllDistances(lst).build();*/
+        com.asur.asur.generated.model.PosCmd.PosCmdProto proto = null;
+        if (cmd.getDistancies().length > 0) {
+            proto = protoBuilder.addAllDistances(lst).build();
+        } else {
+            proto = protoBuilder.build();
+        }
         sendCmd(prefix + cmd.getRobot().getTopicId() + "/action/pos/cmd", proto);
     }
 

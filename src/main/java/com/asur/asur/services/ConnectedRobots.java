@@ -88,7 +88,7 @@ public class ConnectedRobots {
       /*  if (changed) {
             webSocketSender.sendConnected(getAllRobots());
         } */
-      //  LOGGER.info("allRobots: {}, onlineRobots: {}", robotsNum, robotsOnline);
+        //LOGGER.info("allRobots: {}, onlineRobots: {}", robotsNum, robotsOnline);
     }
 
 
