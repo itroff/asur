@@ -85,8 +85,17 @@ function sendMqttConfig() {
 }
 
 function sendMove(msg) {
+    let str = $("#distances-input").val();
+    let arrDigits = str.split(",");
+    let arrDist = [];
+    arrDigits.forEach(element => {
+        let elem = parseInt(element.trim(), 10);
+        if(!isNaN(elem)){
+            arrDist.push(elem);
+        }
+    });
     stompClient.send("/app/cmd-pos", {}, JSON.stringify({'direction' : msg, 'position' : parseInt($('#position-input').val(), 10), 
-    'distancies' : [], 'robot': robot}));
+    'distancies' : arrDist, 'robot': robot}));
 }
 
 function sendCargo(type, direction) {
@@ -124,9 +133,16 @@ $(function () {
        $("input:file").change(function (){
         $( "#form-file" ).submit();
       });
+      $( "#distances-input" ).change(function() {
+        localStorage.setItem('distances', $("#distances-input").val());
+      });
+      
       $("#start-btn").click(function () { sendCmdAuto('PLAY'); });
       $("#pause-btn").click(function () { sendCmdAuto('PAUSE'); });
       $("#cancel-btn").click(function () { sendCmdAuto('STOP'); });
-
+      if ("distances" in localStorage) {
+        $("#distances-input").val(localStorage.getItem('distances'));
+      }
+     
     connect();
 });
