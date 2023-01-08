@@ -1,5 +1,7 @@
 package com.asur.asur.services;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +31,13 @@ public class WebSocketSender {
     }    
 
     public void sendDiagnostic(DiagnosticElem elem) {
-        this.simpMessagingTemplate.convertAndSend("/topic/diagnostics", List.of(elem));
+        this.simpMessagingTemplate.convertAndSend("/topic/diagnostics", Arrays.asList(elem));//List.of(elem));
     }
 
     public void sendAutoControl(String msg, StateControl state) {
-        Map<String, Object> map = Map.of("msg", msg, "state", state);
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", msg);//Map.of("msg", msg, "state", state);
+        map.put("state", state);
         this.simpMessagingTemplate.convertAndSend("/topic/auto-control", map);
     }
 }

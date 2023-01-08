@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -72,7 +73,7 @@ class AsurApplicationTests {
 		el3.setResponseTopic("action/cargo/res");
 		CargoCmd ccmd = new CargoCmd(true, true, rb);
 		el3.setCargoCmd(ccmd);
-		List<CmdElem> els = List.of(el, el2, el3);
+		List<CmdElem> els = Arrays.asList(el, el2, el3);//List.of(el, el2, el3);
 		file.setCmds(els);
     }
 /* 

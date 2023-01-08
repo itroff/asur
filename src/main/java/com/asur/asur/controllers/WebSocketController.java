@@ -54,6 +54,7 @@ public class WebSocketController {
     @MessageMapping("/mqtt-config")
     public void setMqttConfig(MqttConfig config) {
         Mqtt.reconnect(config);
+        mqttService.subscribeKeepAlive();
     }
 
     @MessageMapping("/cmd-bool")

@@ -116,10 +116,12 @@ $(function () {
         $('#position-input').get(0).value++;
     });
     $("#arrow-down-btn").click(function () {
-        $('#position-input').get(0).value--;
+        if($('#position-input').get(0).value > 1) {
+            $('#position-input').get(0).value--;
+        }
     });
-    $("#move-up-btn").click(function () { sendMove(false); });
-    $("#move-down-btn").click(function () { sendMove(true); });
+    $("#move-up-btn").click(function () { sendMove(true); });
+    $("#move-down-btn").click(function () { sendMove(false); });
     //first parameter unload - false, load - true. second param: false - left, true - right  
     $("#load-left-btn").click(function () { sendCargo(true, false); });
     $("#load-right-btn").click(function () { sendCargo(true, true); });

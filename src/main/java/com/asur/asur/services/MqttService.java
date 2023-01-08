@@ -1,17 +1,11 @@
 package com.asur.asur.services;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
@@ -22,15 +16,15 @@ import org.springframework.stereotype.Component;
 
 import com.asur.asur.config.Mqtt;
 import com.asur.asur.generated.model.Boolean;
-import com.asur.asur.generated.model.FloatData;
+import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.generated.model.IntData;
 import com.asur.asur.generated.model.Test;
-import com.asur.asur.generated.model.Boolean.BooleanProto;
-import com.asur.asur.generated.model.FloatData.FloatDataProto;
-import com.asur.asur.generated.model.PosCmd.PosCmdProto;
-import com.asur.asur.generated.model.Test.TestProto;
-import com.asur.asur.models.*;
-import com.asur.asur.services.mqttListeners.BooleanListener;
+import com.asur.asur.models.BoolCmd;
+import com.asur.asur.models.CargoCmd;
+import com.asur.asur.models.CmdParam;
+import com.asur.asur.models.DiagnosticElem;
+import com.asur.asur.models.MotorCmd;
+import com.asur.asur.models.PosCmd;
 import com.asur.asur.services.mqttListeners.KeepAliveListener;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.util.JsonFormat;
@@ -56,6 +50,10 @@ public class MqttService {
     @Autowired
     public MqttService(ConnectedRobots connectedRobots) {
         this.connectedRobots = connectedRobots;
+        subscribeKeepAlive();
+    }
+
+    public void subscribeKeepAlive(){
         try {
             Mqtt.getInstance().subscribe(prefix + "+/info/KeepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (MqttException ex) {
@@ -110,17 +108,17 @@ public class MqttService {
         sendCmd("Robot/1/param/move_vel/set", proto);
     } */
 
-        
+        /* 
     @Scheduled(fixedRate = 5000)
     private void sendConfig() {
         try{
             webSocketSender.sendConfig(Mqtt.getConfig());
-            Mqtt.getInstance().subscribe(prefix + "+/info/KeepAlive", 0, new KeepAliveListener(connectedRobots));
+       //     Mqtt.getInstance().subscribe(prefix + "+/info/KeepAlive", 0, new KeepAliveListener(connectedRobots));
         } catch (Exception ex) {
             LOGGER.error(ex.toString());
         }
     }
-
+*/
     public void sendBoolCmd(BoolCmd cmd){
         Boolean.BooleanProto proto = BooleanProto.newBuilder().setEnabled(cmd.isValue()).build();
         sendCmd(prefix + cmd.getRobot().getTopicId() + cmd.getTopic(), proto);

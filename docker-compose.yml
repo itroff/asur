@@ -11,5 +11,5 @@ services:
     volumes:
       - $HOME/asur/:/asur/asur/src/main/resources/scenarious/:rw
     environment:
-      - MQTT_ADDRESS=broker.mqttdashboard.com
+      - MQTT_ADDRESS=127.0.0.1
       - MQTT_ID=asur-server-prod

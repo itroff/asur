@@ -1,16 +1,9 @@
 package com.asur.asur.controllers;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,12 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.asur.asur.config.Mqtt;
-import com.asur.asur.config.Robots;
-import com.asur.asur.generated.model.Robot;
-import com.asur.asur.generated.model.Test;
-import com.asur.asur.generated.model.Robot.RobotProto;
-import com.asur.asur.generated.model.Test.TestProto;
 import com.asur.asur.models.FileMeta;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -97,7 +84,7 @@ public class UserController {
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
          //   LOGGER.info(Paths.get("src/main/resources/scenarious", fileName).toString());
-            writer.writeValue(Paths.get("/asur/asur/src/main/resources/scenarious", fileName).toFile(), mission);
+            writer.writeValue(Paths.get("/asur/asur/src/main/resources/scenarious", mission.getName() + ".json").toFile(), mission);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             redirectAttributes.addAttribute("file", "Error while processing file");

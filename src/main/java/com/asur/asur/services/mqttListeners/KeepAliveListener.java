@@ -7,11 +7,8 @@ import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.asur.asur.generated.model.Boolean.BooleanProto;
 import com.asur.asur.services.ConnectedRobots;
-import com.google.protobuf.util.JsonFormat;
 
 public class KeepAliveListener implements IMqttMessageListener {
 
@@ -61,6 +58,7 @@ public class KeepAliveListener implements IMqttMessageListener {
         // LOGGER.info("asdsad");
         // LOGGER.info(connectedRobots.toString());
         pool.execute(new MessageHandler(topic, message, connectedRobots));
+        
         /*
          * LOGGER.info("Thread [ " + Thread.currentThread().getName() +
          * "], Topic[ "+ topic + "],  Message [" + message +"] ");

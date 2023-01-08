@@ -11,13 +11,26 @@ function connect() {
             lastParams = message;
             $(".finger").removeClass("finger-success");
             message.forEach(element => {
-                if(element.paramName.startsWith("info/sensor/")) {
+                if (element.paramName.startsWith("info/sensor/")) {
                     let paramName = element.paramName;
-                    paramName =  paramName.replace("info/sensor/", "");
-                    if(element.value) {
-                        $("#" + paramName).addClass("finger-success");
+                    paramName = paramName.replace("info/sensor/", "");
+                    if (paramName == "FNG_F_L_U" || paramName == "FNG_F_L_D" ||
+                        paramName == "FNG_R_L_U" || paramName == "FNG_R_L_D" ||
+                        paramName == "FNG_F_R_U" || paramName == "FNG_F_R_D" ||
+                        paramName == "FNG_R_R_U" || paramName == "FNG_R_R_D" ||
+                        paramName == "LHD_F_L" || paramName == "LHD_R_L" ||
+                        paramName == "LHD_F_R" || paramName == "LHD_R_R") {
+                        if (element.value) {
+                            $("#" + paramName).removeClass("finger-success");
+                        } else {
+                            $("#" + paramName).addClass("finger-success");
+                        }
                     } else {
-                        $("#" + paramName).removeClass("finger-success");
+                        if (element.value) {
+                            $("#" + paramName).addClass("finger-success");
+                        } else {
+                            $("#" + paramName).removeClass("finger-success");
+                        }
                     }
                 }
             });
@@ -63,6 +76,52 @@ $(function () {
     $("#front-left-range").change(function(){
         $("#front-left-range-label").html($(this).val());
     });
+    $("#fingerSpeed").change(function(){
+        const minFingerSpeed = 10;
+        const maxFingerSpeed = 100;
+
+        if ($(this).val() < minFingerSpeed) { 
+            $(this).val(minFingerSpeed);
+        }
+        if ($(this).val() > maxFingerSpeed) { 
+            $(this).val(maxFingerSpeed);
+        }
+        $("#rear-right-range-label").html($(this).val());
+        $("#front-right-range-label").html($(this).val());
+        $("#rear-left-range-label").html($(this).val());
+        $("#front-left-range-label").html($(this).val());
+        $("#rear-right-range").val($(this).val());
+        $("#front-right-range").val($(this).val());
+        $("#front-left-range").val($(this).val());
+        $("#rear-left-range").val($(this).val());
+    });
+
+    $("#maxSpeed").change(function(){
+        const minShuttleSpeed = 0.1;
+        const maxShuttleSpeed = 4;
+
+        if ($(this).val() < minShuttleSpeed) { 
+            $(this).val(minShuttleSpeed);
+        }
+        if ($(this).val() > maxShuttleSpeed) { 
+            $(this).val(maxShuttleSpeed);
+        }
+    });
+
+    $("#lhdTime").change(function(){
+        const minLhdTime = 4;
+        const maxLhdTime = 7;
+
+        if ($(this).val() < minLhdTime) { 
+            $(this).val(minLhdTime);
+        }
+        if ($(this).val() > maxLhdTime) { 
+            $(this).val(maxLhdTime);
+        }
+    });
+    
+    
+
     // platform 
     $("#motor-up-nav-sensor-btn").click(function () {
         var speed = $("#platform-range").val();
