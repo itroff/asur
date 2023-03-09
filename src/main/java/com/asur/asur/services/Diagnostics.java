@@ -4,8 +4,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +12,7 @@ import com.asur.asur.models.DiagnosticElem;
 @Component
 public class Diagnostics {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(Diagnostics.class);
+  //  private final static Logger LOGGER = LoggerFactory.getLogger(Diagnostics.class);
     private final int SIZE_DEQUE = 1000;
     ArrayDeque<DiagnosticElem> obj;
 

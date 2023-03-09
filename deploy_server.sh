@@ -4,7 +4,7 @@ USER=$1
 HOST=$2
 PORT=$3
 
-./gradlew build
+./gradlew clean build
 ssh $USER@$HOST -p $PORT "
 mkdir -p asur
 "

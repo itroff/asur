@@ -2,7 +2,7 @@
 
 case $1 in
     -local)
-    ./gradlew build
+    ./gradlew clean build
     docker build . --tag asur:latest
     docker compose up -d
     docker image prune -f

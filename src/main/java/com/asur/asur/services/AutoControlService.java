@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -95,7 +94,9 @@ public class AutoControlService {
                 execCmd(currentMission.getCmds().get(0));
             }
 
-        } else {
+        } else if (cmd.equals(CmdControl.RETRY)) {
+            execCmd(currentMission.getCmds().get(0));
+        }else {
             webSocketSender.sendAutoControl("Wrong cmd", StateControl.WAITING);
         }
 
@@ -129,11 +130,13 @@ public class AutoControlService {
                     IntegerParam ip = (IntegerParam) param;
                     if (ip.getValue() == 3) {
                         controlStep(CmdControl.RESPONSE);
-                    } // TODO if failure
+                    } else if (ip.getValue() == 4){
+                        controlStep(CmdControl.RETRY);
+                    }
                 }
             }
         } catch (Exception ex) {
-            LOGGER.info("error in sheduled task {}", ex.getStackTrace());
+            LOGGER.info("error in sheduled task {}", ex.getMessage());
         }
     }
 
@@ -234,11 +237,11 @@ public class AutoControlService {
                 .collect(Collectors.toList());
         for (String filename : files) {
             try {
-                ObjectMapper mapper = new ObjectMapper();
+            //    ObjectMapper mapper = new ObjectMapper();
                 LOGGER.info(filename);
-                FileMeta mission = mapper.readValue(
-                        Paths.get("/asur/asur/src/main/resources/scenarious", filename).toFile(), FileMeta.class);
-                scenariousFiles.add(mission.getName());
+              //  FileMeta mission = mapper.readValue(
+              //          Paths.get("/asur/asur/src/main/resources/scenarious", filename).toFile(), FileMeta.class);
+                scenariousFiles.add(filename.split("\\.")[0]);
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
             }

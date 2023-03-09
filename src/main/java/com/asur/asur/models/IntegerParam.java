@@ -3,7 +3,6 @@ package com.asur.asur.models;
 import java.time.LocalDateTime;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class IntegerParam extends RobotParam {

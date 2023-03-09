@@ -3,7 +3,6 @@ package com.asur.asur.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +22,6 @@ import com.asur.asur.models.RobotStatusEnum;
 import com.asur.asur.services.mqttListeners.BooleanListener;
 import com.asur.asur.services.mqttListeners.ErrorListener;
 import com.asur.asur.services.mqttListeners.IntDataListener;
-//import com.asur.asur.services.mqttListeners.FloatDataListener;
 import com.asur.asur.services.mqttListeners.MotorResListener;
 
 
@@ -42,9 +40,6 @@ public class ConnectedRobots {
     @Autowired
     private Diagnostics diagnostics;
 
-    @Autowired
-    private Mqtt mqtt;
-
     public void updateKeepAlive(String topicName) {
         try{
             String prefix = topicName.split("/")[1];
@@ -61,7 +56,7 @@ public class ConnectedRobots {
                 RobotStatusEnum.ONLINE, LocalDateTime.now());
                 subscribeRobot(prefix);
                 allRobots.put(prefix, rb);
-                params.put(rb, new ArrayList<RobotParam>());
+                params.put(rb, new ArrayList<>());
                 webSocketSender.sendConnected(getAllRobots());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -73,7 +68,7 @@ public class ConnectedRobots {
  
     @Scheduled(fixedRate = 1000)
     public void updateStatus() {
-        int robotsNum = allRobots.size();
+     //   int robotsNum = allRobots.size();
       //  int robotsOnline = 0;
         boolean changed = false;
         for (Map.Entry<String, Robot> entry : allRobots.entrySet()) {
@@ -136,25 +131,28 @@ public class ConnectedRobots {
     }
 
     public List<Robot> getAllRobots() {
-        return new ArrayList<Robot>(this.allRobots.values());
+        return new ArrayList<>(this.allRobots.values());
     }
 
     public synchronized void updateParam(String robotName, RobotParam param, DiagnosticElem elem) {
-
-        Robot rb = allRobots.get(robotName);
-        boolean finded = false;
-        diagnostics.addElem(elem);
-        List<RobotParam> lst = params.get(rb);
-        for(RobotParam pr : lst){
-            if (param.getParamName().equals(pr.getParamName())) {
-                //pr = param;
-                pr.updateParam(param);
-         //       LOGGER.info("update param: {}", pr);
-                return;
+        try {
+            Robot rb = allRobots.get(robotName);
+            //boolean finded = false;
+            diagnostics.addElem(elem);
+            List<RobotParam> lst = params.get(rb);
+            for (RobotParam pr : lst) {
+                if (param.getParamName().equals(pr.getParamName())) {
+                    // pr = param;
+                    pr.updateParam(param);
+                    // LOGGER.info("update param: {}", pr);
+                    return;
+                }
             }
+            // LOGGER.info("add new param: {}", param);
+            params.get(rb).add(param);
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
         }
-    //    LOGGER.info("add new param: {}", param);
-        params.get(rb).add(param);
     }
 
     public List<RobotParam> getParamsForRobot(String robotName) {
