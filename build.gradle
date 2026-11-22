@@ -1,14 +1,18 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.3'
-	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'org.springframework.boot' version '3.5.16'
+	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
-	id 'com.google.protobuf' version '0.8.15'
+	id 'com.google.protobuf' version '0.9.5'
 }
 
 group = 'com.asur'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
 
 configurations {
 	compileOnly {
@@ -28,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	compileOnly 'org.projectlombok:lombok'
 	//runtimeOnly 'org.postgresql:postgresql'
 	//runtimeOnly 'com.h2database:h2'
@@ -37,12 +41,12 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	//compile "org.springframework.integration:spring-integration-mqtt:5.5.14"
-	implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0"
-	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.14.0'
-	implementation group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.14.0'
+	implementation "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5"
+	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.25.9'
+	implementation group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.25.9'
 	//compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.19'
 	implementation group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
-	implementation 'org.webjars:webjars-locator-core:0.30'
+	implementation 'org.webjars:webjars-locator-core:0.59'
 	implementation 'org.webjars:sockjs-client:1.0.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3'
 	implementation 'org.webjars:bootstrap:3.3.7'
@@ -56,7 +60,6 @@ tasks.named('test') {
 protobuf {
     protoc {
         // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.4.0'
-		generatedFilesBaseDir = "$projectDir/src"
+        artifact = 'com.google.protobuf:protoc:3.25.9'
     }
 }

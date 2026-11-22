@@ -3,14 +3,12 @@
 ## Building
 
 ### Main build in Linux OS with command:
-Need to install java 8 or higher JDK
-Need to install gradle
-Build with gradle
+Need to install JDK 25 (Gradle toolchain will pick it up)
+Build with the gradle wrapper (Gradle 9.x)
 ./gradlew build
 
 ### Automatic script build and deploy to local or remote machine
-Need to install java 8 or higher JDK (sudo apt install openjdk-java8-jdk)
-Need to install gradle
+Need to install JDK 25
 Need to install docker and docker-compose
 
 ./deploy.sh -local

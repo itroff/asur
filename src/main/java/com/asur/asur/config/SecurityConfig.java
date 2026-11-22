@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -15,12 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 import com.asur.asur.models.User;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
     @Value("${spring.security.debug:false}")
@@ -61,11 +61,11 @@ public class SecurityConfig {
 
         http
 			.authorizeHttpRequests((requests) -> requests
-				.antMatchers(PUBLIC_MATCHERS).permitAll()
-                .antMatchers("/robot").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/diagnostics").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/index").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/put-file").hasAnyRole("USER", "ADMIN")
+				.requestMatchers(PUBLIC_MATCHERS).permitAll()
+                .requestMatchers("/robot").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/diagnostics").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/index").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/put-file").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -73,8 +73,10 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/index", true)
 				.permitAll()
 			)
-			.logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
+			.logout((logout) -> logout
+				.logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/logout"))
+				.logoutSuccessUrl("/login")
+			);
             //exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 		return http.build();
     }
